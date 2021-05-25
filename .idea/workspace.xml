@@ -2,10 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6668f9e4-a5a7-49be-a380-c028d41a502f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TALexer.interp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TALexer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TALexer.tokens" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParser.interp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParser.tokens" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParserBaseListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParserBaseVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParserListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParserVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.g4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.interp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.tokens" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/Window$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/Window$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/Window.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/Window.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/Window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +35,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1sxg1HqWTzXHlXAEAi0JAqxhmHP" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
       <flattenPackages />
@@ -83,15 +98,17 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="251" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="303" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../UppaalMutants" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="Application.Window">
@@ -121,15 +138,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -157,7 +172,12 @@
       <workItem from="1621819448548" duration="3986000" />
       <workItem from="1621823777487" duration="127000" />
       <workItem from="1621823925712" duration="2306000" />
-      <workItem from="1621826275266" duration="3768000" />
+      <workItem from="1621826275266" duration="4132000" />
+      <workItem from="1621830463714" duration="254000" />
+      <workItem from="1621830927832" duration="601000" />
+      <workItem from="1621898889875" duration="1230000" />
+      <workItem from="1621907732068" duration="42000" />
+      <workItem from="1621912636379" duration="8363000" />
     </task>
     <servers />
   </component>
@@ -175,5 +195,8 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
