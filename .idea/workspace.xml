@@ -2,22 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6668f9e4-a5a7-49be-a380-c028d41a502f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TALexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TALexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TALexer.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParser.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParser.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParserBaseListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParserBaseVisitor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParserListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParserVisitor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.tokens" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Automaton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Clock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Location.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/View/App.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/View/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TimedAutomataNamur.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TimedAutomataNamur.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TALexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/gen/Model/Parser/TALexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TALexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/Model/Parser/TALexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TALexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/gen/Model/Parser/TALexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParser.interp" beforeDir="false" afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParser.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParser.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/gen/Model/Parser/TAParser.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/Window$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/Window.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/asd.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/asd.jfd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TALexer.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.tokens" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,18 +106,31 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="251" />
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="127" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="303" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="278" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../UppaalMutants" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../antlr-4.9-complete.jar" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager" selected="Application.Window">
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="View.App" />
+      <module name="TimedAutomataNamur" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="View.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="View.Main" />
       <module name="TimedAutomataNamur" />
@@ -152,9 +171,11 @@
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.Window" />
+      <item itemvalue="Application.App" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.App" />
         <item itemvalue="Application.Window" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
@@ -178,6 +199,11 @@
       <workItem from="1621898889875" duration="1230000" />
       <workItem from="1621907732068" duration="42000" />
       <workItem from="1621912636379" duration="8363000" />
+      <workItem from="1621986663337" duration="5168000" />
+      <workItem from="1622042123444" duration="2359000" />
+      <workItem from="1622157373443" duration="2400000" />
+      <workItem from="1622502602115" duration="595000" />
+      <workItem from="1622598108306" duration="6449000" />
     </task>
     <servers />
   </component>
