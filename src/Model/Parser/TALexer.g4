@@ -9,11 +9,16 @@ WS              :   [ \t\r\n]+          -> skip; //Skip spaces and new lines (Wh
 
 //____________________RESERVED WORDS (KEYWORDS)____________________//
 
+LET             :   'let' ;
+NUM             :   'num' ;
 AUTOMATON       :   'automaton' ;
-LOCATIONS       :   'locations' ;
-CLOCKS          :   'clocks' ;
-ACTIONS         :   'actions' ;
+LOCATION        :   'locations' ;
+CLOCK           :   'clocks' ;
+ACTION          :   'actions' ;
 EDGES           :   'edges' ;
+INVARIANT       :   'invariant' ;
+GUARD           :   'guard' ;
+RESET           :   'reset' ;
 L_C_BRACKET     :   '{' ;   //Left curly bracket
 R_C_BRACKET     :   '}' ;   //Right curly bracket
 L_PARENTHESIS   :   '(' ;   //left parenthesis
@@ -37,11 +42,13 @@ AND_SYMBOL      :   '&&' ;
 OR              :   'or' ;
 OR_SYMBOL       :   '||' ;
 NEQ_MARK        :   '!' ;
+NEQ_LOG         :   'not' ;
 
 IDENTIFIER      :   [a-zA-Z_]([a-zA-Z0-9_])* ;
 fragment DIGIT  :   [0-9] ;
-INT             :   DIGIT+ ;
-DOUBLE          :   INT '.' DIGIT+
+//INT             :   DIGIT+ ;
+DOUBLE          :   DIGIT+
+                |   DIGIT+ '.' DIGIT+
                 |   '.' DIGIT+
                 ;
 

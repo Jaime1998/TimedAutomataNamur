@@ -1,9 +1,15 @@
 package View;
 
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import Model.Parser.*;
 
 public class App extends JFrame{
     private JButton delayTransition;
@@ -22,6 +28,20 @@ public class App extends JFrame{
         delayTransition.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*
+                CharStream input = CharStreams.fromFileName(modelFile);
+                UppaalLexer lexer = new UppaalLexer(input);
+                CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+                this.parser = new UppaalParser(tokens);
+                this.tree = this.parser.model();
+                 */
 
             }
         });
