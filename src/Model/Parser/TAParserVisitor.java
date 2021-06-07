@@ -17,17 +17,44 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitModel(TAParser.ModelContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TAParser#block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock(TAParser.BlockContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link TAParser#let}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLet(TAParser.LetContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TAParser#declaration}.
+	 * Visit a parse tree produced by the {@code VarDeclarationSt}
+	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaration(TAParser.DeclarationContext ctx);
+	T visitVarDeclarationSt(TAParser.VarDeclarationStContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NumExprSt}
+	 * labeled alternative in {@link TAParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumExprSt(TAParser.NumExprStContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code PrintSt}
+	 * labeled alternative in {@link TAParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrintSt(TAParser.PrintStContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TAParser#printStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrintStatement(TAParser.PrintStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TAParser#varDeclaration}.
 	 * @param ctx the parse tree
@@ -111,66 +138,83 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCons_guard(TAParser.Cons_guardContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TAParser#funcExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncExpr(TAParser.FuncExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TAParser#funcParameters}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncParameters(TAParser.FuncParametersContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TAParser#funcParameter}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncParameter(TAParser.FuncParameterContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link TAParser#arguments}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArguments(TAParser.ArgumentsContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code DoubleExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitDoubleExpr(TAParser.DoubleExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code SumSub}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSumSub(TAParser.SumSubContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code TrueExpr}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitTrueExpr(TAParser.TrueExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code IdExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIdExpr(TAParser.IdExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code FalseExprq}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFalseExprq(TAParser.FalseExprqContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code MulDiv}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitMulDiv(TAParser.MulDivContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code AddSub}
+	 * labeled alternative in {@link TAParser#numExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddSub(TAParser.AddSubContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitCompareExpr(TAParser.CompareExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ParensExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitParensExpr(TAParser.ParensExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Unary}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitUnary(TAParser.UnaryContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code AssignExpr}
+	 * labeled alternative in {@link TAParser#numExpr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignExpr(TAParser.AssignExprContext ctx);
 }

@@ -14,10 +14,15 @@ import Model.Parser.*;
 public class App extends JFrame{
     private JButton delayTransition;
     private JPanel panelMain;
-    private JTextArea declaration;
     private JSpinner spinner1;
     private JLabel delayLabel;
     private JButton updateButton;
+    private JPanel leftPanel;
+    private JPanel rightPanel;
+    private JPanel topPanel;
+    private JPanel downPanel;
+    private JTextArea declarationArea;
+    private JTextArea printArea;
 
     public App(String title) {
         super(title);

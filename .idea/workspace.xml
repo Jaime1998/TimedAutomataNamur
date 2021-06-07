@@ -2,29 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6668f9e4-a5a7-49be-a380-c028d41a502f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Model/Interval.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.interp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.tokens" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/TAVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Types/Lambda.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Types/Number.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Types/TypeError.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Types/Value.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TALexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TALexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TALexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.tokens" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParser.interp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParser.tokens" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParserBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParserBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParserListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen/Model/Parser/TAParserVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Automaton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Automaton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Location.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/TALexer.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TALexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TALexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TALexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.tokens" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParserListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParserVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.interp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/TAVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/TAVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,11 +107,12 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="127" />
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="206" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="278" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="428" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -209,6 +209,11 @@
       <workItem from="1622502602115" duration="595000" />
       <workItem from="1622598108306" duration="6449000" />
       <workItem from="1622669230869" duration="16506000" />
+      <workItem from="1622836306205" duration="8485000" />
+      <workItem from="1622860930032" duration="6163000" />
+      <workItem from="1623004892446" duration="595000" />
+      <workItem from="1623011372925" duration="9101000" />
+      <workItem from="1623029936551" duration="12387000" />
     </task>
     <servers />
   </component>

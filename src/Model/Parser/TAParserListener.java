@@ -18,6 +18,16 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitModel(TAParser.ModelContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TAParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock(TAParser.BlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TAParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock(TAParser.BlockContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TAParser#let}.
 	 * @param ctx the parse tree
 	 */
@@ -28,15 +38,51 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitLet(TAParser.LetContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TAParser#declaration}.
+	 * Enter a parse tree produced by the {@code VarDeclarationSt}
+	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterDeclaration(TAParser.DeclarationContext ctx);
+	void enterVarDeclarationSt(TAParser.VarDeclarationStContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TAParser#declaration}.
+	 * Exit a parse tree produced by the {@code VarDeclarationSt}
+	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitDeclaration(TAParser.DeclarationContext ctx);
+	void exitVarDeclarationSt(TAParser.VarDeclarationStContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NumExprSt}
+	 * labeled alternative in {@link TAParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumExprSt(TAParser.NumExprStContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NumExprSt}
+	 * labeled alternative in {@link TAParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumExprSt(TAParser.NumExprStContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code PrintSt}
+	 * labeled alternative in {@link TAParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintSt(TAParser.PrintStContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code PrintSt}
+	 * labeled alternative in {@link TAParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintSt(TAParser.PrintStContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TAParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrintStatement(TAParser.PrintStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TAParser#printStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrintStatement(TAParser.PrintStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TAParser#varDeclaration}.
 	 * @param ctx the parse tree
@@ -176,111 +222,139 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitCons_guard(TAParser.Cons_guardContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TAParser#funcExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncExpr(TAParser.FuncExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TAParser#funcExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncExpr(TAParser.FuncExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TAParser#funcParameters}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncParameters(TAParser.FuncParametersContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TAParser#funcParameters}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncParameters(TAParser.FuncParametersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TAParser#funcParameter}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncParameter(TAParser.FuncParameterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TAParser#funcParameter}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncParameter(TAParser.FuncParameterContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TAParser#arguments}.
+	 * @param ctx the parse tree
+	 */
+	void enterArguments(TAParser.ArgumentsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TAParser#arguments}.
+	 * @param ctx the parse tree
+	 */
+	void exitArguments(TAParser.ArgumentsContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code DoubleExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterDoubleExpr(TAParser.DoubleExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code DoubleExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitDoubleExpr(TAParser.DoubleExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code SumSub}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterSumSub(TAParser.SumSubContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code SumSub}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitSumSub(TAParser.SumSubContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code TrueExpr}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterTrueExpr(TAParser.TrueExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code TrueExpr}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitTrueExpr(TAParser.TrueExprContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code IdExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterIdExpr(TAParser.IdExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code IdExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitIdExpr(TAParser.IdExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code FalseExprq}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterFalseExprq(TAParser.FalseExprqContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code FalseExprq}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitFalseExprq(TAParser.FalseExprqContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code MulDiv}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterMulDiv(TAParser.MulDivContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code MulDiv}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitMulDiv(TAParser.MulDivContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code AddSub}
+	 * labeled alternative in {@link TAParser#numExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddSub(TAParser.AddSubContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AddSub}
+	 * labeled alternative in {@link TAParser#numExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddSub(TAParser.AddSubContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterCompareExpr(TAParser.CompareExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitCompareExpr(TAParser.CompareExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ParensExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterParensExpr(TAParser.ParensExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ParensExpr}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitParensExpr(TAParser.ParensExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Unary}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void enterUnary(TAParser.UnaryContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code Unary}
-	 * labeled alternative in {@link TAParser#expr}.
+	 * labeled alternative in {@link TAParser#numExpr}.
 	 * @param ctx the parse tree
 	 */
 	void exitUnary(TAParser.UnaryContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AssignExpr}
+	 * labeled alternative in {@link TAParser#numExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignExpr(TAParser.AssignExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignExpr}
+	 * labeled alternative in {@link TAParser#numExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignExpr(TAParser.AssignExprContext ctx);
 }

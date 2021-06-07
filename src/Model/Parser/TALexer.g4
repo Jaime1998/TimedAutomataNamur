@@ -10,7 +10,11 @@ WS              :   [ \t\r\n]+          -> skip; //Skip spaces and new lines (Wh
 //____________________RESERVED WORDS (KEYWORDS)____________________//
 
 LET             :   'let' ;
+PRINT           :   'print' ;
 NUM             :   'num' ;
+FUNCTION        :   'function' ;
+RETURNS         :   'returns' ;
+RETURN          :   'return' ;
 AUTOMATON       :   'automaton' ;
 LOCATION        :   'locations' ;
 CLOCK           :   'clocks' ;
@@ -29,12 +33,12 @@ COLON           :   ':' ;
 
 MUL             :   '*' ;
 DIV             :   '/' ;
-SUM             :   '+' ;
+ADD             :   '+' ;
 SUB             :   '-' ;
 
 
-LESS            :   '<=' ;
-GREATER         :   '>=' ;
+LESS_EQ         :   '<=' ;
+GREATER_EQ      :   '>=' ;
 TRUE            :   'true' ;
 FALSE           :   'false' ;
 AND             :   'and' ;

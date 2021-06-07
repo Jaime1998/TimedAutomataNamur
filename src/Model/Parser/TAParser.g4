@@ -1,19 +1,29 @@
 parser grammar TAParser;
 options { tokenVocab=TALexer; }
 
-model       :   let? automaton;
+model       :   let automaton;
 
-let         :   'let' '{' declaration* '}';
+block       :   statement*;
 
-declaration :   varDeclaration ;
+let         :   'let' '{' statement* '}';
+
+statement   :   varDeclaration          # VarDeclarationSt
+            |   numExpr                 # NumExprSt
+            |   printStatement          # PrintSt
+            ;
+
+printStatement: 'print' numExpr ;
+//let         :   'let' '{' declaration* '}';
+
+//declaration :   varDeclaration ;
 
 varDeclaration: (type varId (',' varId)*) ;
 
 type        :   'num' ;
 
-varId       :   IDENTIFIER '=' initialiser ;
+varId       :   IDENTIFIER ('=' initialiser)? ;
 
-initialiser :   expr ;
+initialiser :   numExpr ;
 
 automaton   :   'automaton' IDENTIFIER '{' types_TA* '}' ;
 
@@ -34,21 +44,30 @@ edge        :   '(' source = IDENTIFIER ','
 guard       :   cons_guard (('and' | '&&') guard)*
             ;
 
-cons_guard  :   expr op=('<=' | '>=' ) expr
-            |   expr
+cons_guard  :   numExpr op=('<=' | '>=' ) numExpr
+            |   numExpr
             |   '(' cons_guard ')'
             ;
 
-expr        :   op=('-' | '+') expr         # Unary
-            |   op=('not' | '!') expr       # Negation
-            |   expr op=('*'|'/') expr      # MulDiv
-            |   expr op=('+'|'-') expr      # SumSub
-            |   expr op=('<='|'>=') expr    # CompareExpr
-            |   DOUBLE                      # DoubleExpr
-            |   IDENTIFIER                  # IdExpr
-            |   'true'                      # TrueExpr
-            |   'false'                     # FalseExprq
-            |   '(' expr ')'                # ParensExpr
+funcExpr    :   'function' IDENTIFIER '(' funcParameters ')' 'returns' 'function' '{' block '}'
+            |   'function' IDENTIFIER '(' funcParameters ')' 'returns' 'num' '{' block '}'
+            |   IDENTIFIER
+            |   IDENTIFIER '(' arguments ')'
+            ;
+funcParameters: (funcParameter (',' funcParameter)*)? ;
+
+funcParameter:  type IDENTIFIER ;
+
+arguments   :   (numExpr  (',' numExpr)*)? ;
+
+numExpr     :   op=('+' | '-') numExpr          # Unary
+            |   numExpr op=('*'|'/') numExpr    # MulDiv
+            |   numExpr op=('+'|'-') numExpr    # AddSub
+            |   numExpr op=('<='|'>=') numExpr  # CompareExpr
+            |   DOUBLE                          # DoubleExpr
+            |   IDENTIFIER                      # IdExpr
+            |   '(' numExpr ')'                 # ParensExpr
+            |   IDENTIFIER '=' numExpr          # AssignExpr
             ;
 
 
