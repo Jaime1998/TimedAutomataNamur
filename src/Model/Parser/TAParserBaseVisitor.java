@@ -45,7 +45,7 @@ public class TAParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitNumExprSt(TAParser.NumExprStContext ctx) { return visitChildren(ctx); }
+	@Override public T visitExprSt(TAParser.ExprStContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -150,7 +150,7 @@ public class TAParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitCons_guard(TAParser.Cons_guardContext ctx) { return visitChildren(ctx); }
+	@Override public T visitConsGuard(TAParser.ConsGuardContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

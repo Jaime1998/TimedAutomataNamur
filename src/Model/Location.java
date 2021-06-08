@@ -1,5 +1,7 @@
 package Model;
 
+import Model.Parser.TAParser;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Function;
@@ -8,13 +10,13 @@ public class Location {
 
     private final String name;
     private final HashMap<String, Clock> clocks;
-    private Function<Void, Interval> invariant;
-    private HashMap<String, ArrayList<TransToLocation>> edge;
+    private TAParser.GuardContext invariant;
+    private ArrayList<TransToLocation> edges;
 
-    public Location(String name, HashMap<String, Clock> clocks){
+    public Location(String name, HashMap<String, Clock> clocks, TAParser.GuardContext invariant){
         this.name = name;
         this.clocks = clocks;
-        this.invariant = (Void)-> null;
+        this.invariant = invariant;
     }
 
     public String getName() {
@@ -25,55 +27,58 @@ public class Location {
         return clocks;
     }
 
-    public Function<Void, Interval> getInvariant() {
+    public TAParser.GuardContext getInvariant() {
         return invariant;
     }
 
-    public void setInvariant(Function<Void, Interval> invariant) {
+    public void setInvariant(TAParser.GuardContext invariant) {
         this.invariant = invariant;
     }
 
-    public HashMap<String, ArrayList<TransToLocation>> getEdge() {
-        return edge;
+    public ArrayList<TransToLocation> getEdges() {
+        return this.edges;
     }
 
-    public void setEdge(HashMap<String, ArrayList<TransToLocation>> edge) {
-        this.edge = edge;
+    public TAParser.GuardContext guardI(int i){
+        return this.edges.get(i).getGuard();
+    }
+    public String actionI(int i){
+        return this.edges.get(i).getAction();
+    }
+    public ArrayList<String> clocksToResetI(int i){
+        return this.edges.get(i).getResetClocks();
+    }
+    public Location getTargetI(int i){
+        return this.edges.get(i).getTarget();
     }
 
     private static class TransToLocation {
-        private Function<Void, Interval> guard;
-        private ArrayList<String> resetClocks;
-        private Location target;
+        private final TAParser.GuardContext guard;
+        private final String action;
+        private final ArrayList<String> resetClocks;
+        private final Location target;
 
-        public TransToLocation(Function<Void, Interval> guard, Location target, ArrayList<String> resetClocks){
+        public TransToLocation(TAParser.GuardContext guard, String action, ArrayList<String> resetClocks, Location target){
             this.guard = guard;
+            this.action = action;
             this.resetClocks = resetClocks;
             this.target = target;
         }
 
-        public Function<Void, Interval> getGuard() {
+        public TAParser.GuardContext getGuard() {
             return guard;
         }
 
-        public void setGuard(Function<Void, Interval> guard) {
-            this.guard = guard;
+        public String getAction(){
+            return this.action;
         }
 
         public ArrayList<String> getResetClocks() {
             return resetClocks;
         }
 
-        public void setResetClocks(ArrayList<String> resetClocks) {
-            this.resetClocks = resetClocks;
-        }
-
         public Location getTarget() {
             return target;
-        }
-
-        public void setTarget(Location target) {
-            this.target = target;
         }
     }
 

@@ -8,11 +8,11 @@ block       :   statement*;
 let         :   'let' '{' statement* '}';
 
 statement   :   varDeclaration          # VarDeclarationSt
-            |   numExpr                 # NumExprSt
+            |   expr                    # ExprSt
             |   printStatement          # PrintSt
             ;
 
-printStatement: 'print' numExpr ;
+printStatement: 'print' expr ;
 //let         :   'let' '{' declaration* '}';
 
 //declaration :   varDeclaration ;
@@ -23,11 +23,11 @@ type        :   'num' ;
 
 varId       :   IDENTIFIER ('=' initialiser)? ;
 
-initialiser :   numExpr ;
+initialiser :   expr ;
 
-automaton   :   'automaton' IDENTIFIER '{' types_TA* '}' ;
+automaton   :   'automaton' IDENTIFIER '{' typesTA* '}' ;
 
-types_TA    :   'locations' '=' '{' location (',' location)* '}'        # locationType
+typesTA    :   'locations' '=' '{' location (',' location)* '}'        # locationType
             |   'clocks' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}'       # clockType
             |   'actions' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}'      # actionsType
             |   'edges' '=' '{' edge* '}'                               # edgesType
@@ -41,12 +41,12 @@ edge        :   '(' source = IDENTIFIER ','
                     ('reset' ':' '{'  '}')?
                     target = IDENTIFIER')' ;
 
-guard       :   cons_guard (('and' | '&&') guard)*
+guard       :   consGuard (('and' | '&&') guard)?
             ;
 
-cons_guard  :   numExpr op=('<=' | '>=' ) numExpr
-            |   numExpr
-            |   '(' cons_guard ')'
+consGuard   :   expr op=('<=' | '>=' ) expr
+            |   expr
+            |   '(' consGuard ')'
             ;
 
 funcExpr    :   'function' IDENTIFIER '(' funcParameters ')' 'returns' 'function' '{' block '}'
@@ -58,16 +58,16 @@ funcParameters: (funcParameter (',' funcParameter)*)? ;
 
 funcParameter:  type IDENTIFIER ;
 
-arguments   :   (numExpr  (',' numExpr)*)? ;
+arguments   :   (expr  (',' expr)*)? ;
 
-numExpr     :   op=('+' | '-') numExpr          # Unary
-            |   numExpr op=('*'|'/') numExpr    # MulDiv
-            |   numExpr op=('+'|'-') numExpr    # AddSub
-            |   numExpr op=('<='|'>=') numExpr  # CompareExpr
+expr     :   op=('+' | '-') expr          # Unary
+            |   expr op=('*'|'/') expr    # MulDiv
+            |   expr op=('+'|'-') expr    # AddSub
+            |   expr op=('<='|'>=') expr  # CompareExpr
             |   DOUBLE                          # DoubleExpr
             |   IDENTIFIER                      # IdExpr
-            |   '(' numExpr ')'                 # ParensExpr
-            |   IDENTIFIER '=' numExpr          # AssignExpr
+            |   '(' expr ')'                 # ParensExpr
+            |   IDENTIFIER '=' expr          # AssignExpr
             ;
 
 

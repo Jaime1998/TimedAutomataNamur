@@ -70,8 +70,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     }
 
     @Override
-    public Value visitNumExprSt(TAParser.NumExprStContext ctx) {
-        return super.visitNumExprSt(ctx);
+    public Value visitExprSt(TAParser.ExprStContext ctx) {
+        return super.visitExprSt(ctx);
     }
 
     @Override
@@ -145,8 +145,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     }
 
     @Override
-    public Value visitCons_guard(TAParser.Cons_guardContext ctx) {
-        return super.visitCons_guard(ctx);
+    public Value visitConsGuard(TAParser.ConsGuardContext ctx) {
+        return super.visitConsGuard(ctx);
     }
 
     @Override
@@ -178,8 +178,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     @Override
     public Value visitAddSub(TAParser.AddSubContext ctx) {
         try {
-            Value left = visit(ctx.numExpr(0));
-            Value right = visit(ctx.numExpr(1));
+            Value left = visit(ctx.expr(0));
+            Value right = visit(ctx.expr(1));
 
             if(ctx.op.getType() == TAParser.ADD){
                 return left.mul(right);
@@ -195,14 +195,14 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitIdExpr(TAParser.IdExprContext ctx) {
-        return lookUpMemory(ctx.IDENTIFIER(), ctx);
+        return lookUpMemory(ctx.IDENTIFIER());
     }
 
     @Override
     public Value visitMulDiv(TAParser.MulDivContext ctx) {
         try {
-            Value left = visit(ctx.numExpr(0));
-            Value right = visit(ctx.numExpr(1));
+            Value left = visit(ctx.expr(0));
+            Value right = visit(ctx.expr(1));
 
             if(ctx.op.getType() == TAParser.MUL){
                 return left.mul(right);
@@ -219,8 +219,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     @Override
     public Value visitCompareExpr(TAParser.CompareExprContext ctx) {
         try {
-            Value left = visit(ctx.numExpr(0));
-            Value right = visit(ctx.numExpr(1));
+            Value left = visit(ctx.expr(0));
+            Value right = visit(ctx.expr(1));
 
             if(ctx.op.getType() == TAParser.GREATER_EQ){
                 return left.greater(right);
@@ -236,16 +236,16 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitParensExpr(TAParser.ParensExprContext ctx) {
-        return visit(ctx.numExpr());
+        return visit(ctx.expr());
     }
 
     @Override
     public Value visitUnary(TAParser.UnaryContext ctx) {
         try {
             if(ctx.op.getType() == TAParser.SUB){
-                return visit(ctx.numExpr()).mul(new Number(-1));
+                return visit(ctx.expr()).mul(new Number(-1));
             }
-            return visit(ctx.numExpr());
+            return visit(ctx.expr());
         }catch (TypeException e){
             e.printStackTrace();
         }
@@ -254,15 +254,12 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitAssignExpr(TAParser.AssignExprContext ctx) {
-        Value oldValue =  lookUpMemory(ctx.IDENTIFIER(), ctx);
-        if(oldValue==null){
-            return new Number(0);
-        }
-        Value newValue = visit(ctx.numExpr());
-        return 
+        //Value oldValue =  lookUpMemory(ctx.IDENTIFIER());
+        Value newValue = visit(ctx.expr());
+        return newValue;
     }
 
-    private Value lookUpMemory(TerminalNode identifier, TAParser.AssignExprContext ctx) {
+    private Value lookUpMemory(TerminalNode identifier) {
         String id = identifier.getText();
         for(int i=this.memory.size()-1; i>=0; i--){
             Value num = this.memory.get(i).get(id);

@@ -50,17 +50,17 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitVarDeclarationSt(TAParser.VarDeclarationStContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code NumExprSt}
+	 * Enter a parse tree produced by the {@code ExprSt}
 	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterNumExprSt(TAParser.NumExprStContext ctx);
+	void enterExprSt(TAParser.ExprStContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code NumExprSt}
+	 * Exit a parse tree produced by the {@code ExprSt}
 	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitNumExprSt(TAParser.NumExprStContext ctx);
+	void exitExprSt(TAParser.ExprStContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code PrintSt}
 	 * labeled alternative in {@link TAParser#statement}.
@@ -135,49 +135,49 @@ public interface TAParserListener extends ParseTreeListener {
 	void exitAutomaton(TAParser.AutomatonContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code locationType}
-	 * labeled alternative in {@link TAParser#types_TA}.
+	 * labeled alternative in {@link TAParser#typesTA}.
 	 * @param ctx the parse tree
 	 */
 	void enterLocationType(TAParser.LocationTypeContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code locationType}
-	 * labeled alternative in {@link TAParser#types_TA}.
+	 * labeled alternative in {@link TAParser#typesTA}.
 	 * @param ctx the parse tree
 	 */
 	void exitLocationType(TAParser.LocationTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code clockType}
-	 * labeled alternative in {@link TAParser#types_TA}.
+	 * labeled alternative in {@link TAParser#typesTA}.
 	 * @param ctx the parse tree
 	 */
 	void enterClockType(TAParser.ClockTypeContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code clockType}
-	 * labeled alternative in {@link TAParser#types_TA}.
+	 * labeled alternative in {@link TAParser#typesTA}.
 	 * @param ctx the parse tree
 	 */
 	void exitClockType(TAParser.ClockTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code actionsType}
-	 * labeled alternative in {@link TAParser#types_TA}.
+	 * labeled alternative in {@link TAParser#typesTA}.
 	 * @param ctx the parse tree
 	 */
 	void enterActionsType(TAParser.ActionsTypeContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code actionsType}
-	 * labeled alternative in {@link TAParser#types_TA}.
+	 * labeled alternative in {@link TAParser#typesTA}.
 	 * @param ctx the parse tree
 	 */
 	void exitActionsType(TAParser.ActionsTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code edgesType}
-	 * labeled alternative in {@link TAParser#types_TA}.
+	 * labeled alternative in {@link TAParser#typesTA}.
 	 * @param ctx the parse tree
 	 */
 	void enterEdgesType(TAParser.EdgesTypeContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code edgesType}
-	 * labeled alternative in {@link TAParser#types_TA}.
+	 * labeled alternative in {@link TAParser#typesTA}.
 	 * @param ctx the parse tree
 	 */
 	void exitEdgesType(TAParser.EdgesTypeContext ctx);
@@ -212,15 +212,15 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitGuard(TAParser.GuardContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TAParser#cons_guard}.
+	 * Enter a parse tree produced by {@link TAParser#consGuard}.
 	 * @param ctx the parse tree
 	 */
-	void enterCons_guard(TAParser.Cons_guardContext ctx);
+	void enterConsGuard(TAParser.ConsGuardContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TAParser#cons_guard}.
+	 * Exit a parse tree produced by {@link TAParser#consGuard}.
 	 * @param ctx the parse tree
 	 */
-	void exitCons_guard(TAParser.Cons_guardContext ctx);
+	void exitConsGuard(TAParser.ConsGuardContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TAParser#funcExpr}.
 	 * @param ctx the parse tree
@@ -263,97 +263,97 @@ public interface TAParserListener extends ParseTreeListener {
 	void exitArguments(TAParser.ArgumentsContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code DoubleExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterDoubleExpr(TAParser.DoubleExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code DoubleExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitDoubleExpr(TAParser.DoubleExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code IdExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterIdExpr(TAParser.IdExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code IdExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitIdExpr(TAParser.IdExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MulDiv}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterMulDiv(TAParser.MulDivContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code MulDiv}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitMulDiv(TAParser.MulDivContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code AddSub}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterAddSub(TAParser.AddSubContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code AddSub}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitAddSub(TAParser.AddSubContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterCompareExpr(TAParser.CompareExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitCompareExpr(TAParser.CompareExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ParensExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterParensExpr(TAParser.ParensExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code ParensExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitParensExpr(TAParser.ParensExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Unary}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterUnary(TAParser.UnaryContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code Unary}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitUnary(TAParser.UnaryContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code AssignExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void enterAssignExpr(TAParser.AssignExprContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code AssignExpr}
-	 * labeled alternative in {@link TAParser#numExpr}.
+	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
 	void exitAssignExpr(TAParser.AssignExprContext ctx);

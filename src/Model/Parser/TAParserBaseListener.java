@@ -64,13 +64,13 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumExprSt(TAParser.NumExprStContext ctx) { }
+	@Override public void enterExprSt(TAParser.ExprStContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumExprSt(TAParser.NumExprStContext ctx) { }
+	@Override public void exitExprSt(TAParser.ExprStContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -244,13 +244,13 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCons_guard(TAParser.Cons_guardContext ctx) { }
+	@Override public void enterConsGuard(TAParser.ConsGuardContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCons_guard(TAParser.Cons_guardContext ctx) { }
+	@Override public void exitConsGuard(TAParser.ConsGuardContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -2,29 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6668f9e4-a5a7-49be-a380-c028d41a502f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Model/Types/Lambda.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Types/Number.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Types/TypeError.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Model/Types/Value.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/GuardVisitor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/TANetwork.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Model/Types/ConstraintGuardVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TALexer.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TALexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TALexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TALexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TALexer.tokens" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Automaton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Automaton.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Clock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Clock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Location.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.interp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.tokens" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserBaseVisitor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParserListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserListener.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParserVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParserVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.tokens" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/gen/TALexer.tokens" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/TAVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/TAVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/App.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +32,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1sxg1HqWTzXHlXAEAi0JAqxhmHP" />
   <component name="ProjectLevelVcsManager">
@@ -106,6 +106,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="206" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
@@ -159,15 +163,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -214,6 +216,7 @@
       <workItem from="1623004892446" duration="595000" />
       <workItem from="1623011372925" duration="9101000" />
       <workItem from="1623029936551" duration="12387000" />
+      <workItem from="1623103449971" duration="14118000" />
     </task>
     <servers />
   </component>

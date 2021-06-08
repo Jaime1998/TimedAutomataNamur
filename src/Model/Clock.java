@@ -24,11 +24,15 @@ public class Clock {
         this.rate = rate;
     }
 
+    public double getCurrentValue() {
+        return this.currentValue;
+    }
+
     public void increaseCurrentValue(double d) {
         this.currentValue += d;
     }
 
-    public double getCurrentValue() {
-        return this.currentValue;
+    public void resetValue(){
+        this.currentValue = 0;
     }
 }
