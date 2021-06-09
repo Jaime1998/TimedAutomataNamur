@@ -19,11 +19,12 @@ public class ConstraintGuardVisitor extends TAParserBaseVisitor<IloRange> {
 
     @Override
     public IloRange visitConsGuard(TAParser.ConsGuardContext ctx) {
+        visit(ctx.expr());
         return super.visitConsGuard(ctx);
     }
 
-    private Value lookUpMemory(TerminalNode identifier) {
-        String id = identifier.getText();
+    private Value lookUpMemory(String id) {
+
         for(int i=this.memory.size()-1; i>=0; i--){
             Value num = this.memory.get(i).get(id);
             if(num!=null){

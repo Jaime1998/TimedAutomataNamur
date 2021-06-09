@@ -1,7 +1,7 @@
 parser grammar TAParser;
 options { tokenVocab=TALexer; }
 
-model       :   let automaton;
+model       :   let? automaton;
 
 block       :   statement*;
 
@@ -25,29 +25,29 @@ varId       :   IDENTIFIER ('=' initialiser)? ;
 
 initialiser :   expr ;
 
-automaton   :   'automaton' IDENTIFIER '{' typesTA* '}' ;
+automaton   :   'automaton' IDENTIFIER '{' (locationType | clockType | actionType | edgesType)* '}' ;
 
-typesTA    :   'locations' '=' '{' location (',' location)* '}'        # locationType
-            |   'clocks' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}'       # clockType
-            |   'actions' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}'      # actionsType
-            |   'edges' '=' '{' edge* '}'                               # edgesType
-            ;
 
-location    :   IDENTIFIER ('invariant' ':' guard)? ;
+locationType:   'locations' '=' '{' location (',' location)* '}' ;
 
-edge        :   '(' source = IDENTIFIER ','
-                    ('guard' ':' guard ',')?
-                    action = IDENTIFIER ','
-                    ('reset' ':' '{'  '}')?
-                    target = IDENTIFIER')' ;
+clockType   :   'clocks' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ;
+
+actionType  :   'actions' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ;
+
+edgesType   :   'edges' '=' '{' edge* '}' ;
+
+location    :   IDENTIFIER ('invariant' '=' guard)? ;
+
+edge        :   '(' 'source' '=' IDENTIFIER ','
+                    ('guard' '=' guard ',')?
+                    'action' '=' IDENTIFIER ','
+                    ('reset' '=' '{' IDENTIFIER* '}')?
+                    'target' '=' IDENTIFIER')' ;
 
 guard       :   consGuard (('and' | '&&') guard)?
             ;
 
-consGuard   :   expr op=('<=' | '>=' ) expr
-            |   expr
-            |   '(' consGuard ')'
-            ;
+consGuard   :   expr ;
 
 funcExpr    :   'function' IDENTIFIER '(' funcParameters ')' 'returns' 'function' '{' block '}'
             |   'function' IDENTIFIER '(' funcParameters ')' 'returns' 'num' '{' block '}'
@@ -60,14 +60,14 @@ funcParameter:  type IDENTIFIER ;
 
 arguments   :   (expr  (',' expr)*)? ;
 
-expr     :   op=('+' | '-') expr          # Unary
-            |   expr op=('*'|'/') expr    # MulDiv
-            |   expr op=('+'|'-') expr    # AddSub
-            |   expr op=('<='|'>=') expr  # CompareExpr
-            |   DOUBLE                          # DoubleExpr
-            |   IDENTIFIER                      # IdExpr
-            |   '(' expr ')'                 # ParensExpr
-            |   IDENTIFIER '=' expr          # AssignExpr
+expr        :   expr op=('<='|'>=') expr    # CompareExpr
+            |   op=('+' | '-') expr         # Unary
+            |   expr op=('*'|'/') expr      # MulDiv
+            |   expr op=('+'|'-') expr      # AddSub
+            |   DOUBLE                      # DoubleExpr
+            |   IDENTIFIER                  # IdExpr
+            |   '(' expr ')'                # ParensExpr
+            |   IDENTIFIER '=' expr         # AssignExpr
             ;
 
 

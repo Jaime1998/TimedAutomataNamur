@@ -1,5 +1,8 @@
 package View;
 
+import Model.TAVisitor;
+import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -39,17 +42,29 @@ public class App extends JFrame{
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                /*
-                CharStream input = CharStreams.fromFileName(modelFile);
-                UppaalLexer lexer = new UppaalLexer(input);
-                CommonTokenStream tokens = new CommonTokenStream(lexer);
+                try{
+                    String code = getTextDeclarationArea();
+                    CharStream input = CharStreams.fromString(code);
 
-                this.parser = new UppaalParser(tokens);
-                this.tree = this.parser.model();
-                 */
+                    TALexer lexer = new TALexer(input);
+                    CommonTokenStream tokens = new CommonTokenStream(lexer);
+
+                    TAParser parser = new TAParser(tokens);
+                    TAParser.ModelContext tree = parser.model();
+
+                    TAVisitor eval = new TAVisitor();
+                    eval.visit(tree);
+                }catch (Exception error){
+                    error.printStackTrace();
+                }
 
             }
         });
+
+
+    }
+    public String getTextDeclarationArea(){
+        return this.declarationArea.getText();
     }
 
     public static void main(String[] args) {

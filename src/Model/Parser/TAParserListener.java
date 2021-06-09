@@ -134,50 +134,42 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitAutomaton(TAParser.AutomatonContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code locationType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Enter a parse tree produced by {@link TAParser#locationType}.
 	 * @param ctx the parse tree
 	 */
 	void enterLocationType(TAParser.LocationTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code locationType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Exit a parse tree produced by {@link TAParser#locationType}.
 	 * @param ctx the parse tree
 	 */
 	void exitLocationType(TAParser.LocationTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code clockType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Enter a parse tree produced by {@link TAParser#clockType}.
 	 * @param ctx the parse tree
 	 */
 	void enterClockType(TAParser.ClockTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code clockType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Exit a parse tree produced by {@link TAParser#clockType}.
 	 * @param ctx the parse tree
 	 */
 	void exitClockType(TAParser.ClockTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code actionsType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Enter a parse tree produced by {@link TAParser#actionType}.
 	 * @param ctx the parse tree
 	 */
-	void enterActionsType(TAParser.ActionsTypeContext ctx);
+	void enterActionType(TAParser.ActionTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code actionsType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Exit a parse tree produced by {@link TAParser#actionType}.
 	 * @param ctx the parse tree
 	 */
-	void exitActionsType(TAParser.ActionsTypeContext ctx);
+	void exitActionType(TAParser.ActionTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code edgesType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Enter a parse tree produced by {@link TAParser#edgesType}.
 	 * @param ctx the parse tree
 	 */
 	void enterEdgesType(TAParser.EdgesTypeContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code edgesType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Exit a parse tree produced by {@link TAParser#edgesType}.
 	 * @param ctx the parse tree
 	 */
 	void exitEdgesType(TAParser.EdgesTypeContext ctx);
@@ -286,6 +278,18 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitIdExpr(TAParser.IdExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code CompareExpr}
+	 * labeled alternative in {@link TAParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompareExpr(TAParser.CompareExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CompareExpr}
+	 * labeled alternative in {@link TAParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompareExpr(TAParser.CompareExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
@@ -309,18 +313,6 @@ public interface TAParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAddSub(TAParser.AddSubContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterCompareExpr(TAParser.CompareExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitCompareExpr(TAParser.CompareExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ParensExpr}
 	 * labeled alternative in {@link TAParser#expr}.

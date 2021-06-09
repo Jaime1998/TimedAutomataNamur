@@ -1,37 +1,70 @@
 parser grammar TAParser;
 options { tokenVocab=TALexer; }
 
-model       :   automaton +;
+model       :   let automaton;
 
-automaton   :   'automaton' IDENTIFIER '{' loc+ clock? actions? edges?'}' ;
+block       :   statement*;
 
-loc         :   'locations' '=' '{' IDENTIFIER (':' guard)? (',' IDENTIFIER (':' guard )?)* '}' ;
+let         :   'let' '{' statement* '}';
 
-clock       :   'clocks' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ;
-
-actions     :   'actions' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ;
-
-edges       :   'edges' '=' '{' '}';
-
-guard       :   expr (('and' | '&&') guard)*
+statement   :   varDeclaration          # VarDeclarationSt
+            |   expr                    # ExprSt
+            |   printStatement          # PrintSt
             ;
 
-boolean     :   boolean op=('and'|'&&') boolean
-            |   expr op=('<=' | '>=' ) expr
-            |   'true'
-            |   'false'
-            |   INT
+printStatement: 'print' expr ;
+//let         :   'let' '{' declaration* '}';
+
+//declaration :   varDeclaration ;
+
+varDeclaration: (type varId (',' varId)*) ;
+
+type        :   'num' ;
+
+varId       :   IDENTIFIER ('=' initialiser)? ;
+
+initialiser :   expr ;
+
+automaton   :   'automaton' IDENTIFIER '{' typesTA* '}' ;
+
+typesTA    :   'locations' '=' '{' location (',' location)* '}'        # locationType
+            |   'clocks' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}'       # clockType
+            |   'actions' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}'      # actionsType
+            |   'edges' '=' '{' edge* '}'                               # edgesType
+            ;
+
+location    :   IDENTIFIER ('invariant' ':' guard)? ;
+
+edge        :   '(' source = IDENTIFIER ','
+                    ('guard' ':' guard ',')?
+                    action = IDENTIFIER ','
+                    ('reset' ':' '{'  '}')?
+                    target = IDENTIFIER')' ;
+
+guard       :   consGuard (('and' | '&&') guard)?
+            ;
+
+consGuard   :   expr ;
+
+funcExpr    :   'function' IDENTIFIER '(' funcParameters ')' 'returns' 'function' '{' block '}'
+            |   'function' IDENTIFIER '(' funcParameters ')' 'returns' 'num' '{' block '}'
             |   IDENTIFIER
-            |   '(' boolean ')'
-            |   '!' boolean
+            |   IDENTIFIER '(' arguments ')'
             ;
+funcParameters: (funcParameter (',' funcParameter)*)? ;
 
-expr        :   expr op=('*'|'/') expr      # MulDiv
-            |   expr op=('+'|'-') expr      # SumSub
-            |   expr op=('<='|'>=') expr    #CompareExpr
-            |   INT                         # IntegerExpr
+funcParameter:  type IDENTIFIER ;
+
+arguments   :   (expr  (',' expr)*)? ;
+
+expr        :   expr op=('<='|'>=') expr    # CompareExpr
+            |   op=('+' | '-') expr         # Unary
+            |   expr op=('*'|'/') expr      # MulDiv
+            |   expr op=('+'|'-') expr      # AddSub
+            |   DOUBLE                      # DoubleExpr
             |   IDENTIFIER                  # IdExpr
             |   '(' expr ')'                # ParensExpr
+            |   IDENTIFIER '=' expr         # AssignExpr
             ;
 
 

@@ -30,12 +30,29 @@ public class Automaton {
         return this.name;
     }
 
+    public void addLocation(Location newLocation){
+        this.locations.put(newLocation.getName(), newLocation);
+    }
+
     public void addLocations(HashMap<String, Location> newLocations){
         this.locations.putAll(newLocations);
     }
 
+    public Location getLocation(String nameLocation){
+        return this.locations.get(nameLocation);
+    }
+
+    public void putClock(String nameClock){
+        Clock newClock = new Clock(nameClock);
+        this.clocks.put(newClock.getName(), newClock);
+    }
+
     public void addClocks(HashMap<String, Clock> newClocks){
         this.clocks.putAll(newClocks);
+    }
+
+    public void addAction(String nameAction){
+        this.actions.add(nameAction);
     }
 
     public void addActions(Set<String> newActions){

@@ -184,13 +184,13 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterActionsType(TAParser.ActionsTypeContext ctx) { }
+	@Override public void enterActionType(TAParser.ActionTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitActionsType(TAParser.ActionsTypeContext ctx) { }
+	@Override public void exitActionType(TAParser.ActionTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -328,6 +328,18 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCompareExpr(TAParser.CompareExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCompareExpr(TAParser.CompareExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterMulDiv(TAParser.MulDivContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -347,18 +359,6 @@ public class TAParserBaseListener implements TAParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAddSub(TAParser.AddSubContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterCompareExpr(TAParser.CompareExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCompareExpr(TAParser.CompareExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

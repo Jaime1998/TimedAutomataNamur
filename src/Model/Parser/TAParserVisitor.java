@@ -86,29 +86,25 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAutomaton(TAParser.AutomatonContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code locationType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Visit a parse tree produced by {@link TAParser#locationType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLocationType(TAParser.LocationTypeContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code clockType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Visit a parse tree produced by {@link TAParser#clockType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitClockType(TAParser.ClockTypeContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code actionsType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Visit a parse tree produced by {@link TAParser#actionType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitActionsType(TAParser.ActionsTypeContext ctx);
+	T visitActionType(TAParser.ActionTypeContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code edgesType}
-	 * labeled alternative in {@link TAParser#typesTA}.
+	 * Visit a parse tree produced by {@link TAParser#edgesType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -176,6 +172,13 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdExpr(TAParser.IdExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code CompareExpr}
+	 * labeled alternative in {@link TAParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompareExpr(TAParser.CompareExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
@@ -189,13 +192,6 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAddSub(TAParser.AddSubContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareExpr(TAParser.CompareExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ParensExpr}
 	 * labeled alternative in {@link TAParser#expr}.

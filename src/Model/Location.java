@@ -2,6 +2,7 @@ package Model;
 
 import Model.Parser.TAParser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Function;
@@ -9,22 +10,16 @@ import java.util.function.Function;
 public class Location {
 
     private final String name;
-    private final HashMap<String, Clock> clocks;
     private TAParser.GuardContext invariant;
     private ArrayList<TransToLocation> edges;
 
-    public Location(String name, HashMap<String, Clock> clocks, TAParser.GuardContext invariant){
+    public Location(String name, TAParser.GuardContext invariant){
         this.name = name;
-        this.clocks = clocks;
         this.invariant = invariant;
     }
 
     public String getName() {
         return name;
-    }
-
-    public HashMap<String, Clock> getClocks() {
-        return clocks;
     }
 
     public TAParser.GuardContext getInvariant() {
@@ -37,6 +32,10 @@ public class Location {
 
     public ArrayList<TransToLocation> getEdges() {
         return this.edges;
+    }
+
+    public void addEdge(TAParser.GuardContext guard, String action, ArrayList<String> resetClocks, Location target){
+        this.edges.add(new TransToLocation(guard, action, resetClocks, target));
     }
 
     public TAParser.GuardContext guardI(int i){

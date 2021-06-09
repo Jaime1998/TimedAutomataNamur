@@ -13,32 +13,12 @@ import java.util.List;
 
 public class TAVisitor extends TAParserBaseVisitor<Value> {
 
-    private HashMap<String, Clock> clockEnv;
-    private HashMap<String, String> actionsEnv;
-    /**
-    private HashMap<String, Double> numEnv;
-    private HashMap<String, Function<String, ?>> funcNumEnv;
-     */
+    private TANetwork automata;
 
-    private List<HashMap<String, Value>> memory;
+    private Automaton currentAutomaton;
 
     public TAVisitor(){
-        this.clockEnv = new HashMap<>();
-        this.actionsEnv = new HashMap<>();
-        this.memory = new ArrayList<>();
-        this.memory.add(new HashMap<>());
-    }
-
-    public double lookUpValueClock(String idClock){
-        try{
-            return clockEnv.get(idClock).getCurrentValue();
-        }catch (NullPointerException e){
-            return -1;
-        }
-    }
-
-    public double lookUpAction(String idAction){
-        return actionsEnv.containsKey(idAction)? 1d: 0d;
+        this.automata = new TANetwork();
     }
 
     @Override
@@ -106,37 +86,109 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitAutomaton(TAParser.AutomatonContext ctx) {
-        return super.visitAutomaton(ctx);
+        String nameAutomaton = ctx.IDENTIFIER().getText();
+        this.currentAutomaton = new Automaton(nameAutomaton);
+        this.automata.addAutomaton(this.currentAutomaton);
+
+        List<TAParser.LocationTypeContext> locationList = ctx.locationType();
+
+        for(TAParser.LocationTypeContext location: locationList){
+            visit(location);
+        }
+
+        List<TAParser.ClockTypeContext> clockList = ctx.clockType();
+
+        for(TAParser.ClockTypeContext clock: clockList){
+            visit(clock);
+        }
+
+        List<TAParser.ActionTypeContext> actionList = ctx.actionType();
+
+        for(TAParser.ActionTypeContext action: actionList){
+            visit(action);
+        }
+
+        List<TAParser.EdgesTypeContext> edgeList = ctx.edgesType();
+
+        for(TAParser.EdgesTypeContext edge: edgeList){
+            visit(edge);
+        }
+
+
+        return new Number(1);
     }
 
     @Override
     public Value visitLocationType(TAParser.LocationTypeContext ctx) {
-        return super.visitLocationType(ctx);
+        List<TAParser.LocationContext> locationList = ctx.location();
+
+        for(TAParser.LocationContext location: locationList){
+            visit(location);
+        }
+
+        return new Number(1);
     }
 
     @Override
     public Value visitClockType(TAParser.ClockTypeContext ctx) {
-        return super.visitClockType(ctx);
+        List<TerminalNode> clocks = ctx.IDENTIFIER();
+        for(TerminalNode clock: clocks){
+            this.currentAutomaton.putClock(clock.getText());
+        }
+        return new Number(1);
     }
 
     @Override
-    public Value visitActionsType(TAParser.ActionsTypeContext ctx) {
-        return super.visitActionsType(ctx);
+    public Value visitActionType(TAParser.ActionTypeContext ctx) {
+        List<TerminalNode> actions = ctx.IDENTIFIER();
+        for(TerminalNode action: actions){
+            this.currentAutomaton.addAction(action.getText());
+        }
+        return new Number(1);
     }
 
     @Override
     public Value visitEdgesType(TAParser.EdgesTypeContext ctx) {
+        List<TAParser.EdgeContext> edgesList = ctx.edge();
+
+        for (TAParser.EdgeContext edge: edgesList){
+            visit(edge);
+        }
         return super.visitEdgesType(ctx);
     }
 
     @Override
     public Value visitLocation(TAParser.LocationContext ctx) {
-        return super.visitLocation(ctx);
+        String nameLocation = ctx.IDENTIFIER().getText();
+        TAParser.GuardContext newGuard = ctx.guard();
+        Location newLocation = new Location(nameLocation, newGuard);
+        this.currentAutomaton.addLocation(newLocation);
+        return new Number(1);
     }
 
     @Override
     public Value visitEdge(TAParser.EdgeContext ctx) {
-        return super.visitEdge(ctx);
+        List<TerminalNode> ids = ctx.IDENTIFIER();
+
+        String nameSource = ctx.IDENTIFIER(0).getText();
+        String nameAction = ctx.IDENTIFIER(1).getText();
+
+        ArrayList<String> resetClocks = new ArrayList<>();
+        for(int i=2; i<ids.size()-1; i++){
+            resetClocks.add(ids.get(i).getText());
+        }
+
+        String nameTarget = ctx.IDENTIFIER(ids.size()-1).getText();
+        Location target = this.currentAutomaton.getLocation(nameTarget);
+
+        if(ctx.guard()!=null){
+            TAParser.GuardContext guard = ctx.guard();
+            this.currentAutomaton.getLocation(nameSource).addEdge(guard, nameAction, resetClocks, target);
+        }
+        else{
+            this.currentAutomaton.getLocation(nameSource).addEdge(null, nameAction, resetClocks, target);
+        }
+        return new Number(1);
     }
 
     @Override
@@ -195,7 +247,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitIdExpr(TAParser.IdExprContext ctx) {
-        return lookUpMemory(ctx.IDENTIFIER());
+        return lookUpMemory(ctx.IDENTIFIER().getText());
     }
 
     @Override
@@ -259,9 +311,14 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         return newValue;
     }
 
+    private Value lookUpMemory(String id){
+        return this.automata.getValue(id);
+    }
+
+    /*
     private Value lookUpMemory(TerminalNode identifier) {
         String id = identifier.getText();
-        for(int i=this.memory.size()-1; i>=0; i--){
+        for(int i=this.automata.get.size()-1; i>=0; i--){
             Value num = this.memory.get(i).get(id);
             if(num!=null){
                 return num;
@@ -269,6 +326,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         }
         return new Number(0);
     }
+
+     */
 
 
 }
