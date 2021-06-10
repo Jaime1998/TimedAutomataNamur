@@ -9,7 +9,7 @@ public class Interval {
     }
 
     public double getMin() {
-        return min;
+        return this.min;
     }
 
     public void setMin(double min) {
@@ -17,7 +17,7 @@ public class Interval {
     }
 
     public double getMax() {
-        return max;
+        return this.max;
     }
 
     public void setMax(double max) {

@@ -1,7 +1,16 @@
 parser grammar TAParser;
 options { tokenVocab=TALexer; }
 
-model       :   let automaton;
+
+/**
+automaton a{
+	locations= {a invariant=x<=10,b,c}
+	clocks={x,y,z}
+	init=a
+}
+*/
+
+model       :   let? automaton;
 
 block       :   statement*;
 
@@ -25,23 +34,28 @@ varId       :   IDENTIFIER ('=' initialiser)? ;
 
 initialiser :   expr ;
 
-automaton   :   'automaton' IDENTIFIER '{' typesTA* '}' ;
+automaton   :   'automaton' IDENTIFIER '{' (locationType | clockType | actionType | edgesType)* initLocation'}' ;
 
-typesTA    :   'locations' '=' '{' location (',' location)* '}'        # locationType
-            |   'clocks' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}'       # clockType
-            |   'actions' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}'      # actionsType
-            |   'edges' '=' '{' edge* '}'                               # edgesType
-            ;
 
-location    :   IDENTIFIER ('invariant' ':' guard)? ;
+locationType:   'locations' '=' '{' location (',' location)* '}' ;
 
-edge        :   '(' source = IDENTIFIER ','
-                    ('guard' ':' guard ',')?
-                    action = IDENTIFIER ','
-                    ('reset' ':' '{'  '}')?
-                    target = IDENTIFIER')' ;
+clockType   :   'clocks' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ;
 
-guard       :   consGuard (('and' | '&&') guard)?
+actionType  :   'actions' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ;
+
+edgesType   :   'edges' '=' '{' edge* '}' ;
+
+location    :   IDENTIFIER ('invariant' '=' guard)? ;
+
+initLocation:   'init' '=' IDENTIFIER ;
+
+edge        :   '(' 'source' '=' IDENTIFIER ','
+                    ('guard' '=' guard ',')?
+                    'action' '=' IDENTIFIER ','
+                    ('reset' '=' '{' IDENTIFIER* '}')?
+                    'target' '=' IDENTIFIER')' ;
+
+guard       :   consGuard (('and' | '&&') consGuard)*
             ;
 
 consGuard   :   expr ;
@@ -59,7 +73,7 @@ arguments   :   (expr  (',' expr)*)? ;
 
 expr        :   expr op=('<='|'>=') expr    # CompareExpr
             |   op=('+' | '-') expr         # Unary
-            |   expr op=('*'|'/') expr      # MulDiv
+            |   expr '*' expr               # Mul
             |   expr op=('+'|'-') expr      # AddSub
             |   DOUBLE                      # DoubleExpr
             |   IDENTIFIER                  # IdExpr

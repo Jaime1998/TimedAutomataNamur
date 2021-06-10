@@ -220,6 +220,18 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterInitLocation(TAParser.InitLocationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInitLocation(TAParser.InitLocationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEdge(TAParser.EdgeContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -340,13 +352,13 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterMulDiv(TAParser.MulDivContext ctx) { }
+	@Override public void enterMul(TAParser.MulContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitMulDiv(TAParser.MulDivContext ctx) { }
+	@Override public void exitMul(TAParser.MulContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

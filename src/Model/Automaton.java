@@ -1,12 +1,10 @@
 package Model;
 
+import Model.Types.Value;
 import ilog.concert.*;
 import ilog.cplex.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Automaton {
 
@@ -25,6 +23,77 @@ public class Automaton {
         this.clocks = new HashMap<>();
         this.currentLocation = null;
     }
+
+    public void setCurrentLocation(Location currentLocation){
+        this.currentLocation = currentLocation;
+    }
+
+    public Interval configInvariant(){
+        double numMinInterval = this.minInvariant();
+        double numMaxInterval = this.maxInvariant();
+        return new Interval(numMinInterval, numMaxInterval);
+    }
+
+    public double maxInvariant(){
+        try{
+            IloCplex cplex = new IloCplex();
+
+            //Variables
+
+            IloNumVar d = cplex.numVar(0, Double.MAX_VALUE, "d");
+
+            IloLinearNumExpr objective = cplex.linearNumExpr();
+            objective.addTerm(1,d);
+
+            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, clocks);
+            guardVisitor.visit(this.currentLocation.getInvariant());
+
+            cplex.addMaximize(objective);
+
+            if(cplex.solve()){
+
+                return cplex.getValue(d);
+            }
+            else{
+                return -1;
+            }
+
+        }catch (IloException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public double minInvariant(){
+        try{
+            IloCplex cplex = new IloCplex();
+
+            //Variables
+
+            IloNumVar d = cplex.numVar(0, Double.MAX_VALUE, "d");
+
+            IloLinearNumExpr objective = cplex.linearNumExpr();
+            objective.addTerm(1,d);
+
+            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, clocks);
+            guardVisitor.visit(this.currentLocation.getInvariant());
+
+            cplex.addMinimize(objective);
+
+            if(cplex.solve()){
+
+                return cplex.getValue(d);
+            }
+            else{
+                return -1;
+            }
+
+        }catch (IloException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
 
     public String getName(){
         return this.name;

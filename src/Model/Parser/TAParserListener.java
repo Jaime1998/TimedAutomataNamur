@@ -184,6 +184,16 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitLocation(TAParser.LocationContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TAParser#initLocation}.
+	 * @param ctx the parse tree
+	 */
+	void enterInitLocation(TAParser.InitLocationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TAParser#initLocation}.
+	 * @param ctx the parse tree
+	 */
+	void exitInitLocation(TAParser.InitLocationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TAParser#edge}.
 	 * @param ctx the parse tree
 	 */
@@ -290,17 +300,17 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitCompareExpr(TAParser.CompareExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code MulDiv}
+	 * Enter a parse tree produced by the {@code Mul}
 	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterMulDiv(TAParser.MulDivContext ctx);
+	void enterMul(TAParser.MulContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code MulDiv}
+	 * Exit a parse tree produced by the {@code Mul}
 	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitMulDiv(TAParser.MulDivContext ctx);
+	void exitMul(TAParser.MulContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code AddSub}
 	 * labeled alternative in {@link TAParser#expr}.

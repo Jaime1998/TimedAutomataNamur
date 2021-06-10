@@ -16,6 +16,7 @@ public class Location {
     public Location(String name, TAParser.GuardContext invariant){
         this.name = name;
         this.invariant = invariant;
+
     }
 
     public String getName() {
@@ -41,6 +42,9 @@ public class Location {
     public TAParser.GuardContext guardI(int i){
         return this.edges.get(i).getGuard();
     }
+
+
+
     public String actionI(int i){
         return this.edges.get(i).getAction();
     }

@@ -17,6 +17,7 @@ RETURNS         :   'returns' ;
 RETURN          :   'return' ;
 AUTOMATON       :   'automaton' ;
 LOCATION        :   'locations' ;
+INIT            :   'init' ;
 CLOCK           :   'clocks' ;
 ACTIONS         :   'actions' ;
 ACTION          :   'action' ;

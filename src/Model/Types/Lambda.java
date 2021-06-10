@@ -2,15 +2,18 @@ package Model.Types;
 
 import Model.Parser.TAParser;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Function;
 
 public class Lambda extends Value {
     private final String[] types;
     private final String[] identifiers;
+    private final ArrayList<HashMap<String, Value>> memory;
     private final TAParser.BlockContext body;
 
-    public Lambda(List<String> typesList, List<String> identifiersList, TAParser.BlockContext body){
+    public Lambda(List<String> typesList, List<String> identifiersList, TAParser.BlockContext body, ArrayList<HashMap<String, Value>> memory){
         this.types = new String[typesList.size()];
         typesList.toArray(this.types);
 
@@ -18,6 +21,8 @@ public class Lambda extends Value {
         identifiersList.toArray(this.identifiers);
 
         this.body = body;
+
+        this.memory = new ArrayList<>(memory);
     }
 
     public String[] getTypes() {

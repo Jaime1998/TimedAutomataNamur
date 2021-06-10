@@ -1,6 +1,15 @@
 parser grammar TAParser;
 options { tokenVocab=TALexer; }
 
+
+/**
+automaton a{
+	locations= {a invariant=x<=10,b,c}
+	clocks={x,y,z}
+	init=a
+}
+*/
+
 model       :   let? automaton;
 
 block       :   statement*;
@@ -25,7 +34,7 @@ varId       :   IDENTIFIER ('=' initialiser)? ;
 
 initialiser :   expr ;
 
-automaton   :   'automaton' IDENTIFIER '{' (locationType | clockType | actionType | edgesType)* '}' ;
+automaton   :   'automaton' IDENTIFIER '{' (locationType | clockType | actionType | edgesType)* initLocation'}' ;
 
 
 locationType:   'locations' '=' '{' location (',' location)* '}' ;
@@ -38,13 +47,15 @@ edgesType   :   'edges' '=' '{' edge* '}' ;
 
 location    :   IDENTIFIER ('invariant' '=' guard)? ;
 
+initLocation:   'init' '=' IDENTIFIER ;
+
 edge        :   '(' 'source' '=' IDENTIFIER ','
                     ('guard' '=' guard ',')?
                     'action' '=' IDENTIFIER ','
                     ('reset' '=' '{' IDENTIFIER* '}')?
                     'target' '=' IDENTIFIER')' ;
 
-guard       :   consGuard (('and' | '&&') guard)?
+guard       :   consGuard (('and' | '&&') consGuard)*
             ;
 
 consGuard   :   expr ;
@@ -62,7 +73,7 @@ arguments   :   (expr  (',' expr)*)? ;
 
 expr        :   expr op=('<='|'>=') expr    # CompareExpr
             |   op=('+' | '-') expr         # Unary
-            |   expr op=('*'|'/') expr      # MulDiv
+            |   expr '*' expr               # Mul
             |   expr op=('+'|'-') expr      # AddSub
             |   DOUBLE                      # DoubleExpr
             |   IDENTIFIER                  # IdExpr

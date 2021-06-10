@@ -1,16 +1,21 @@
 package View;
 
+import Model.Interval;
+import Model.TANetwork;
+import Model.Automaton;
 import Model.TAVisitor;
-import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 import Model.Parser.*;
 
@@ -26,6 +31,11 @@ public class App extends JFrame{
     private JPanel downPanel;
     private JTextArea declarationArea;
     private JTextArea printArea;
+    private JButton invariantButton;
+    private JLabel invariantLabel;
+
+
+    private TANetwork automata;
 
     public App(String title) {
         super(title);
@@ -40,6 +50,7 @@ public class App extends JFrame{
             }
         });
         updateButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
@@ -54,6 +65,8 @@ public class App extends JFrame{
 
                     TAVisitor eval = new TAVisitor();
                     eval.visit(tree);
+
+                    App.this.automata = eval.getAutomata();
                 }catch (Exception error){
                     error.printStackTrace();
                 }
@@ -62,6 +75,19 @@ public class App extends JFrame{
         });
 
 
+        invariantButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LinkedHashMap<String, Automaton> mapAutomata = App.this.automata.getAutomaton();
+                Set<Map.Entry<String, Automaton>> entrySet = mapAutomata.entrySet();
+                Iterator<Map.Entry<String, Automaton>> it = entrySet.iterator();
+                Automaton initautomata = it.next().getValue();
+                Interval a = initautomata.configInvariant();
+
+                App.this.invariantLabel.setText(a.getMin() + " " + a.getMax());
+
+            }
+        });
     }
     public String getTextDeclarationArea(){
         return this.declarationArea.getText();

@@ -21,9 +21,16 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         this.automata = new TANetwork();
     }
 
+    public TANetwork getAutomata(){
+        return this.automata;
+    }
+
     @Override
     public Value visitModel(TAParser.ModelContext ctx) {
-        Value let = visit(ctx.let());
+        //Value let = visit(ctx.let());
+        if(ctx.let() != null){
+            Value let = visit(ctx.let());
+        }
         Value automaton = visitAutomaton(ctx.automaton());
         return new Number(0);
     }
@@ -113,8 +120,10 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         for(TAParser.EdgesTypeContext edge: edgeList){
             visit(edge);
         }
-
-
+        String initNameL = ctx.initLocation().IDENTIFIER().getText();
+        this.currentAutomaton.setInitLocation(initNameL);
+        Location initLocation = this.currentAutomaton.getLocation(initNameL);
+        this.currentAutomaton.setCurrentLocation(initLocation);
         return new Number(1);
     }
 
@@ -237,7 +246,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
                 return left.mul(right);
             }
             if(ctx.op.getType() == TAParser.SUB){
-                return left.div(right);
+                return left.sub(right);
             }
         }catch (TypeException e){
             e.printStackTrace();
@@ -251,17 +260,13 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     }
 
     @Override
-    public Value visitMulDiv(TAParser.MulDivContext ctx) {
+    public Value visitMul(TAParser.MulContext ctx) {
         try {
             Value left = visit(ctx.expr(0));
             Value right = visit(ctx.expr(1));
 
-            if(ctx.op.getType() == TAParser.MUL){
                 return left.mul(right);
-            }
-            if(ctx.op.getType() == TAParser.DIV){
-                return left.div(right);
-            }
+
         }catch (TypeException e){
             e.printStackTrace();
         }
@@ -312,6 +317,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     }
 
     private Value lookUpMemory(String id){
+
+
         return this.automata.getValue(id);
     }
 

@@ -116,6 +116,12 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLocation(TAParser.LocationContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link TAParser#initLocation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInitLocation(TAParser.InitLocationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link TAParser#edge}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -179,12 +185,12 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCompareExpr(TAParser.CompareExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code MulDiv}
+	 * Visit a parse tree produced by the {@code Mul}
 	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitMulDiv(TAParser.MulDivContext ctx);
+	T visitMul(TAParser.MulContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code AddSub}
 	 * labeled alternative in {@link TAParser#expr}.
