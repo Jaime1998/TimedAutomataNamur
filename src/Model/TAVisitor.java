@@ -97,16 +97,18 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         this.currentAutomaton = new Automaton(nameAutomaton);
         this.automata.addAutomaton(this.currentAutomaton);
 
-        List<TAParser.LocationTypeContext> locationList = ctx.locationType();
 
-        for(TAParser.LocationTypeContext location: locationList){
-            visit(location);
-        }
 
         List<TAParser.ClockTypeContext> clockList = ctx.clockType();
 
         for(TAParser.ClockTypeContext clock: clockList){
             visit(clock);
+        }
+
+        List<TAParser.LocationTypeContext> locationList = ctx.locationType();
+
+        for(TAParser.LocationTypeContext location: locationList){
+            visit(location);
         }
 
         List<TAParser.ActionTypeContext> actionList = ctx.actionType();
@@ -134,7 +136,6 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         for(TAParser.LocationContext location: locationList){
             visit(location);
         }
-
         return new Number(1);
     }
 
@@ -168,10 +169,24 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitLocation(TAParser.LocationContext ctx) {
-        String nameLocation = ctx.IDENTIFIER().getText();
+        String nameLocation = ctx.IDENTIFIER(0).getText();
         TAParser.GuardContext newGuard = ctx.guard();
         Location newLocation = new Location(nameLocation, newGuard);
         this.currentAutomaton.addLocation(newLocation);
+
+        List<TerminalNode> clockRates = ctx.IDENTIFIER();
+
+
+        for(int i=1; i<clockRates.size(); i++){
+            String nameClock = clockRates.get(i).getText();
+            Value newRate = visit(ctx.expr(i-1));
+            if(newRate instanceof Number){
+                this.currentAutomaton.setClockRate(nameClock, ((Number) newRate).getValue());
+            }
+            else{
+                this.currentAutomaton.setClockRate(nameClock, 1);
+            }
+        }
         return new Number(1);
     }
 

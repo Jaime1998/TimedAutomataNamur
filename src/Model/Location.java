@@ -16,7 +16,7 @@ public class Location {
     public Location(String name, TAParser.GuardContext invariant){
         this.name = name;
         this.invariant = invariant;
-
+        this.edges = new ArrayList<>();
     }
 
     public String getName() {

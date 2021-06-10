@@ -3,7 +3,7 @@ package Model;
 public class Clock {
 
     private String name;
-    private int rate;
+    private double rate;
     private double currentValue;
 
     public Clock(String name){
@@ -16,11 +16,11 @@ public class Clock {
         return this.name;
     }
 
-    public int getRate() {
+    public double getRate() {
         return this.rate;
     }
 
-    public void setRate(int rate) {
+    public void setRate(double rate) {
         this.rate = rate;
     }
 

@@ -43,16 +43,17 @@ clockType   :   'clocks' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ;
 
 actionType  :   'actions' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ;
 
-edgesType   :   'edges' '=' '{' edge* '}' ;
+edgesType   :   'edges' '=' '{' edge (',' edge)* '}' ;
 
-location    :   IDENTIFIER ('invariant' '=' guard)? ;
+location    :   IDENTIFIER (':' 'invariant' '=' guard)?
+                           (':' 'rates' '=' '{' IDENTIFIER '=' expr (',' IDENTIFIER '=' expr)* '}')?;
 
 initLocation:   'init' '=' IDENTIFIER ;
 
 edge        :   '(' 'source' '=' IDENTIFIER ','
                     ('guard' '=' guard ',')?
                     'action' '=' IDENTIFIER ','
-                    ('reset' '=' '{' IDENTIFIER* '}')?
+                    ('reset' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ',' )?
                     'target' '=' IDENTIFIER')' ;
 
 guard       :   consGuard (('and' | '&&') consGuard)*

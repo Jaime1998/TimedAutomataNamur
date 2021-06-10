@@ -84,7 +84,7 @@ public class App extends JFrame{
                 Automaton initautomata = it.next().getValue();
                 Interval a = initautomata.configInvariant();
 
-                App.this.invariantLabel.setText(a.getMin() + " " + a.getMax());
+                App.this.invariantLabel.setText("[ " + a.getMin() + ", " + a.getMax() + " ]");
 
             }
         });

@@ -120,6 +120,10 @@ public class Automaton {
         this.clocks.putAll(newClocks);
     }
 
+    public void setClockRate(String nameClock, double newRate){
+        this.clocks.get(nameClock).setRate(newRate);
+    }
+
     public void addAction(String nameAction){
         this.actions.add(nameAction);
     }

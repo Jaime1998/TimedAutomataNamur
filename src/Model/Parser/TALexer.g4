@@ -25,6 +25,7 @@ EDGES           :   'edges' ;
 SOURCE          :   'source' ;
 TARGET          :   'target' ;
 INVARIANT       :   'invariant' ;
+RATES           :   'rates' ;
 GUARD           :   'guard' ;
 RESET           :   'reset' ;
 L_C_BRACKET     :   '{' ;   //Left curly bracket
