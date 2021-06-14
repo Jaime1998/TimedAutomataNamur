@@ -1,24 +1,39 @@
 package Model;
 
+import Model.Errors.NoFindSymbolException;
 import Model.Parser.TAParser;
 import Model.Parser.TAParserBaseVisitor;
+import Model.Types.Clock;
 import Model.Types.Number;
+import Model.Types.Value;
 import ilog.concert.IloNumExpr;
 import ilog.concert.IloNumVar;
 import ilog.cplex.IloCplex;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class GuardVisitor extends TAParserBaseVisitor<Object> {
     private IloCplex cplex;
-    private HashMap<String, Clock> clocks;
+    private ArrayList<HashMap<String, Value>> memory;
     private IloNumVar d;
 
-    public GuardVisitor(IloCplex cplex, IloNumVar d, HashMap<String, Clock> clocks){
+    public GuardVisitor(IloCplex cplex, IloNumVar d, ArrayList<HashMap<String, Value>> memory){
         this.cplex = cplex;
-        this.clocks = clocks;
+        this.memory = memory;
         this.d = d;
+    }
+
+    public Value getValue(String id){
+        Value v;
+        for(int i=this.memory.size() -1; i>=0; i--){
+            v=this.memory.get(i).get(id);
+            if(v!=null){
+                return v;
+            }
+        }
+        throw new NoFindSymbolException(id);
     }
 
     @Override
@@ -157,11 +172,12 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
     public Object visitIdExpr(TAParser.IdExprContext ctx) {
         try{
             String nameId = ctx.IDENTIFIER().getText();
-            Clock clock = this.clocks.get(nameId);
-            if(clock!=null){
-                System.out.println("Reloj con valor "+clock.getCurrentValue() + " y rate "+clock.getRate());
-                return this.cplex.sum(cplex.prod(d, clock.getRate()), clock.getCurrentValue());
+
+            Value value = getValue(nameId);
+            if(value instanceof Clock){
+                return this.cplex.sum(cplex.prod(d, ((Clock)value).getRate()), ((Clock)value).getCurrentValue());
             }
+            return value;
         }catch (Exception e){
             e.printStackTrace();
         }

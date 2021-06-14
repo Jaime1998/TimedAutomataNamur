@@ -88,13 +88,25 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarDeclaration(TAParser.VarDeclarationContext ctx) { }
+	@Override public void enterNumVarDecl(TAParser.NumVarDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarDeclaration(TAParser.VarDeclarationContext ctx) { }
+	@Override public void exitNumVarDecl(TAParser.NumVarDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFuncVarDecl(TAParser.FuncVarDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFuncVarDecl(TAParser.FuncVarDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

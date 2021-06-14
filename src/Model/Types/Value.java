@@ -10,7 +10,6 @@ public abstract class Value {
     public abstract boolean isNumber();
 
     public abstract Value mul(Value valMul) ;
-    public abstract Value div(Value valDiv) ;
     public abstract Value sum(Value valSum) ;
     public abstract Value sub(Value valSub) ;
 

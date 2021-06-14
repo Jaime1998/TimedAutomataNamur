@@ -36,38 +36,40 @@ public class Number extends Value {
 
     @Override
     public Value mul(Value valueMul) {
-
-        if(!(valueMul instanceof Number)){
-            throw new TypeException("Type error for binary operator *. A value is not a number");
+        if(valueMul instanceof Number){
+            return new Number(this.numberValue *((Number) valueMul).numberValue);
         }
-        return new Number(this.numberValue *((Number) valueMul).numberValue);
-    }
-
-    @Override
-    public Value div(Value valueDiv)  {
-        if(!(valueDiv instanceof Number)){
-            throw new TypeException("Type error for binary operator /. A value is not a number");
+        if(valueMul instanceof Clock){
+            return new Clock(((Clock)valueMul).getName(),
+                    ((Clock) valueMul).getRate() * this.numberValue,
+                    ((Clock) valueMul).getCurrentValue());
         }
-        if(((Number) valueDiv).getNumberValue()!=0){
-            throw new ArithmeticException("The divisor is zero");
-        }
-        return new Number(this.numberValue /((Number) valueDiv).numberValue);
+        throw new TypeException("Type error for binary operator *. A value is not a number");
     }
 
     @Override
     public Value sum(Value valueSum) {
-        if(!(valueSum instanceof Number)){
-            throw new TypeException("Type error for binary operator *. A value is not a number");
+
+        if(valueSum instanceof Number){
+            return new Number(this.numberValue +((Number) valueSum).numberValue);
         }
-        return new Number(this.numberValue +((Number) valueSum).numberValue);
+        if(valueSum instanceof Clock){
+            return new Number(this.numberValue+ ((Clock) valueSum).getCurrentValue());
+        }
+        throw new TypeException("Type error for binary operator +. A value is not a number");
     }
 
     @Override
     public Value sub(Value valueSub) {
-        if(!(valueSub instanceof Number)){
-            throw new TypeException("Type error for binary operator -. A value is not a number");
+
+        if(valueSub instanceof Number){
+            return new Number(this.numberValue -((Number) valueSub).numberValue);
         }
-        return new Number(this.numberValue -((Number) valueSub).numberValue);
+        if(valueSub instanceof Clock){
+            return new Number(this.numberValue -((Clock) valueSub).getCurrentValue());
+        }
+        throw new TypeException("Type error for binary operator -. A value is not a number");
+
     }
 
     @Override
@@ -95,5 +97,10 @@ public class Number extends Value {
     @Override
     public Value apply(Value[] values){
         throw new NoFunctionException();
+    }
+
+    @Override
+    public String toString() {
+        return Double.toString(this.numberValue);
     }
 }

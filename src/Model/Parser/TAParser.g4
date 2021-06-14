@@ -25,7 +25,9 @@ statement   :   varDeclaration          # VarDeclarationSt
 
 //declaration :   varDeclaration ;
 
-varDeclaration: (type varId (',' varId)*) ;
+varDeclaration: ('num' varId (',' varId)*)      # NumVarDecl
+            |   ('function' varId (',' varId)*) # FuncVarDecl
+            ;
 
 type        :   'num' ;
 
@@ -33,7 +35,11 @@ varId       :   IDENTIFIER ('=' initialiser)? ;
 
 initialiser :   expr ;
 
-automaton   :   'automaton' IDENTIFIER '{' (locationType | clockType | actionType | edgesType)* initLocation'}' ;
+automaton   :   'automaton' IDENTIFIER
+                        '{' (locationType | clockType | actionType | edgesType)*
+                            initLocation
+                            block
+                            '}' ;
 
 
 locationType:   'locations' '=' '{' location (',' location)* '}' ;

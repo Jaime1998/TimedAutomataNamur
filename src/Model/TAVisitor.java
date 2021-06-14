@@ -2,6 +2,7 @@ package Model;
 
 import Model.Parser.TAParser;
 import Model.Parser.TAParserBaseVisitor;
+import Model.Types.Lambda;
 import Model.Types.Number;
 import Model.Errors.TypeException;
 import Model.Types.Value;
@@ -29,7 +30,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         //Value let = visit(ctx.let());
         visit(ctx.block());
         Value automaton = visitAutomaton(ctx.automaton());
-        return new Number(0);
+        return new Number(1);
     }
 
     @Override
@@ -38,12 +39,13 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         for(TAParser.StatementContext statement: statements){
             visit(statement);
         }
-        return super.visitBlock(ctx);
+        return new Number(1);
     }
 
     @Override
     public Value visitVarDeclarationSt(TAParser.VarDeclarationStContext ctx) {
-        return super.visitVarDeclarationSt(ctx);
+        visit(ctx.varDeclaration());
+        return new Number(1);
     }
 
     @Override
@@ -53,12 +55,48 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitPrintSt(TAParser.PrintStContext ctx) {
-        return super.visitPrintSt(ctx);
+        System.out.println(visit(ctx.expr()));
+        return new Number(1);
     }
 
     @Override
-    public Value visitVarDeclaration(TAParser.VarDeclarationContext ctx) {
-        return super.visitVarDeclaration(ctx);
+    public Value visitNumVarDecl(TAParser.NumVarDeclContext ctx) {
+
+        List<TAParser.VarIdContext> varsId = ctx.varId();
+
+        for(TAParser.VarIdContext varId: varsId){
+
+            Value newValue = visit(varId);
+
+            if(newValue==null){
+                this.automata.assignNewValue(varId.IDENTIFIER().getText(), new Number(0));
+                continue;
+            }
+            if(!(newValue instanceof Number)){
+                throw new TypeException("Type error. incompatible types");
+            }
+            this.automata.assignNewValue(varId.IDENTIFIER().getText(), newValue);
+        }
+
+        return new Number(1);
+    }
+
+    @Override
+    public Value visitFuncVarDecl(TAParser.FuncVarDeclContext ctx) {
+        List<TAParser.VarIdContext> varsId = ctx.varId();
+
+        for(TAParser.VarIdContext varId: varsId){
+            Value newValue = visit(varId);
+            if(newValue==null){
+                this.automata.assignNewValue(varId.IDENTIFIER().getText(), new Lambda());
+                continue;
+            }
+            if(!(newValue instanceof Lambda)){
+                throw new TypeException("Type error. incompatible types");
+            }
+            this.automata.assignNewValue(varId.IDENTIFIER().getText(), newValue);
+        }
+        return new Number(1);
     }
 
     @Override
@@ -68,13 +106,12 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitVarId(TAParser.VarIdContext ctx) {
-
-        return super.visitVarId(ctx);
+        return visit(ctx.initialiser());
     }
 
     @Override
     public Value visitInitialiser(TAParser.InitialiserContext ctx) {
-        return super.visitInitialiser(ctx);
+        return visit(ctx.expr());
     }
 
     @Override
@@ -110,6 +147,9 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         this.currentAutomaton.setInitLocation(initNameL);
         Location initLocation = this.currentAutomaton.getLocation(initNameL);
         this.currentAutomaton.setCurrentLocation(initLocation);
+
+        visit(ctx.block());
+
         return new Number(1);
     }
 
@@ -242,7 +282,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
             Value right = visit(ctx.expr(1));
 
             if(ctx.op.getType() == TAParser.ADD){
-                return left.mul(right);
+                return left.sum(right);
             }
             if(ctx.op.getType() == TAParser.SUB){
                 return left.sub(right);
@@ -255,7 +295,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitIdExpr(TAParser.IdExprContext ctx) {
-        return this.currentAutomaton.getValue(ctx.IDENTIFIER().getText());
+
+        return this.automata.getValue(ctx.IDENTIFIER().getText());
     }
 
     @Override
@@ -263,9 +304,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         try {
             Value left = visit(ctx.expr(0));
             Value right = visit(ctx.expr(1));
-
-                return left.mul(right);
-
+            return left.mul(right);
         }catch (TypeException e){
             e.printStackTrace();
         }

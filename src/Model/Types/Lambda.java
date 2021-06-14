@@ -26,6 +26,13 @@ public class Lambda extends Value {
         this.memory = new ArrayList<>(memory);
     }
 
+    public Lambda(){
+        this.types= null;
+        this.identifiers = null;
+        this.memory = null;
+        this.body = null;
+    }
+
     public String[] getTypes() {
         return types;
     }
@@ -59,11 +66,6 @@ public class Lambda extends Value {
     }
 
     @Override
-    public Value div(Value valDiv) {
-        throw new TypeException("Type error for binary operator /. A value is not a number");
-    }
-
-    @Override
     public Value sum(Value valSum) {
         throw new TypeException("Type error for binary operator +. A value is not a number");
     }
@@ -85,6 +87,10 @@ public class Lambda extends Value {
 
     @Override
     public Value apply(Value[] values) {
+
+        if(body == null){
+            throw new TypeException("The function was not initialised");
+        }
         this.memory.add(new HashMap<>());
         int lastEnv = this.memory.size()-1;
         for(int i = 0; i<this.identifiers.length; i++){

@@ -51,11 +51,19 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitReturnSt(TAParser.ReturnStContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TAParser#varDeclaration}.
+	 * Visit a parse tree produced by the {@code NumVarDecl}
+	 * labeled alternative in {@link TAParser#varDeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarDeclaration(TAParser.VarDeclarationContext ctx);
+	T visitNumVarDecl(TAParser.NumVarDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FuncVarDecl}
+	 * labeled alternative in {@link TAParser#varDeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncVarDecl(TAParser.FuncVarDeclContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TAParser#type}.
 	 * @param ctx the parse tree

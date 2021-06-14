@@ -72,8 +72,8 @@ public class App extends JFrame{
                     eval.visit(tree);
 
                     App.this.automata = eval.getAutomata();
-                }catch (TypeException error){
-                    System.out.println("sintx");
+                }catch (Exception error){
+                    error.printStackTrace();
                 }
 
             }

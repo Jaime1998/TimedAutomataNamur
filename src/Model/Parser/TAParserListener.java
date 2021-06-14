@@ -76,15 +76,29 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitReturnSt(TAParser.ReturnStContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TAParser#varDeclaration}.
+	 * Enter a parse tree produced by the {@code NumVarDecl}
+	 * labeled alternative in {@link TAParser#varDeclaration}.
 	 * @param ctx the parse tree
 	 */
-	void enterVarDeclaration(TAParser.VarDeclarationContext ctx);
+	void enterNumVarDecl(TAParser.NumVarDeclContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TAParser#varDeclaration}.
+	 * Exit a parse tree produced by the {@code NumVarDecl}
+	 * labeled alternative in {@link TAParser#varDeclaration}.
 	 * @param ctx the parse tree
 	 */
-	void exitVarDeclaration(TAParser.VarDeclarationContext ctx);
+	void exitNumVarDecl(TAParser.NumVarDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code FuncVarDecl}
+	 * labeled alternative in {@link TAParser#varDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncVarDecl(TAParser.FuncVarDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FuncVarDecl}
+	 * labeled alternative in {@link TAParser#varDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncVarDecl(TAParser.FuncVarDeclContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TAParser#type}.
 	 * @param ctx the parse tree

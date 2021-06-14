@@ -2,6 +2,7 @@ package Model;
 
 import Model.Errors.NoFindSymbolException;
 import Model.Errors.NoLocationException;
+import Model.Types.Clock;
 import Model.Types.Number;
 import Model.Types.Value;
 import ilog.concert.*;
@@ -16,7 +17,7 @@ public class Automaton {
     private String initLocation;
     private Location currentLocation;
     private HashSet<String> actions;
-    private HashMap<String, Clock> clocks;
+    //private HashMap<String, Clock> clocks;
     private ArrayList<HashMap<String, Value>> memory;
 
     Automaton(String name, ArrayList<HashMap<String, Value>> memory){
@@ -24,16 +25,16 @@ public class Automaton {
         this.locations = new HashMap<>();
         this.initLocation = "";
         this.actions = new HashSet<>();
-        this.clocks = new HashMap<>();
         this.currentLocation = null;
         this.memory = memory;
     }
 
+    public ArrayList<HashMap<String, Value>> getMemory(){
+        return this.memory;
+    }
+
     public Value getValue(String id){
         Value v;
-        if(this.clocks.containsKey(id)){
-            return new Number(this.clocks.get(id).getCurrentValue());
-        }
 
         for(int i=this.memory.size() -1; i>=0; i--){
             v=this.memory.get(i).get(id);
@@ -65,7 +66,7 @@ public class Automaton {
             IloLinearNumExpr objective = cplex.linearNumExpr();
             objective.addTerm(1,d);
 
-            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, clocks);
+            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, this.memory);
             guardVisitor.visit(this.currentLocation.getInvariant());
 
             cplex.addMaximize(objective);
@@ -75,7 +76,7 @@ public class Automaton {
                 return cplex.getValue(d);
             }
             else{
-                return -1;
+                return Double.POSITIVE_INFINITY;
             }
 
         }catch (IloException e) {
@@ -95,7 +96,7 @@ public class Automaton {
             IloLinearNumExpr objective = cplex.linearNumExpr();
             objective.addTerm(1,d);
 
-            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, clocks);
+            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, this.memory);
             guardVisitor.visit(this.currentLocation.getInvariant());
 
             cplex.addMinimize(objective);
@@ -105,7 +106,7 @@ public class Automaton {
                 return cplex.getValue(d);
             }
             else{
-                return -1;
+                return Double.POSITIVE_INFINITY;
             }
 
         }catch (IloException e) {
@@ -133,15 +134,15 @@ public class Automaton {
 
     public void putClock(String nameClock){
         Clock newClock = new Clock(nameClock);
-        this.clocks.put(newClock.getName(), newClock);
-    }
-
-    public void addClocks(HashMap<String, Clock> newClocks){
-        this.clocks.putAll(newClocks);
+        int lastEnv = this.memory.size()-1;
+        this.memory.get(lastEnv).put(nameClock, newClock);
     }
 
     public void setClockRate(String nameClock, double newRate){
-        this.clocks.get(nameClock).setRate(newRate);
+        Value value = getValue(nameClock);
+        if( value instanceof Clock){
+            ((Clock) value).setRate(newRate);
+        }
     }
 
     public void addAction(String nameAction){
@@ -157,13 +158,6 @@ public class Automaton {
             throw new NoLocationException(newInitLocation);
         }
         this.initLocation = newInitLocation;
-    }
-
-    public void takeTransition(int i){
-        for(String c: this.currentLocation.clocksToResetI(i)){
-            clocks.get(c).resetValue();
-        }
-        this.currentLocation = this.currentLocation.getTargetI(i);
     }
 
 }

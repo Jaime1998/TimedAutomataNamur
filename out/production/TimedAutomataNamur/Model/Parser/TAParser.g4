@@ -10,23 +10,24 @@ automaton a{
 }
 */
 
-model       :   let? automaton;
+model       :   block automaton;
 
 block       :   statement*;
 
-let         :   'let' '{' statement* '}';
-
 statement   :   varDeclaration          # VarDeclarationSt
             |   expr                    # ExprSt
-            |   printStatement          # PrintSt
+            |   'print' expr            # PrintSt
+            |   'return' expr           # ReturnSt
             ;
 
-printStatement: 'print' expr ;
+
 //let         :   'let' '{' declaration* '}';
 
 //declaration :   varDeclaration ;
 
-varDeclaration: (type varId (',' varId)*) ;
+varDeclaration: ('num' varId (',' varId)*)      # NumVarDecl
+            |   ('function' varId (',' varId)*) # FuncVarDecl
+            ;
 
 type        :   'num' ;
 
@@ -34,7 +35,11 @@ varId       :   IDENTIFIER ('=' initialiser)? ;
 
 initialiser :   expr ;
 
-automaton   :   'automaton' IDENTIFIER '{' (locationType | clockType | actionType | edgesType)* initLocation'}' ;
+automaton   :   'automaton' IDENTIFIER
+                        '{' (locationType | clockType | actionType | edgesType)*
+                            initLocation
+                            block
+                            '}' ;
 
 
 locationType:   'locations' '=' '{' location (',' location)* '}' ;
