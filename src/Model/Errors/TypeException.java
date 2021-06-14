@@ -1,6 +1,6 @@
-package Model.Types;
+package Model.Errors;
 
-public class TypeException extends Exception {
+public class TypeException extends RuntimeException {
     public TypeException(String errorMessage){
         super(errorMessage);
     }

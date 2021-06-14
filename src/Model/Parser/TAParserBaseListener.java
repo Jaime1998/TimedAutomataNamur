@@ -40,18 +40,6 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLet(TAParser.LetContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLet(TAParser.LetContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterVarDeclarationSt(TAParser.VarDeclarationStContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -88,13 +76,13 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterPrintStatement(TAParser.PrintStatementContext ctx) { }
+	@Override public void enterReturnSt(TAParser.ReturnStContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitPrintStatement(TAParser.PrintStatementContext ctx) { }
+	@Override public void exitReturnSt(TAParser.ReturnStContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -340,18 +328,6 @@ public class TAParserBaseListener implements TAParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCompareExpr(TAParser.CompareExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitCompareExpr(TAParser.CompareExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterMul(TAParser.MulContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -371,6 +347,18 @@ public class TAParserBaseListener implements TAParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAddSub(TAParser.AddSubContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCompareExpr(TAParser.CompareExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCompareExpr(TAParser.CompareExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

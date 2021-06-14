@@ -1,5 +1,7 @@
 package Model;
 
+import Model.Errors.AlreadyDefinedExpection;
+import Model.Errors.NoFindSymbolException;
 import Model.Types.Value;
 
 import java.util.*;
@@ -17,6 +19,7 @@ public class TANetwork {
         return this.memory;
     }
 
+    /*
     public Value getValue(String id){
         Value v;
         for(int i=this.memory.size() -1; i>=0; i--){
@@ -25,7 +28,59 @@ public class TANetwork {
                 return v;
             }
         }
-        return null;
+        throw new NoFindSymbolException(id);
+    }
+     */
+
+    /*
+    public boolean existsValue(String id){
+        Value v;
+        boolean exist;
+
+        for(int i=this.memory.size() -1; i>=0; i--){
+            exist = this.memory.get(i).containsKey(id);
+            if(exist){
+               return true;
+            }
+        }
+        return false;
+    }
+
+
+    public void assignNewValue(String id, Value value){
+        if(existsValue(id)){
+            throw new AlreadyDefinedExpection(id);
+        }
+        this.memory.get(this.memory.size()-1).put(id, value);
+    }
+
+     */
+
+    public Value updateValue(String id, Value value){
+        Value v;
+        for(int i=this.memory.size() -1; i>=0; i--){
+            v = this.memory.get(i).get(id);
+            if(v==null){
+                continue;
+            }
+            if(v.isNumber() && value.isNumber()){
+                this.memory.get(i).replace(id, value);
+                return value;
+            }
+            if(v.isFunction() && value.isFunction()){
+                this.memory.get(i).replace(id, value);
+                return value;
+            }
+        }
+        throw new NoFindSymbolException(id);
+    }
+
+    public boolean newEnv(){
+        return this.memory.add(new HashMap<>());
+    }
+
+    public HashMap<String, Value> removeEnv(){
+        return this.memory.remove(this.memory.size() - 1);
     }
 
     public void addValue(String id, Value newValue){
@@ -33,9 +88,10 @@ public class TANetwork {
         this.memory.get(lastEnv).put(id, newValue);
     }
 
-    public void addAutomaton(String nameNewAutomaton){
-        Automaton newAutomaton = new Automaton(nameNewAutomaton);
-        this.network.put(nameNewAutomaton, newAutomaton);
+    public Automaton addAutomaton(String nameNewAutomaton){
+        ArrayList<HashMap<String, Value>> currentMemory = new ArrayList<>(this.memory);
+        Automaton newAutomaton = new Automaton(nameNewAutomaton, currentMemory);
+        return this.network.put(nameNewAutomaton, newAutomaton);
     }
 
     public void addAutomaton(Automaton newAutomaton){

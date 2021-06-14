@@ -1,5 +1,8 @@
 package Model;
 
+import Model.Errors.NoFindSymbolException;
+import Model.Errors.NoLocationException;
+import Model.Types.Number;
 import Model.Types.Value;
 import ilog.concert.*;
 import ilog.cplex.*;
@@ -14,14 +17,31 @@ public class Automaton {
     private Location currentLocation;
     private HashSet<String> actions;
     private HashMap<String, Clock> clocks;
+    private ArrayList<HashMap<String, Value>> memory;
 
-    Automaton(String name){
+    Automaton(String name, ArrayList<HashMap<String, Value>> memory){
         this.name = name;
         this.locations = new HashMap<>();
         this.initLocation = "";
         this.actions = new HashSet<>();
         this.clocks = new HashMap<>();
         this.currentLocation = null;
+        this.memory = memory;
+    }
+
+    public Value getValue(String id){
+        Value v;
+        if(this.clocks.containsKey(id)){
+            return new Number(this.clocks.get(id).getCurrentValue());
+        }
+
+        for(int i=this.memory.size() -1; i>=0; i--){
+            v=this.memory.get(i).get(id);
+            if(v!=null){
+                return v;
+            }
+        }
+        throw new NoFindSymbolException(id);
     }
 
     public void setCurrentLocation(Location currentLocation){
@@ -133,6 +153,9 @@ public class Automaton {
     }
 
     public void setInitLocation(String newInitLocation){
+        if(!this.locations.containsKey(newInitLocation)){
+            throw new NoLocationException(newInitLocation);
+        }
         this.initLocation = newInitLocation;
     }
 

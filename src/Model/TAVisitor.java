@@ -3,12 +3,11 @@ package Model;
 import Model.Parser.TAParser;
 import Model.Parser.TAParserBaseVisitor;
 import Model.Types.Number;
-import Model.Types.TypeException;
+import Model.Errors.TypeException;
 import Model.Types.Value;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class TAVisitor extends TAParserBaseVisitor<Value> {
@@ -28,27 +27,18 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     @Override
     public Value visitModel(TAParser.ModelContext ctx) {
         //Value let = visit(ctx.let());
-        if(ctx.let() != null){
-            Value let = visit(ctx.let());
-        }
+        visit(ctx.block());
         Value automaton = visitAutomaton(ctx.automaton());
         return new Number(0);
     }
 
     @Override
     public Value visitBlock(TAParser.BlockContext ctx) {
-        return super.visitBlock(ctx);
-    }
-
-    @Override
-    public Value visitLet(TAParser.LetContext ctx) {
         List<TAParser.StatementContext> statements = ctx.statement();
-
-        for(TAParser.StatementContext stm: statements){
-            visit(stm);
+        for(TAParser.StatementContext statement: statements){
+            visit(statement);
         }
-
-        return new Number(0);
+        return super.visitBlock(ctx);
     }
 
     @Override
@@ -67,11 +57,6 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     }
 
     @Override
-    public Value visitPrintStatement(TAParser.PrintStatementContext ctx) {
-        return super.visitPrintStatement(ctx);
-    }
-
-    @Override
     public Value visitVarDeclaration(TAParser.VarDeclarationContext ctx) {
         return super.visitVarDeclaration(ctx);
     }
@@ -83,6 +68,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitVarId(TAParser.VarIdContext ctx) {
+
         return super.visitVarId(ctx);
     }
 
@@ -94,10 +80,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     @Override
     public Value visitAutomaton(TAParser.AutomatonContext ctx) {
         String nameAutomaton = ctx.IDENTIFIER().getText();
-        this.currentAutomaton = new Automaton(nameAutomaton);
-        this.automata.addAutomaton(this.currentAutomaton);
 
-
+        this.currentAutomaton = this.automata.addAutomaton(nameAutomaton);
 
         List<TAParser.ClockTypeContext> clockList = ctx.clockType();
 
@@ -181,7 +165,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
             String nameClock = clockRates.get(i).getText();
             Value newRate = visit(ctx.expr(i-1));
             if(newRate instanceof Number){
-                this.currentAutomaton.setClockRate(nameClock, ((Number) newRate).getValue());
+                this.currentAutomaton.setClockRate(nameClock, ((Number) newRate).getNumberValue());
             }
             else{
                 this.currentAutomaton.setClockRate(nameClock, 1);
@@ -271,7 +255,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitIdExpr(TAParser.IdExprContext ctx) {
-        return lookUpMemory(ctx.IDENTIFIER().getText());
+        return this.currentAutomaton.getValue(ctx.IDENTIFIER().getText());
     }
 
     @Override
@@ -326,15 +310,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitAssignExpr(TAParser.AssignExprContext ctx) {
-        //Value oldValue =  lookUpMemory(ctx.IDENTIFIER());
         Value newValue = visit(ctx.expr());
-        return newValue;
-    }
-
-    private Value lookUpMemory(String id){
-
-
-        return this.automata.getValue(id);
+        return this.automata.updateValue(ctx.IDENTIFIER().getText(), newValue);
     }
 
     /*

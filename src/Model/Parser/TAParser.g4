@@ -10,18 +10,17 @@ automaton a{
 }
 */
 
-model       :   let? automaton;
+model       :   block automaton;
 
 block       :   statement*;
 
-let         :   'let' '{' statement* '}';
-
 statement   :   varDeclaration          # VarDeclarationSt
             |   expr                    # ExprSt
-            |   printStatement          # PrintSt
+            |   'print' expr            # PrintSt
+            |   'return' expr           # ReturnSt
             ;
 
-printStatement: 'print' expr ;
+
 //let         :   'let' '{' declaration* '}';
 
 //declaration :   varDeclaration ;
@@ -72,10 +71,10 @@ funcParameter:  type IDENTIFIER ;
 
 arguments   :   (expr  (',' expr)*)? ;
 
-expr        :   expr op=('<='|'>=') expr    # CompareExpr
-            |   op=('+' | '-') expr         # Unary
+expr        :   op=('+' | '-') expr         # Unary
             |   expr '*' expr               # Mul
             |   expr op=('+'|'-') expr      # AddSub
+            |   expr op=('<='|'>=') expr    # CompareExpr
             |   DOUBLE                      # DoubleExpr
             |   IDENTIFIER                  # IdExpr
             |   '(' expr ')'                # ParensExpr

@@ -72,10 +72,10 @@ funcParameter:  type IDENTIFIER ;
 
 arguments   :   (expr  (',' expr)*)? ;
 
-expr        :   expr op=('<='|'>=') expr    # CompareExpr
-            |   op=('+' | '-') expr         # Unary
+expr        :   op=('+' | '-') expr         # Unary
             |   expr '*' expr               # Mul
             |   expr op=('+'|'-') expr      # AddSub
+            |   expr op=('<='|'>=') expr    # CompareExpr
             |   DOUBLE                      # DoubleExpr
             |   IDENTIFIER                  # IdExpr
             |   '(' expr ')'                # ParensExpr

@@ -3,11 +3,8 @@ package Model;
 import Model.Parser.TAParser;
 import Model.Parser.TAParserBaseVisitor;
 import Model.Types.Number;
-import Model.Types.TypeException;
-import Model.Types.Value;
 import ilog.concert.IloNumExpr;
 import ilog.concert.IloNumVar;
-import ilog.concert.IloRange;
 import ilog.cplex.IloCplex;
 
 import java.util.HashMap;
@@ -51,10 +48,10 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
                     return ((Number)left).less((Number)right);
                 }
                 if(left instanceof Number){
-                    return cplex.addLe(((Number)left).getValue(), (IloNumExpr) right);
+                    return cplex.addLe(((Number)left).getNumberValue(), (IloNumExpr) right);
                 }
                 if(right instanceof Number){
-                    return cplex.addLe((IloNumExpr) left, ((Number)right).getValue());
+                    return cplex.addLe((IloNumExpr) left, ((Number)right).getNumberValue());
                 }
                 return cplex.addLe((IloNumExpr) left, (IloNumExpr) right);
             }
@@ -63,10 +60,10 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
                     return ((Number)left).greater((Number)right);
                 }
                 if(left instanceof Number){
-                    return cplex.addGe(((Number)left).getValue(), (IloNumExpr) right);
+                    return cplex.addGe(((Number)left).getNumberValue(), (IloNumExpr) right);
                 }
                 if(right instanceof Number){
-                    return cplex.addGe((IloNumExpr) left, ((Number)right).getValue());
+                    return cplex.addGe((IloNumExpr) left, ((Number)right).getNumberValue());
                 }
                 return cplex.addGe((IloNumExpr) left, (IloNumExpr) right);
             }
@@ -81,7 +78,7 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
         try {
             Object expression = visit(ctx.expr());
             if(expression instanceof Number){
-                return new Number(((Number)expression).getValue()*-1);
+                return new Number(((Number)expression).getNumberValue()*-1);
             }
             return  cplex.prod((IloNumExpr)expression, -1);
         }catch (Exception e){
@@ -100,10 +97,10 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
                 return ((Number)left).mul((Number)right);
             }
             if(left instanceof Number){
-                return cplex.prod(((Number)left).getValue(), (IloNumExpr)right);
+                return cplex.prod(((Number)left).getNumberValue(), (IloNumExpr)right);
             }
             if(right instanceof Number){
-                return cplex.prod((IloNumExpr)left, ((Number)right).getValue());
+                return cplex.prod((IloNumExpr)left, ((Number)right).getNumberValue());
             }
             return cplex.prod((IloNumExpr) left, (IloNumExpr) right);
         }catch (Exception e){
@@ -123,10 +120,10 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
                     return ((Number)left).sum((Number)right);
                 }
                 if(left instanceof Number){
-                    return cplex.sum(((Number)left).getValue(), (IloNumExpr)right);
+                    return cplex.sum(((Number)left).getNumberValue(), (IloNumExpr)right);
                 }
                 if(right instanceof Number){
-                    return cplex.sum((IloNumExpr) left, ((Number)right).getValue());
+                    return cplex.sum((IloNumExpr) left, ((Number)right).getNumberValue());
                 }
                 return cplex.sum((IloNumExpr) left, (IloNumExpr) right);
 
@@ -136,12 +133,12 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
                     return ((Number)left).sub((Number)right);
                 }
                 if(left instanceof Number){
-                    return cplex.sum(((Number)left).getValue(), cplex.prod((IloNumExpr)right, -1));
+                    return cplex.diff(((Number)left).getNumberValue(), (IloNumExpr) right);
                 }
                 if(right instanceof Number){
-                    return cplex.sum((IloNumExpr) left, ((Number)right).getValue()*-1);
+                    return cplex.diff((IloNumExpr) left, ((Number) right).getNumberValue());
                 }
-                return cplex.sum((IloNumExpr) left, cplex.prod((IloNumExpr) right, -1));
+                return cplex.diff((IloNumExpr) left, (IloNumExpr) right);
             }
         }catch (Exception e){
             e.printStackTrace();

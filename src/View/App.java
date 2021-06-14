@@ -1,10 +1,11 @@
 package View;
 
+import Model.Errors.TaErrorListener;
+import Model.Errors.TypeException;
 import Model.Interval;
 import Model.TANetwork;
 import Model.Automaton;
 import Model.TAVisitor;
-import org.antlr.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -18,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 import Model.Parser.*;
+import org.antlr.v4.runtime.RecognitionException;
 
 public class App extends JFrame{
     private JButton delayTransition;
@@ -61,14 +63,17 @@ public class App extends JFrame{
                     CommonTokenStream tokens = new CommonTokenStream(lexer);
 
                     TAParser parser = new TAParser(tokens);
+                    parser.removeErrorListeners();
+                    parser.addErrorListener(new TaErrorListener(App.this.printArea));
+
                     TAParser.ModelContext tree = parser.model();
 
                     TAVisitor eval = new TAVisitor();
                     eval.visit(tree);
 
                     App.this.automata = eval.getAutomata();
-                }catch (Exception error){
-                    error.printStackTrace();
+                }catch (TypeException error){
+                    System.out.println("sintx");
                 }
 
             }

@@ -23,12 +23,6 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlock(TAParser.BlockContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TAParser#let}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLet(TAParser.LetContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code VarDeclarationSt}
 	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
@@ -50,11 +44,12 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPrintSt(TAParser.PrintStContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link TAParser#printStatement}.
+	 * Visit a parse tree produced by the {@code ReturnSt}
+	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitPrintStatement(TAParser.PrintStatementContext ctx);
+	T visitReturnSt(TAParser.ReturnStContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link TAParser#varDeclaration}.
 	 * @param ctx the parse tree
@@ -178,13 +173,6 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdExpr(TAParser.IdExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCompareExpr(TAParser.CompareExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code Mul}
 	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
@@ -198,6 +186,13 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAddSub(TAParser.AddSubContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code CompareExpr}
+	 * labeled alternative in {@link TAParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCompareExpr(TAParser.CompareExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code ParensExpr}
 	 * labeled alternative in {@link TAParser#expr}.

@@ -28,16 +28,6 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitBlock(TAParser.BlockContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TAParser#let}.
-	 * @param ctx the parse tree
-	 */
-	void enterLet(TAParser.LetContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TAParser#let}.
-	 * @param ctx the parse tree
-	 */
-	void exitLet(TAParser.LetContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code VarDeclarationSt}
 	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
@@ -74,15 +64,17 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitPrintSt(TAParser.PrintStContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TAParser#printStatement}.
+	 * Enter a parse tree produced by the {@code ReturnSt}
+	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void enterPrintStatement(TAParser.PrintStatementContext ctx);
+	void enterReturnSt(TAParser.ReturnStContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TAParser#printStatement}.
+	 * Exit a parse tree produced by the {@code ReturnSt}
+	 * labeled alternative in {@link TAParser#statement}.
 	 * @param ctx the parse tree
 	 */
-	void exitPrintStatement(TAParser.PrintStatementContext ctx);
+	void exitReturnSt(TAParser.ReturnStContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TAParser#varDeclaration}.
 	 * @param ctx the parse tree
@@ -288,18 +280,6 @@ public interface TAParserListener extends ParseTreeListener {
 	 */
 	void exitIdExpr(TAParser.IdExprContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterCompareExpr(TAParser.CompareExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code CompareExpr}
-	 * labeled alternative in {@link TAParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitCompareExpr(TAParser.CompareExprContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code Mul}
 	 * labeled alternative in {@link TAParser#expr}.
 	 * @param ctx the parse tree
@@ -323,6 +303,18 @@ public interface TAParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAddSub(TAParser.AddSubContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code CompareExpr}
+	 * labeled alternative in {@link TAParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterCompareExpr(TAParser.CompareExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code CompareExpr}
+	 * labeled alternative in {@link TAParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitCompareExpr(TAParser.CompareExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code ParensExpr}
 	 * labeled alternative in {@link TAParser#expr}.

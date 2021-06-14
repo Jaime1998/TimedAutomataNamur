@@ -1,13 +1,14 @@
 package Model.Types;
 
+import Model.Errors.TypeException;
 import Model.Parser.TAParser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Function;
 
 public class Lambda extends Value {
+    //Types are: "number", "lambda"
     private final String[] types;
     private final String[] identifiers;
     private final ArrayList<HashMap<String, Value>> memory;
@@ -53,32 +54,43 @@ public class Lambda extends Value {
     }
 
     @Override
-    public Value mul(Value valMul) throws TypeException {
+    public Value mul(Value valMul) {
         throw new TypeException("Type error for binary operator *. A value is not a number");
     }
 
     @Override
-    public Value div(Value valDiv) throws TypeException {
+    public Value div(Value valDiv) {
         throw new TypeException("Type error for binary operator /. A value is not a number");
     }
 
     @Override
-    public Value sum(Value valSum) throws TypeException {
+    public Value sum(Value valSum) {
         throw new TypeException("Type error for binary operator +. A value is not a number");
     }
 
     @Override
-    public Value sub(Value valSub) throws TypeException {
+    public Value sub(Value valSub) {
         throw new TypeException("Type error for binary operator -. A value is not a number");
     }
 
     @Override
-    public Value greater(Value valGreater) throws TypeException {
+    public Value greater(Value valGreater) {
         throw new TypeException("Type error for binary operator >=. A value is not a number");
     }
 
     @Override
-    public Value less(Value valLess) throws TypeException {
+    public Value less(Value valLess) {
         throw new TypeException("Type error for binary operator <=. A value is not a number");
+    }
+
+    @Override
+    public Value apply(Value[] values) {
+        this.memory.add(new HashMap<>());
+        int lastEnv = this.memory.size()-1;
+        for(int i = 0; i<this.identifiers.length; i++){
+            this.memory.get(lastEnv).put(this.identifiers[i], values[i]);
+        }
+
+        return null;
     }
 }
