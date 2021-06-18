@@ -50,12 +50,16 @@ public class Automaton {
     }
 
     public Interval configInvariant(){
-        double numMinInterval = this.minInvariant();
-        double numMaxInterval = this.maxInvariant();
+        if(this.currentLocation.getInvariant() == null){
+
+            return new Interval(0, Double.POSITIVE_INFINITY);
+        }
+        double numMinInterval = this.minInvariant(this.currentLocation);
+        double numMaxInterval = this.maxInvariant(this.currentLocation);
         return new Interval(numMinInterval, numMaxInterval);
     }
 
-    public double maxInvariant(){
+    public double maxInvariant(Location locationIn){
         try{
             IloCplex cplex = new IloCplex();
 
@@ -66,8 +70,15 @@ public class Automaton {
             IloLinearNumExpr objective = cplex.linearNumExpr();
             objective.addTerm(1,d);
 
-            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, this.memory);
-            guardVisitor.visit(this.currentLocation.getInvariant());
+            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, this.memory, new ArrayList<>());
+
+            Object visitedGuard = guardVisitor.visit(locationIn.getInvariant());
+
+            if(visitedGuard instanceof Number){
+                if(!((Number) visitedGuard).toBoolean()){
+                    return Double.POSITIVE_INFINITY;
+                }
+            }
 
             cplex.addMaximize(objective);
 
@@ -85,7 +96,7 @@ public class Automaton {
         return -1;
     }
 
-    public double minInvariant(){
+    public double minInvariant(Location locationIn){
         try{
             IloCplex cplex = new IloCplex();
 
@@ -96,13 +107,19 @@ public class Automaton {
             IloLinearNumExpr objective = cplex.linearNumExpr();
             objective.addTerm(1,d);
 
-            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, this.memory);
-            guardVisitor.visit(this.currentLocation.getInvariant());
+            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, this.memory, new ArrayList<>());
+
+            Object visitedGuard = guardVisitor.visit(locationIn.getInvariant());
+
+            if(visitedGuard instanceof Number){
+                if(!((Number) visitedGuard).toBoolean()){
+                    return Double.POSITIVE_INFINITY;
+                }
+            }
 
             cplex.addMinimize(objective);
 
             if(cplex.solve()){
-
                 return cplex.getValue(d);
             }
             else{

@@ -45,7 +45,7 @@ public class Clock extends Value{
     }
 
     @Override
-    public boolean isTrue() {
+    public boolean toBoolean() {
         return false;
     }
 
@@ -62,7 +62,7 @@ public class Clock extends Value{
     @Override
     public Value mul(Value valMul) {
         if(valMul instanceof Number){
-            return new Clock(this.name, this.rate*((Number)valMul).getNumberValue(), this.currentValue);
+            return new Number(this.currentValue * ((Number)valMul).getNumberValue());
         }
         throw new TypeException("Type error for binary operator *. A value is not a number");
     }

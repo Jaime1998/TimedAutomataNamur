@@ -123,5 +123,16 @@ public class TANetwork {
     public void setInitLocation(String automaton, String initLocation){
         this.network.get(automaton).setInitLocation(initLocation);
     }
+    /*
+    public LinkedHashMap<Location, ArrayList<Edge>> getTransitions(){
+        LinkedHashMap<Location, ArrayList<Edge>> transitions = new LinkedHashMap<>();
+        for(Automaton automaton: this.network.values()){
+            ArrayList<Edge> edge = new ArrayList<>();
+            transitions.put()
+        }
+        return transitions;
+    }
+    
+     */
 
 }

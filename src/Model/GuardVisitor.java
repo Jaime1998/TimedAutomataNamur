@@ -19,10 +19,14 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
     private ArrayList<HashMap<String, Value>> memory;
     private IloNumVar d;
 
-    public GuardVisitor(IloCplex cplex, IloNumVar d, ArrayList<HashMap<String, Value>> memory){
+    private final ArrayList<String> resetClocks;
+
+    public GuardVisitor(IloCplex cplex, IloNumVar d, ArrayList<HashMap<String, Value>> memory, ArrayList<String> resetClocks){
         this.cplex = cplex;
         this.memory = memory;
         this.d = d;
+        this.resetClocks = resetClocks;
+
     }
 
     public Value getValue(String id){
@@ -41,10 +45,25 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
 
         List<TAParser.ConsGuardContext> guardList = ctx.consGuard();
 
-        for (TAParser.ConsGuardContext guardCtx: guardList){
-            visit(guardCtx);
+        this.memory.add(new HashMap<>());
+        int lastEnv = this.memory.size() -1;
+        for(String resetClock: resetClocks){
+            this.memory.get(lastEnv).put(resetClock, new Number(0));
         }
-        return new Number(0);
+
+        for (TAParser.ConsGuardContext guardCtx: guardList){
+            Object visitedGuard = visit(guardCtx);
+
+            if(visitedGuard instanceof Number){
+                if(((Number) visitedGuard).getNumberValue() == 0){
+                    return new Number(0);
+                }
+            }
+        }
+
+        this.memory.remove(lastEnv);
+
+        return new Number(1);
     }
 
     @Override
@@ -85,7 +104,7 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new Number(0);
+        return new Number(1);
     }
 
     @Override
@@ -95,11 +114,11 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
             if(expression instanceof Number){
                 return new Number(((Number)expression).getNumberValue()*-1);
             }
-            return  cplex.prod((IloNumExpr)expression, -1);
+            return cplex.prod((IloNumExpr)expression, -1);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new Number(0);
+        return new Number(1);
     }
 
     @Override
@@ -121,7 +140,7 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new Number(0);
+        return new Number(1);
     }
 
     @Override
@@ -158,7 +177,7 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return new Number(0);
+        return new Number(1);
     }
 
     @Override

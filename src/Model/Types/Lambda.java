@@ -46,8 +46,8 @@ public class Lambda extends Value {
     }
 
     @Override
-    public boolean isTrue() {
-        return true;
+    public boolean toBoolean() {
+        return false;
     }
 
     @Override

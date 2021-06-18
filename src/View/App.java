@@ -1,7 +1,6 @@
 package View;
 
 import Model.Errors.TaErrorListener;
-import Model.Errors.TypeException;
 import Model.Interval;
 import Model.TANetwork;
 import Model.Automaton;
@@ -13,13 +12,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import Model.Parser.*;
-import org.antlr.v4.runtime.RecognitionException;
 
 public class App extends JFrame{
     private JButton delayTransition;
@@ -35,13 +30,29 @@ public class App extends JFrame{
     private JTextArea printArea;
     private JButton invariantButton;
     private JLabel invariantLabel;
+    private JPanel invariantPanel;
+    private JPanel delayTransitionsPanel;
+    private JList<String> listTransitions;
+    private JButton discreteTransitionButton;
+    private JPanel discretePanel;
+    private JScrollPane discreteScroll;
 
+    private DefaultListModel<String> stringTransitions;
 
     private TANetwork automata;
 
     public App(String title) {
+
+
+
         super(title);
+
         this.setContentPane(this.panelMain);
+
+        App.this.stringTransitions = new DefaultListModel<>();
+
+        App.this.listTransitions.setModel(App.this.stringTransitions);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
 
@@ -72,6 +83,8 @@ public class App extends JFrame{
                     eval.visit(tree);
 
                     App.this.automata = eval.getAutomata();
+
+
                 }catch (Exception error){
                     error.printStackTrace();
                 }
@@ -91,6 +104,11 @@ public class App extends JFrame{
 
                 App.this.invariantLabel.setText("[ " + a.getMin() + ", " + a.getMax() + " ]");
 
+            }
+        });
+        discreteTransitionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
             }
         });
     }

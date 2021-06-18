@@ -2,21 +2,20 @@ package Model;
 
 import Model.Parser.TAParser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.function.Function;
 
 public class Location {
 
     private final String name;
     private TAParser.GuardContext invariant;
-    private ArrayList<TransToLocation> edges;
+    private Interval invariantInterval;
+    private ArrayList<Edge> edges;
 
     public Location(String name, TAParser.GuardContext invariant){
         this.name = name;
         this.invariant = invariant;
         this.edges = new ArrayList<>();
+        this.invariantInterval = null;
     }
 
     public String getName() {
@@ -31,20 +30,17 @@ public class Location {
         this.invariant = invariant;
     }
 
-    public ArrayList<TransToLocation> getEdges() {
+    public ArrayList<Edge> getEdges() {
         return this.edges;
     }
 
     public void addEdge(TAParser.GuardContext guard, String action, ArrayList<String> resetClocks, Location target){
-        this.edges.add(new TransToLocation(guard, action, resetClocks, target));
+        this.edges.add(new Edge(guard, action, resetClocks, target));
     }
 
     public TAParser.GuardContext guardI(int i){
         return this.edges.get(i).getGuard();
     }
-
-
-
     public String actionI(int i){
         return this.edges.get(i).getAction();
     }
@@ -55,34 +51,7 @@ public class Location {
         return this.edges.get(i).getTarget();
     }
 
-    private static class TransToLocation {
-        private final TAParser.GuardContext guard;
-        private final String action;
-        private final ArrayList<String> resetClocks;
-        private final Location target;
+    public void configInterval(){
 
-        public TransToLocation(TAParser.GuardContext guard, String action, ArrayList<String> resetClocks, Location target){
-            this.guard = guard;
-            this.action = action;
-            this.resetClocks = resetClocks;
-            this.target = target;
-        }
-
-        public TAParser.GuardContext getGuard() {
-            return guard;
-        }
-
-        public String getAction(){
-            return this.action;
-        }
-
-        public ArrayList<String> getResetClocks() {
-            return resetClocks;
-        }
-
-        public Location getTarget() {
-            return target;
-        }
     }
-
 }

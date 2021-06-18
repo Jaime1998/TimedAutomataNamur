@@ -20,7 +20,7 @@ public class Number extends Value {
     }
 
     @Override
-    public boolean isTrue() {
+    public boolean toBoolean() {
         return this.numberValue !=0;
     }
 

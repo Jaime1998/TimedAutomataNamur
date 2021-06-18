@@ -5,7 +5,7 @@ import Model.Errors.TypeException;
 
 public abstract class Value {
 
-    public abstract boolean isTrue();
+    public abstract boolean toBoolean();
     public abstract boolean isFunction();
     public abstract boolean isNumber();
 
