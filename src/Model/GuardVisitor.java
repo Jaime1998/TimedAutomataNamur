@@ -12,6 +12,7 @@ import ilog.cplex.IloCplex;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class GuardVisitor extends TAParserBaseVisitor<Object> {
@@ -19,12 +20,18 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
     private ArrayList<HashMap<String, Value>> memory;
     private IloNumVar d;
 
-    private final ArrayList<String> resetClocks;
+    private final HashMap<String, Clock> clocks;
+    private final HashSet<String> resetClocks;
 
-    public GuardVisitor(IloCplex cplex, IloNumVar d, ArrayList<HashMap<String, Value>> memory, ArrayList<String> resetClocks){
+    public GuardVisitor(IloCplex cplex,
+                        IloNumVar d,
+                        ArrayList<HashMap<String, Value>> memory,
+                        HashMap<String, Clock> clocks,
+                        HashSet<String> resetClocks){
         this.cplex = cplex;
         this.memory = memory;
         this.d = d;
+        this.clocks = clocks;
         this.resetClocks = resetClocks;
 
     }
@@ -45,12 +52,6 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
 
         List<TAParser.ConsGuardContext> guardList = ctx.consGuard();
 
-        this.memory.add(new HashMap<>());
-        int lastEnv = this.memory.size() -1;
-        for(String resetClock: resetClocks){
-            this.memory.get(lastEnv).put(resetClock, new Number(0));
-        }
-
         for (TAParser.ConsGuardContext guardCtx: guardList){
             Object visitedGuard = visit(guardCtx);
 
@@ -60,8 +61,6 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
                 }
             }
         }
-
-        this.memory.remove(lastEnv);
 
         return new Number(1);
     }
@@ -191,6 +190,17 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
     public Object visitIdExpr(TAParser.IdExprContext ctx) {
         try{
             String nameId = ctx.IDENTIFIER().getText();
+
+            if(this.clocks.containsKey(nameId)){
+                System.out.println(this.resetClocks);
+                if(this.resetClocks.contains(nameId)){
+                    System.out.println("confirmadisimo");
+                    return new Number(0);
+
+                }
+                Clock clock = this.clocks.get(nameId);
+                return this.cplex.sum(cplex.prod(d, clock.getRate()), clock.getCurrentValue());
+            }
 
             Value value = getValue(nameId);
             if(value instanceof Clock){

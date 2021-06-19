@@ -1,10 +1,9 @@
 package View;
 
+import Model.*;
+import Model.Errors.CannotTakeTransition;
 import Model.Errors.TaErrorListener;
-import Model.Interval;
-import Model.TANetwork;
-import Model.Automaton;
-import Model.TAVisitor;
+import Model.Types.Number;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -19,7 +18,7 @@ import Model.Parser.*;
 public class App extends JFrame{
     private JButton delayTransition;
     private JPanel panelMain;
-    private JSpinner spinner1;
+    private JSpinner spinnerDelay;
     private JLabel delayLabel;
     private JButton updateButton;
     private JPanel leftPanel;
@@ -34,12 +33,14 @@ public class App extends JFrame{
     private JPanel delayTransitionsPanel;
     private JList<String> listTransitions;
     private JButton discreteTransitionButton;
+    private JTextField delayField;
     private JPanel discretePanel;
     private JScrollPane discreteScroll;
 
     private DefaultListModel<String> stringTransitions;
 
     private TANetwork automata;
+    private Automaton automaton;
 
     public App(String title) {
 
@@ -59,11 +60,11 @@ public class App extends JFrame{
         delayTransition.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                takeDelayTransition();
+                setLabelsIntervals();
             }
         });
         updateButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
@@ -85,6 +86,13 @@ public class App extends JFrame{
                     App.this.automata = eval.getAutomata();
 
 
+                    LinkedHashMap<String, Automaton> mapAutomata = App.this.automata.getAutomaton();
+                    Set<Map.Entry<String, Automaton>> entrySet = mapAutomata.entrySet();
+                    Iterator<Map.Entry<String, Automaton>> it = entrySet.iterator();
+                    App.this.automaton = it.next().getValue();
+
+                    setLabelsIntervals();
+
                 }catch (Exception error){
                     error.printStackTrace();
                 }
@@ -92,28 +100,55 @@ public class App extends JFrame{
             }
         });
 
-
-        invariantButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                LinkedHashMap<String, Automaton> mapAutomata = App.this.automata.getAutomaton();
-                Set<Map.Entry<String, Automaton>> entrySet = mapAutomata.entrySet();
-                Iterator<Map.Entry<String, Automaton>> it = entrySet.iterator();
-                Automaton initautomata = it.next().getValue();
-                Interval a = initautomata.configInvariant();
-
-                App.this.invariantLabel.setText("[ " + a.getMin() + ", " + a.getMax() + " ]");
-
-            }
-        });
         discreteTransitionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                takeDiscreteTransition();
             }
         });
     }
+
+
     public String getTextDeclarationArea(){
         return this.declarationArea.getText();
+    }
+
+    public void takeDelayTransition(){
+        String delayText = this.delayField.getText();
+        try{
+            double d = Double.parseDouble(delayText);
+            this.automaton.takeDelayTransition(d);
+        }catch (NumberFormatException ignored){
+            JOptionPane.showMessageDialog(null, "Delay is not a number");
+        }
+    }
+
+    public void takeDiscreteTransition(){
+        try{
+            int i = this.listTransitions.getSelectedIndex();
+            this.automaton.takeDiscreteTransition(i);
+            this.setLabelsIntervals();
+        }catch (CannotTakeTransition e){
+            this.printArea.append(e.getMessage());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void setLabelsIntervals(){
+        this.stringTransitions.clear();
+        Interval invariantInterval = this.automaton.getCurrentLocation().getInvariantInterval();
+        ArrayList<Edge> listEdge = this.automaton.getEdges();
+
+        for(Edge edge: listEdge){
+            String element = this.automaton.getCurrentLocation().getName().concat(", ");
+            element = element.concat(edge.toString());
+            this.stringTransitions.addElement(element);
+        }
+
+        this.invariantLabel.setText("[ " + invariantInterval.getMin() + ", " + invariantInterval.getMax() + " ]");
     }
 
     public static void main(String[] args) {

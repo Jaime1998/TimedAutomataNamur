@@ -8,6 +8,7 @@ import Model.Types.Value;
 import ilog.concert.*;
 import ilog.cplex.*;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Automaton {
@@ -17,7 +18,7 @@ public class Automaton {
     private String initLocation;
     private Location currentLocation;
     private HashSet<String> actions;
-    //private HashMap<String, Clock> clocks;
+    private HashMap<String, Clock> clocks;
     private ArrayList<HashMap<String, Value>> memory;
 
     Automaton(String name, ArrayList<HashMap<String, Value>> memory){
@@ -26,7 +27,12 @@ public class Automaton {
         this.initLocation = "";
         this.actions = new HashSet<>();
         this.currentLocation = null;
+        this.clocks = new HashMap<>();
         this.memory = memory;
+    }
+
+    public Location getCurrentLocation() {
+        return currentLocation;
     }
 
     public ArrayList<HashMap<String, Value>> getMemory(){
@@ -47,89 +53,11 @@ public class Automaton {
 
     public void setCurrentLocation(Location currentLocation){
         this.currentLocation = currentLocation;
+        this.currentLocation.configLocation(this.memory, this.clocks);
     }
 
-    public Interval configInvariant(){
-        if(this.currentLocation.getInvariant() == null){
-
-            return new Interval(0, Double.POSITIVE_INFINITY);
-        }
-        double numMinInterval = this.minInvariant(this.currentLocation);
-        double numMaxInterval = this.maxInvariant(this.currentLocation);
-        return new Interval(numMinInterval, numMaxInterval);
-    }
-
-    public double maxInvariant(Location locationIn){
-        try{
-            IloCplex cplex = new IloCplex();
-
-            //Variables
-
-            IloNumVar d = cplex.numVar(0, Double.MAX_VALUE, "d");
-
-            IloLinearNumExpr objective = cplex.linearNumExpr();
-            objective.addTerm(1,d);
-
-            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, this.memory, new ArrayList<>());
-
-            Object visitedGuard = guardVisitor.visit(locationIn.getInvariant());
-
-            if(visitedGuard instanceof Number){
-                if(!((Number) visitedGuard).toBoolean()){
-                    return Double.POSITIVE_INFINITY;
-                }
-            }
-
-            cplex.addMaximize(objective);
-
-            if(cplex.solve()){
-
-                return cplex.getValue(d);
-            }
-            else{
-                return Double.POSITIVE_INFINITY;
-            }
-
-        }catch (IloException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-
-    public double minInvariant(Location locationIn){
-        try{
-            IloCplex cplex = new IloCplex();
-
-            //Variables
-
-            IloNumVar d = cplex.numVar(0, Double.MAX_VALUE, "d");
-
-            IloLinearNumExpr objective = cplex.linearNumExpr();
-            objective.addTerm(1,d);
-
-            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, this.memory, new ArrayList<>());
-
-            Object visitedGuard = guardVisitor.visit(locationIn.getInvariant());
-
-            if(visitedGuard instanceof Number){
-                if(!((Number) visitedGuard).toBoolean()){
-                    return Double.POSITIVE_INFINITY;
-                }
-            }
-
-            cplex.addMinimize(objective);
-
-            if(cplex.solve()){
-                return cplex.getValue(d);
-            }
-            else{
-                return Double.POSITIVE_INFINITY;
-            }
-
-        }catch (IloException e) {
-            e.printStackTrace();
-        }
-        return -1;
+    public ArrayList<Edge> getEdges(){
+        return this.currentLocation.getEdges();
     }
 
 
@@ -151,8 +79,11 @@ public class Automaton {
 
     public void putClock(String nameClock){
         Clock newClock = new Clock(nameClock);
-        int lastEnv = this.memory.size()-1;
-        this.memory.get(lastEnv).put(nameClock, newClock);
+        this.clocks.put(nameClock, newClock);
+    }
+
+    public void setClockRate(String location, String nameClock, double newRate){
+        this.locations.get(location).setRate(nameClock, newRate);
     }
 
     public void setClockRate(String nameClock, double newRate){
@@ -175,6 +106,19 @@ public class Automaton {
             throw new NoLocationException(newInitLocation);
         }
         this.initLocation = newInitLocation;
+    }
+
+    public void takeDelayTransition(double d){
+        for(Clock clock: this.clocks.values()){
+            clock.increaseCurrentValue(d);
+        }
+        this.currentLocation.takeDelayTransition(d);
+    }
+
+    public void takeDiscreteTransition(int i){
+        Location target = this.currentLocation.takeDiscreteTransition(this.clocks, i);
+
+        this.setCurrentLocation(target);
     }
 
 }

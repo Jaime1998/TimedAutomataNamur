@@ -9,6 +9,7 @@ import Model.Types.Value;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class TAVisitor extends TAParserBaseVisitor<Value> {
@@ -188,7 +189,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         for (TAParser.EdgeContext edge: edgesList){
             visit(edge);
         }
-        return super.visitEdgesType(ctx);
+        return new Number(1);
     }
 
     @Override
@@ -205,7 +206,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
             String nameClock = clockRates.get(i).getText();
             Value newRate = visit(ctx.expr(i-1));
             if(newRate instanceof Number){
-                this.currentAutomaton.setClockRate(nameClock, ((Number) newRate).getNumberValue());
+                this.currentAutomaton.setClockRate(nameLocation, nameClock, ((Number) newRate).getNumberValue());
+                //this.currentAutomaton.setClockRate(nameClock, ((Number) newRate).getNumberValue());
             }
             else{
                 this.currentAutomaton.setClockRate(nameClock, 1);
@@ -221,7 +223,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         String nameSource = ctx.IDENTIFIER(0).getText();
         String nameAction = ctx.IDENTIFIER(1).getText();
 
-        ArrayList<String> resetClocks = new ArrayList<>();
+        HashSet<String> resetClocks = new HashSet<>();
         for(int i=2; i<ids.size()-1; i++){
             resetClocks.add(ids.get(i).getText());
         }
