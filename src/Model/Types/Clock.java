@@ -37,7 +37,7 @@ public class Clock extends Value{
     }
 
     public void increaseCurrentValue(double d) {
-        this.currentValue += d;
+        this.currentValue += d*this.rate;
     }
 
     public void resetValue(){

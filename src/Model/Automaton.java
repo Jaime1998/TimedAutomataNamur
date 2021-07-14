@@ -67,6 +67,7 @@ public class Automaton {
 
     public void addLocation(Location newLocation){
         this.locations.put(newLocation.getName(), newLocation);
+        newLocation.setRandomClocks(this.clocks);
     }
 
     public void addLocations(HashMap<String, Location> newLocations){
@@ -112,13 +113,26 @@ public class Automaton {
         for(Clock clock: this.clocks.values()){
             clock.increaseCurrentValue(d);
         }
-        this.currentLocation.takeDelayTransition(d);
+        this.currentLocation.configLocation(memory, clocks);
+        //this.currentLocation.takeDelayTransition(d);
     }
 
     public void takeDiscreteTransition(int i){
         Location target = this.currentLocation.takeDiscreteTransition(this.clocks, i);
 
         this.setCurrentLocation(target);
+    }
+
+    public String getVariablesString(){
+        String output = "";
+        for(Clock clock: this.clocks.values()){
+            output = output.concat("\t");
+            output = output.concat(clock.getName()).concat(" = ");
+            output = output.concat(Double.toString(clock.getCurrentValue()));
+            output = output.concat("(rate = ").concat(Double.toString(clock.getRate())).concat(")");
+            output = output.concat("\n");
+        }
+        return output;
     }
 
 }

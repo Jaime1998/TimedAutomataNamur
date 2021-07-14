@@ -194,7 +194,6 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
             if(this.clocks.containsKey(nameId)){
                 System.out.println(this.resetClocks);
                 if(this.resetClocks.contains(nameId)){
-                    System.out.println("confirmadisimo");
                     return new Number(0);
 
                 }

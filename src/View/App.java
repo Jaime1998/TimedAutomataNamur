@@ -37,6 +37,11 @@ public class App extends JFrame{
     private JPanel discretePanel;
     private JScrollPane discreteScroll;
 
+
+
+    private JMenuBar menuBar;
+    private JMenu file;
+    private JMenuItem variables;
     private DefaultListModel<String> stringTransitions;
 
     private TANetwork automata;
@@ -50,12 +55,24 @@ public class App extends JFrame{
 
         this.setContentPane(this.panelMain);
 
+        this.menuBar = new JMenuBar();
+        this.file = new JMenu("File");
+        this.variables = new JMenuItem("Variables");
+
+        this.menuBar.add(this.file);
+        this.file.add(this.variables);
+
+        this.setJMenuBar(this.menuBar);
+
+
         App.this.stringTransitions = new DefaultListModel<>();
 
         App.this.listTransitions.setModel(App.this.stringTransitions);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
+
+
 
         delayTransition.addActionListener(new ActionListener() {
             @Override
@@ -68,6 +85,7 @@ public class App extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
+                    App.this.printArea.setText("");
                     String code = getTextDeclarationArea();
                     CharStream input = CharStreams.fromString(code);
 
@@ -106,6 +124,13 @@ public class App extends JFrame{
                 takeDiscreteTransition();
             }
         });
+
+        variables.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, getVariablesString());
+            }
+        });
     }
 
 
@@ -126,6 +151,10 @@ public class App extends JFrame{
     public void takeDiscreteTransition(){
         try{
             int i = this.listTransitions.getSelectedIndex();
+            if(i<0){
+                this.printArea.append("Transition is not selected");
+                return;
+            }
             this.automaton.takeDiscreteTransition(i);
             this.setLabelsIntervals();
         }catch (CannotTakeTransition e){
@@ -149,6 +178,13 @@ public class App extends JFrame{
         }
 
         this.invariantLabel.setText("[ " + invariantInterval.getMin() + ", " + invariantInterval.getMax() + " ]");
+    }
+
+    public String getVariablesString(){
+        if(this.automata==null){
+            return "";
+        }
+        return this.automata.getVariablesString();
     }
 
     public static void main(String[] args) {

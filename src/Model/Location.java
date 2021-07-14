@@ -19,6 +19,7 @@ public class Location {
     private Interval invariantInterval;
     private ArrayList<Edge> edges;
     private HashMap<String, Double> clockRates;
+    private static Random rand = new Random();
 
     public Location(String name, TAParser.GuardContext invariant){
         this.name = name;
@@ -73,10 +74,11 @@ public class Location {
         return this.edges.get(i).getTarget();
     }
 
-    public void takeDelayTransition(double d){
-        this.invariantInterval.reduceInterval(d);
-        for(Edge edge: this.edges){
-            edge.getGuardInterval().reduceInterval(d);
+    public void setRandomClocks(HashMap<String, Clock> clocks){
+
+        for(Clock clock: clocks.values()){
+            int randomRate = rand.nextInt(1000);
+            this.clockRates.put(clock.getName(), (double) randomRate);
         }
     }
 

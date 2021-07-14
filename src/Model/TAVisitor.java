@@ -11,12 +11,14 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     private TANetwork automata;
 
     private Automaton currentAutomaton;
+    private Random rand = new Random();
 
     public TAVisitor(){
         this.automata = new TANetwork();
@@ -200,6 +202,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         this.currentAutomaton.addLocation(newLocation);
 
         List<TerminalNode> clockRates = ctx.IDENTIFIER();
+
 
 
         for(int i=1; i<clockRates.size(); i++){

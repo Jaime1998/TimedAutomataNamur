@@ -51,15 +51,16 @@ actionType  :   'actions' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ;
 edgesType   :   'edges' '=' '{' edge (',' edge)* '}' ;
 
 location    :   IDENTIFIER (':' 'invariant' '=' guard)?
+
                            (':' 'rates' '=' '{' IDENTIFIER '=' expr (',' IDENTIFIER '=' expr)* '}')?;
 
 initLocation:   'init' '=' IDENTIFIER ;
 
-edge        :   '(' 'source' '=' IDENTIFIER ','
+edge        :   '(' ('source' '=')? IDENTIFIER ','
                     ('guard' '=' guard ',')?
-                    'action' '=' IDENTIFIER ','
+                    ('action' '=')? IDENTIFIER ','
                     ('reset' '=' '{' IDENTIFIER (',' IDENTIFIER)* '}' ',' )?
-                    'target' '=' IDENTIFIER')' ;
+                    ('target' '=')? IDENTIFIER')' ;
 
 guard       :   consGuard (('and' | '&&') consGuard)*
             ;
