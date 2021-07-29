@@ -3,45 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="6668f9e4-a5a7-49be-a380-c028d41a502f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Automaton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Automaton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/GuardVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/GuardVisitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Location.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Location.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$AddSubContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$AddSubContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$ArgumentsContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$ArgumentsContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$AssignExprContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$AssignExprContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$CompareExprContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$CompareExprContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$ConsGuardContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$ConsGuardContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$DoubleExprContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$DoubleExprContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$EdgeContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$EdgeContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$ExprContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$ExprContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$FuncExprContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$FuncExprContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$FuncParameterContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$FuncParameterContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$FuncParametersContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$FuncParametersContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$GuardContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$GuardContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$IdExprContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$IdExprContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$MulContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$MulContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$ParensExprContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$ParensExprContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$UnaryContext.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser$UnaryContext.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser.g4" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser.interp" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Parser/TAParser.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/TANetwork.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/TANetwork.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/TAVisitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/TAVisitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Types/Clock.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Types/Clock.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$5.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Automaton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Automaton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/GuardVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/GuardVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Location.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/TANetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/TANetwork.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/TAVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/TAVisitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Types/Clock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Types/Clock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -139,11 +107,11 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH" value="206" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW" value="true" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="382" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH" value="334" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../UppaalMutants" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../bisimulacion/timed-bisim/timed-bisim/TimBrCheck/tool" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -268,6 +236,17 @@
       <workItem from="1626185396089" duration="733000" />
       <workItem from="1626222812865" duration="3952000" />
       <workItem from="1626233940514" duration="4109000" />
+      <workItem from="1626238408149" duration="8000" />
+      <workItem from="1626271387046" duration="654000" />
+      <workItem from="1627246683877" duration="1687000" />
+      <workItem from="1627420501729" duration="1564000" />
+      <workItem from="1627405778485" duration="1375000" />
+      <workItem from="1627409831407" duration="1796000" />
+      <workItem from="1627421787355" duration="1187000" />
+      <workItem from="1627513693066" duration="2662000" />
+      <workItem from="1627595760163" duration="3440000" />
+      <workItem from="1627604413124" duration="2554000" />
+      <workItem from="1627590825190" duration="1746000" />
     </task>
     <servers />
   </component>

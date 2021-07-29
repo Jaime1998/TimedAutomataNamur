@@ -34,6 +34,10 @@ public class App extends JFrame{
     private JList<String> listTransitions;
     private JButton discreteTransitionButton;
     private JTextField delayField;
+    private JList listTraces;
+    private JScrollPane scrollListTransitions;
+    private JScrollPane scrollListTraces;
+    private JPanel tracesPanel;
     private JPanel discretePanel;
     private JScrollPane discreteScroll;
 
