@@ -39,12 +39,14 @@ public class Number extends Value {
         if(valueMul instanceof Number){
             return new Number(this.numberValue *((Number) valueMul).numberValue);
         }
-        if(valueMul instanceof Clock){
-            return new Clock(((Clock)valueMul).getName(),
-                    ((Clock) valueMul).getRate() * this.numberValue,
-                    ((Clock) valueMul).getCurrentValue());
-        }
         throw new TypeException("Type error for binary operator *. A value is not a number");
+    }
+
+    @Override
+    public Clock mul(Clock clock){
+        return new Clock(clock.getName(),
+                clock.getRate() * this.numberValue,
+                clock.getCurrentValue());
     }
 
     @Override
@@ -53,23 +55,27 @@ public class Number extends Value {
         if(valueSum instanceof Number){
             return new Number(this.numberValue +((Number) valueSum).numberValue);
         }
-        if(valueSum instanceof Clock){
-            return new Number(this.numberValue+ ((Clock) valueSum).getCurrentValue());
-        }
+
         throw new TypeException("Type error for binary operator +. A value is not a number");
     }
 
     @Override
-    public Value sub(Value valueSub) {
+    public Value sum(Clock clock) {
+        return new Number(this.numberValue+ (clock.getCurrentValue()));
+    }
 
+    @Override
+    public Value sub(Value valueSub) {
         if(valueSub instanceof Number){
             return new Number(this.numberValue -((Number) valueSub).numberValue);
         }
-        if(valueSub instanceof Clock){
-            return new Number(this.numberValue -((Clock) valueSub).getCurrentValue());
-        }
         throw new TypeException("Type error for binary operator -. A value is not a number");
 
+    }
+
+    @Override
+    public Value sub(Clock clock) {
+        return new Number(this.numberValue -(clock.getCurrentValue()));
     }
 
     @Override

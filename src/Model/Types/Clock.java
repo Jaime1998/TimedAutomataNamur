@@ -2,7 +2,7 @@ package Model.Types;
 
 import Model.Errors.TypeException;
 
-public class Clock extends Value{
+public class Clock {
 
     private String name;
     private double rate;
@@ -44,22 +44,7 @@ public class Clock extends Value{
         this.currentValue = 0;
     }
 
-    @Override
-    public boolean toBoolean() {
-        return false;
-    }
 
-    @Override
-    public boolean isFunction() {
-        return false;
-    }
-
-    @Override
-    public boolean isNumber() {
-        return false;
-    }
-
-    @Override
     public Value mul(Value valMul) {
         if(valMul instanceof Number){
             return new Number(this.currentValue * ((Number)valMul).getNumberValue());
@@ -67,40 +52,26 @@ public class Clock extends Value{
         throw new TypeException("Type error for binary operator *. A value is not a number");
     }
 
-    @Override
     public Value sum(Value valSum) {
         if(valSum instanceof Number){
-            return new Number(this.currentValue + ((Number) valSum).getNumberValue());
-        }
-        if(valSum instanceof Clock){
             return new Number(this.currentValue + ((Number) valSum).getNumberValue());
         }
         throw new TypeException("Type error for binary operator +. A value is not a number");
     }
 
-    @Override
     public Value sub(Value valSub) {
         if(valSub instanceof Number){
-            return new Number(this.currentValue - ((Number) valSub).getNumberValue());
-        }
-        if(valSub instanceof Clock){
             return new Number(this.currentValue - ((Number) valSub).getNumberValue());
         }
         throw new TypeException("Type error for binary operator -. A value is not a number");
     }
 
-    @Override
     public Value greater(Value valGreater) {
         throw new TypeException("Type error for binary operator >=. A value is not a number");
     }
 
-    @Override
     public Value less(Value valLess) {
         throw new TypeException("Type error for binary operator <=. A value is not a number");
     }
 
-    @Override
-    public Value apply(Value[] values) {
-        return null;
-    }
 }

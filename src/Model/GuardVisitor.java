@@ -17,7 +17,8 @@ import java.util.List;
 
 public class GuardVisitor extends TAParserBaseVisitor<Object> {
     private IloCplex cplex;
-    private ArrayList<HashMap<String, Value>> memory;
+    private HashMap<String, Value> localMemory;
+    private HashMap<String, Value> globalMemory;
     private IloNumVar d;
 
     private final HashMap<String, Clock> clocks;
@@ -25,24 +26,27 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
 
     public GuardVisitor(IloCplex cplex,
                         IloNumVar d,
-                        ArrayList<HashMap<String, Value>> memory,
+                        HashMap<String, Value> localMemory,
+                        HashMap<String, Value> globalMemory,
                         HashMap<String, Clock> clocks,
                         HashSet<String> resetClocks){
         this.cplex = cplex;
-        this.memory = memory;
+        this.localMemory = localMemory;
+        this.globalMemory = globalMemory;
         this.d = d;
         this.clocks = clocks;
         this.resetClocks = resetClocks;
-
     }
 
     public Value getValue(String id){
         Value v;
-        for(int i=this.memory.size() -1; i>=0; i--){
-            v=this.memory.get(i).get(id);
-            if(v!=null){
-                return v;
-            }
+        v = this.localMemory.get(id);
+        if(v!=null){
+            return v;
+        }
+        v = this.globalMemory.get(id);
+        if(v!=null){
+            return v;
         }
         throw new NoFindSymbolException(id);
     }
@@ -200,11 +204,8 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
                 return this.cplex.sum(cplex.prod(d, clock.getRate()), clock.getCurrentValue());
             }
 
-            Value value = getValue(nameId);
-            if(value instanceof Clock){
-                return this.cplex.sum(cplex.prod(d, ((Clock)value).getRate()), ((Clock)value).getCurrentValue());
-            }
-            return value;
+            return getValue(nameId);
+
         }catch (Exception e){
             e.printStackTrace();
         }

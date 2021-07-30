@@ -66,12 +66,27 @@ public class Lambda extends Value {
     }
 
     @Override
+    public Clock mul(Clock clock) {
+        throw new TypeException("Type error for binary operator *. A value is not a number");
+    }
+
+    @Override
     public Value sum(Value valSum) {
         throw new TypeException("Type error for binary operator +. A value is not a number");
     }
 
     @Override
+    public Value sum(Clock clock) {
+        throw new TypeException("Type error for binary operator +. A value is not a number");
+    }
+
+    @Override
     public Value sub(Value valSub) {
+        throw new TypeException("Type error for binary operator -. A value is not a number");
+    }
+
+    @Override
+    public Value sub(Clock clock) {
         throw new TypeException("Type error for binary operator -. A value is not a number");
     }
 

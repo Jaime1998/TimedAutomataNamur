@@ -87,13 +87,6 @@ public class Automaton {
         this.locations.get(location).setRate(nameClock, newRate);
     }
 
-    public void setClockRate(String nameClock, double newRate){
-        Value value = getValue(nameClock);
-        if( value instanceof Clock){
-            ((Clock) value).setRate(newRate);
-        }
-    }
-
     public void addAction(String nameAction){
         this.actions.add(nameAction);
     }

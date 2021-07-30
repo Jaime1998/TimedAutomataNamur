@@ -210,10 +210,6 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
             Value newRate = visit(ctx.expr(i-1));
             if(newRate instanceof Number){
                 this.currentAutomaton.setClockRate(nameLocation, nameClock, ((Number) newRate).getNumberValue());
-                //this.currentAutomaton.setClockRate(nameClock, ((Number) newRate).getNumberValue());
-            }
-            else{
-                this.currentAutomaton.setClockRate(nameClock, 1);
             }
         }
         return new Number(1);
