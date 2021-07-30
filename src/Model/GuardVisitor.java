@@ -195,7 +195,6 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
                 System.out.println(this.resetClocks);
                 if(this.resetClocks.contains(nameId)){
                     return new Number(0);
-
                 }
                 Clock clock = this.clocks.get(nameId);
                 return this.cplex.sum(cplex.prod(d, clock.getRate()), clock.getCurrentValue());
