@@ -1,7 +1,10 @@
-package Model;
+package Controller;
 
+import Model.Automaton;
+import Model.Location;
 import Model.Parser.TAParser;
 import Model.Parser.TAParserBaseVisitor;
+import Model.TANetwork;
 import Model.Types.Lambda;
 import Model.Types.Number;
 import Model.Errors.TypeException;
@@ -15,17 +18,18 @@ import java.util.Random;
 
 public class TAVisitor extends TAParserBaseVisitor<Value> {
 
-    private TANetwork automata;
+    //private TANetwork automata;
+    private Controller controller;
 
     private Automaton currentAutomaton;
-    private Random rand = new Random();
 
     public TAVisitor(){
-        this.automata = new TANetwork();
+        this.controller = new Controller();
+        this.currentAutomaton = null;
     }
 
     public TANetwork getAutomata(){
-        return this.automata;
+        return this.controller.getAutomata();
     }
 
     @Override
@@ -72,13 +76,13 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
             Value newValue = visit(varId);
 
             if(newValue==null){
-                this.automata.assignNewValue(varId.IDENTIFIER().getText(), new Number(0));
+                this.controller.assignNewValue(this.currentAutomaton, varId.IDENTIFIER().getText(), new Number(0));
                 continue;
             }
             if(!(newValue instanceof Number)){
                 throw new TypeException("Type error. incompatible types");
             }
-            this.automata.assignNewValue(varId.IDENTIFIER().getText(), newValue);
+            this.controller.assignNewValue(this.currentAutomaton, varId.IDENTIFIER().getText(), newValue);
         }
 
         return new Number(1);
@@ -91,13 +95,13 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         for(TAParser.VarIdContext varId: varsId){
             Value newValue = visit(varId);
             if(newValue==null){
-                this.automata.assignNewValue(varId.IDENTIFIER().getText(), new Lambda());
+                this.controller.assignNewValue(this.currentAutomaton, varId.IDENTIFIER().getText(), new Lambda());
                 continue;
             }
             if(!(newValue instanceof Lambda)){
                 throw new TypeException("Type error. incompatible types");
             }
-            this.automata.assignNewValue(varId.IDENTIFIER().getText(), newValue);
+            this.controller.assignNewValue(this.currentAutomaton, varId.IDENTIFIER().getText(), newValue);
         }
         return new Number(1);
     }
@@ -121,7 +125,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     public Value visitAutomaton(TAParser.AutomatonContext ctx) {
         String nameAutomaton = ctx.IDENTIFIER().getText();
 
-        this.currentAutomaton = this.automata.addAutomaton(nameAutomaton);
+        this.currentAutomaton = this.controller.addAutomaton(nameAutomaton);
 
         List<TAParser.ClockTypeContext> clockList = ctx.clockType();
 
@@ -179,7 +183,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     public Value visitActionType(TAParser.ActionTypeContext ctx) {
         List<TerminalNode> actions = ctx.IDENTIFIER();
         for(TerminalNode action: actions){
-            this.currentAutomaton.addAction(action.getText());
+            //this.currentAutomaton.addAction(action.getText());
         }
         return new Number(1);
     }
@@ -296,8 +300,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
 
     @Override
     public Value visitIdExpr(TAParser.IdExprContext ctx) {
-
-        return this.automata.getValue(ctx.IDENTIFIER().getText());
+        return this.controller.getValue(this.currentAutomaton, ctx.IDENTIFIER().getText());
     }
 
     @Override
@@ -351,7 +354,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     @Override
     public Value visitAssignExpr(TAParser.AssignExprContext ctx) {
         Value newValue = visit(ctx.expr());
-        return this.automata.updateValue(ctx.IDENTIFIER().getText(), newValue);
+        return this.controller.updateValue(this.currentAutomaton, ctx.IDENTIFIER().getText(), newValue);
     }
 
     /*
