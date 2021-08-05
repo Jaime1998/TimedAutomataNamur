@@ -107,6 +107,14 @@ public class State {
         this.currentLocations = currentLocations;
     }
 
+    public ArrayList<String> getNameLocations(){
+        ArrayList<String> nameLocations = new ArrayList<>();
+        for(Location loc: this.currentLocations){
+            nameLocations.add(loc.getName());
+        }
+        return nameLocations;
+    }
+
     public void addAutomatonState(){
         this.localMemory.add(new HashMap<>());
         this.localClocks.add(new HashMap<>());

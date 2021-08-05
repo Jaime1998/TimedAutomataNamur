@@ -10,7 +10,7 @@ automaton a{
 }
 */
 
-model       :   block automaton;
+model       :   block automaton+;
 
 block       :   statement*;
 

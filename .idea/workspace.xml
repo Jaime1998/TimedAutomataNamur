@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="6668f9e4-a5a7-49be-a380-c028d41a502f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Location.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/Location.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/TANetwork.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/Model/TANetwork.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$2.class" afterDir="false" />
@@ -11,10 +10,13 @@
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$4.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App$5.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TimedAutomataNamur/View/App.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Automaton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Automaton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/TAVisitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TAVisitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.interp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/Parser/TAParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Parser/TAParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Model/State.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/State.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/TANetwork.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/TANetwork.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View/App.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/App.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/View/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/View/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -262,7 +264,7 @@
       <workItem from="1628104040045" duration="14165000" />
       <workItem from="1628121720268" duration="14860000" />
       <workItem from="1628182529994" duration="1842000" />
-      <workItem from="1628188196131" duration="2476000" />
+      <workItem from="1628188196131" duration="10499000" />
     </task>
     <servers />
   </component>

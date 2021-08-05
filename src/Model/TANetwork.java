@@ -80,7 +80,10 @@ public class TANetwork {
             Location loc = state.getCurrentLocations().get(numAutomaton);
             numTargets = loc.getNumTargets();
 
-            if(i<=numTargets){
+            System.out.println("calculo del indice del edge ");
+            System.out.println("aquí i es: "+i);
+            System.out.println("numTargets es"+ numTargets);
+            if(i<numTargets){
                 automaton.takeDiscreteTransition(i, state);
                 return;
             }

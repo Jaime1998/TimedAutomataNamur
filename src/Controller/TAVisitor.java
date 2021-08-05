@@ -37,7 +37,10 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     public Value visitModel(TAParser.ModelContext ctx) {
         //Value let = visit(ctx.let());
         visit(ctx.block());
-        Value automaton = visitAutomaton(ctx.automaton());
+
+        for(TAParser.AutomatonContext automaton : ctx.automaton()){
+            visitAutomaton(automaton);
+        }
         return new Number(1);
     }
 
@@ -152,6 +155,7 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
             visit(edge);
         }
         String initNameL = ctx.initLocation().IDENTIFIER().getText();
+        System.out.println("ESTAMOS EN EL PARSER CON EL AUTOMATA "+ this.currentAutomaton.getName() +"y el init es " + initNameL);
         this.controller.setInitLocation(this.currentAutomaton.getName(), initNameL);
         /*this.currentAutomaton.setInitLocation(initNameL);
         Location initLocation = this.currentAutomaton.getLocation(initNameL);

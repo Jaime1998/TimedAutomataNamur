@@ -164,4 +164,13 @@ public class Controller {
     }
 
 
+    public ArrayList<ArrayList<String>> getTraceLocation(){
+        ArrayList<ArrayList<String>> trace = new ArrayList<>();
+        for(State state: this.statesRecord){
+            trace.add(state.getNameLocations());
+        }
+        return trace;
+    }
+
+
 }

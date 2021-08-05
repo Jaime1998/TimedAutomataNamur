@@ -35,10 +35,13 @@ public class App extends JFrame{
     private JList<String> listTransitions;
     private JButton discreteTransitionButton;
     private JTextField delayField;
-    private JList listTraces;
+    private JList<String> listTraces;
     private JScrollPane scrollListTransitions;
     private JScrollPane scrollListTraces;
     private JPanel tracesPanel;
+    private JButton a;
+    private JSlider slideSpeedSimulation;
+    private JButton randomSimulationButton;
     private JPanel discretePanel;
     private JScrollPane discreteScroll;
 
@@ -48,9 +51,11 @@ public class App extends JFrame{
     private JMenu file;
     private JMenuItem variables;
     private DefaultListModel<String> stringTransitions;
+    private DefaultListModel<String> stringTraces;
 
 
     private Controller controller;
+    private boolean randomSimulation;
 
     public App(String title) {
 
@@ -69,8 +74,10 @@ public class App extends JFrame{
 
 
         App.this.stringTransitions = new DefaultListModel<>();
+        App.this.stringTraces = new DefaultListModel<>();
 
         App.this.listTransitions.setModel(App.this.stringTransitions);
+        App.this.listTraces.setModel(App.this.stringTraces);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -89,6 +96,7 @@ public class App extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 try{
                     App.this.printArea.setText("");
+                    App.this.randomSimulation = false;
                     String code = getTextDeclarationArea();
                     CharStream input = CharStreams.fromString(code);
 
@@ -114,6 +122,8 @@ public class App extends JFrame{
                     App.this.automaton = it.next().getValue();
                      */
 
+
+
                     setLabelsIntervals();
 
                 }catch (Exception error){
@@ -134,6 +144,14 @@ public class App extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, getVariablesString());
+            }
+        });
+        randomSimulationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                takeRandomTransitions();
+
             }
         });
     }
@@ -171,18 +189,47 @@ public class App extends JFrame{
 
     }
 
+    public void takeRandomTransitions() {
+        this.randomSimulation = !this.randomSimulation;
+        new Thread (()->{
+            while(this.randomSimulation){
+
+                int speed = this.slideSpeedSimulation.getValue();
+                int timeSleep = 1000-speed*9;
+                System.out.println(timeSleep);
+
+                try{
+                    Thread.sleep(timeSleep);
+                }catch (InterruptedException error){
+                    error.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     public void setLabelsIntervals(){
         this.stringTransitions.clear();
+        this.stringTraces.clear();
         Interval invariantInterval = this.controller.intersectionInvariants();
         ArrayList<Location> currentLocation = this.controller.getCurrentLocation();
 
         for(Location loc: currentLocation){
-
+            System.out.println("jajajajjaj  " + loc.getName());
             for(Edge edge: loc.getTargets()){
                 String element = loc.getName().concat(", ");
                 element = element.concat(edge.toString());
                 this.stringTransitions.addElement(element);
             }
+        }
+        for(ArrayList<String> locations: this.controller.getTraceLocation()){
+            String element = "( ";
+            String separator = "";
+            for(String locName: locations){
+                element = element.concat(separator).concat(locName);
+                separator = ", ";
+            }
+            element = element.concat(" )");
+            this.stringTraces.addElement(element);
         }
 
         this.invariantLabel.setText("[ " + invariantInterval.getMin() + ", " + invariantInterval.getMax() + " ]");
