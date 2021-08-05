@@ -20,6 +20,12 @@ public class Clock {
         this.currentValue = currentValue;
     }
 
+    public Clock(Clock clockIn){
+        this.name = clockIn.name;
+        this.rate = clockIn.rate;
+        this.currentValue = clockIn.currentValue;
+    }
+
     public String getName() {
         return this.name;
     }

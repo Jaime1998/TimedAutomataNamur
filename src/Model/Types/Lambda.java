@@ -33,6 +33,13 @@ public class Lambda extends Value {
         this.body = null;
     }
 
+    public Lambda(Lambda lambdaIn){
+        this.types = lambdaIn.types;
+        this.identifiers = lambdaIn.identifiers;
+        this.memory = lambdaIn.memory;
+        this.body = lambdaIn.body;
+    }
+
     public String[] getTypes() {
         return types;
     }

@@ -3,6 +3,7 @@ package Model;
 import Model.Errors.AlreadyDefinedExpection;
 import Model.Errors.NoFindSymbolException;
 import Model.Types.Clock;
+import Model.Types.Lambda;
 import Model.Types.Number;
 import Model.Types.Value;
 
@@ -28,11 +29,26 @@ public class State {
         this.globalMemory = new HashMap<>(stateIn.globalMemory);
         this.localMemory = new ArrayList<>();
         for (HashMap<String, Value> values: stateIn.localMemory){
-            this.localMemory.add(new HashMap<>(values));
+            this.localMemory.add(new HashMap<>());
+            for(Map.Entry<String, Value> v: values.entrySet()){
+                if(v.getValue() instanceof Number){
+                    double numberValue = ((Number) v.getValue()).getNumberValue();
+                    Number newNumber = new Number(numberValue);
+                    this.localMemory.get(this.localMemory.size()-1).put(v.getKey(), newNumber);
+                }
+                if(v.getValue() instanceof Lambda){
+                    Lambda newLambda = new Lambda((Lambda)v.getValue());
+                    this.localMemory.get(this.localMemory.size()-1).put(v.getKey(), newLambda);
+                }
+            }
         }
         this.localClocks = new ArrayList<>();
         for (HashMap<String, Clock> clocks: stateIn.localClocks){
-            this.localClocks.add(new HashMap<>(clocks));
+            this.localClocks.add(new HashMap<>());
+            for(Map.Entry<String, Clock> v: clocks.entrySet()){
+                Clock newClock = new Clock(v.getValue());
+                this.localClocks.get(this.localClocks.size()-1).put(v.getKey(), newClock);
+            }
         }
         this.currentLocations = new ArrayList<>();
         this.currentLocations.addAll(stateIn.currentLocations);
