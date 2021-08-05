@@ -49,8 +49,6 @@ public class App extends JFrame{
     private JMenuItem variables;
     private DefaultListModel<String> stringTransitions;
 
-    //private TANetwork automata;
-    //private Automaton automaton;
 
     private Controller controller;
 
@@ -104,6 +102,7 @@ public class App extends JFrame{
                     TAParser.ModelContext tree = parser.model();
 
                     TAVisitor eval = new TAVisitor();
+                    App.this.controller = null;
                     eval.visit(tree);
 
                     App.this.controller = eval.getController();

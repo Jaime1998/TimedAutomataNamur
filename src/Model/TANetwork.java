@@ -12,8 +12,12 @@ public class TANetwork {
 
     private LinkedHashMap<String, Automaton> network;
 
+    //Used to give id to each automaton. Every id correspond to the index in array of states
+    protected int idAssign;
+
     public TANetwork(){
         this.network = new LinkedHashMap<>();
+        this.idAssign=0;
     }
 
     public int size(){
@@ -21,7 +25,7 @@ public class TANetwork {
     }
 
     public Automaton addAutomaton(String nameNewAutomaton){
-        Automaton newAutomaton = new Automaton(nameNewAutomaton);
+        Automaton newAutomaton = new Automaton(nameNewAutomaton, idAssign++);
         this.network.put(nameNewAutomaton, newAutomaton);
         return newAutomaton;
     }
@@ -39,9 +43,11 @@ public class TANetwork {
         System.out.println("empieza");
         System.out.println(nameAutomaton);
         System.out.println(this.network.get(nameAutomaton).getId());
-
-        System.out.println("termina");
+        System.out.println("estado en adicionar loca");
+        System.out.println(currentState.toString());
+        System.out.println("estado en finalizar loca");
         HashMap<String, Clock> clocks = currentState.getLocalClocks().get(automaton.getId());
+        System.out.println("terminaaa");
         return automaton.addLocation(loc, clocks);
     }
 
@@ -73,11 +79,12 @@ public class TANetwork {
         for(Automaton automaton: this.network.values()){
             Location loc = state.getCurrentLocations().get(numAutomaton);
             numTargets = loc.getNumTargets();
-            i=i-numTargets;
+
             if(i<=numTargets){
                 automaton.takeDiscreteTransition(i, state);
                 return;
             }
+            i=i-numTargets;
 
             numAutomaton++;
         }

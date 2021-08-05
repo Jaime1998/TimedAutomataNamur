@@ -122,8 +122,6 @@ public class State {
 
     public void putClock(int idAutomaton, String nameClock){
         Clock newClock = new Clock(nameClock);
-        System.out.println("relojes");
-        System.out.println(this.localClocks.size());
         this.localClocks.get(idAutomaton).put(nameClock, newClock);
     }
 

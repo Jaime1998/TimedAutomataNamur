@@ -102,7 +102,10 @@ public class Location {
     }
 
     public Location takeDiscreteTransition(HashMap<String, Clock> clocks, int i){
+        System.out.println("Este es el i : " + i);
         Edge edge = this.targets.get(i);
+
+
 
         if(edge.getGuardInterval().getMin()>0){
             throw new CannotTakeTransition();

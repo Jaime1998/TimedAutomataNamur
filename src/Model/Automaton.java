@@ -16,12 +16,13 @@ public class Automaton {
     private String name;
     private HashMap<String, Location> locations;
     private final int id;
-    private static int nextId = 0;
+    //private static int nextId = 0;
 
-    Automaton(String name){
+    Automaton(String name, int id){
         this.name = name;
         this.locations = new HashMap<>();
-        this.id = nextId++;
+        this.id = id;
+        //this.id = nextId++;
     }
 
     public int getId(){
