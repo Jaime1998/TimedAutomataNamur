@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Controller.TAVisitor;
 import Model.*;
 import Model.Errors.CannotTakeTransition;
@@ -48,12 +49,12 @@ public class App extends JFrame{
     private JMenuItem variables;
     private DefaultListModel<String> stringTransitions;
 
-    private TANetwork automata;
-    private Automaton automaton;
+    //private TANetwork automata;
+    //private Automaton automaton;
+
+    private Controller controller;
 
     public App(String title) {
-
-
 
         super(title);
 
@@ -105,13 +106,14 @@ public class App extends JFrame{
                     TAVisitor eval = new TAVisitor();
                     eval.visit(tree);
 
-                    App.this.automata = eval.getAutomata();
+                    App.this.controller = eval.getController();
 
-
+                    /*
                     LinkedHashMap<String, Automaton> mapAutomata = App.this.automata.getAutomaton();
                     Set<Map.Entry<String, Automaton>> entrySet = mapAutomata.entrySet();
                     Iterator<Map.Entry<String, Automaton>> it = entrySet.iterator();
                     App.this.automaton = it.next().getValue();
+                     */
 
                     setLabelsIntervals();
 
@@ -146,7 +148,7 @@ public class App extends JFrame{
         String delayText = this.delayField.getText();
         try{
             double d = Double.parseDouble(delayText);
-            this.automaton.takeDelayTransition(d);
+            this.controller.takeDelayTransition(d);
         }catch (NumberFormatException ignored){
             JOptionPane.showMessageDialog(null, "Delay is not a number");
         }
@@ -159,7 +161,7 @@ public class App extends JFrame{
                 this.printArea.append("Transition is not selected");
                 return;
             }
-            this.automaton.takeDiscreteTransition(i);
+            this.controller.takeDiscreteTransition(i);
             this.setLabelsIntervals();
         }catch (CannotTakeTransition e){
             this.printArea.append(e.getMessage());
@@ -172,23 +174,26 @@ public class App extends JFrame{
 
     public void setLabelsIntervals(){
         this.stringTransitions.clear();
-        Interval invariantInterval = this.automaton.getCurrentLocation().getInvariantInterval();
-        ArrayList<Edge> listEdge = this.automaton.getEdges();
+        Interval invariantInterval = this.controller.intersectionInvariants();
+        ArrayList<Location> currentLocation = this.controller.getCurrentLocation();
 
-        for(Edge edge: listEdge){
-            String element = this.automaton.getCurrentLocation().getName().concat(", ");
-            element = element.concat(edge.toString());
-            this.stringTransitions.addElement(element);
+        for(Location loc: currentLocation){
+
+            for(Edge edge: loc.getTargets()){
+                String element = loc.getName().concat(", ");
+                element = element.concat(edge.toString());
+                this.stringTransitions.addElement(element);
+            }
         }
 
         this.invariantLabel.setText("[ " + invariantInterval.getMin() + ", " + invariantInterval.getMax() + " ]");
     }
 
     public String getVariablesString(){
-        if(this.automata==null){
+        if(this.controller==null){
             return "";
         }
-        return this.automata.getVariablesString();
+        return this.controller.getVariablesString();
     }
 
     public static void main(String[] args) {

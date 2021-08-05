@@ -27,6 +27,7 @@ public class Location {
         this.invariant = invariant;
         this.invariantInterval = null;
         this.targets = new ArrayList<>();
+        this.sources = new ArrayList<>();
         this.clockRates = new HashMap<>();
     }
 
@@ -68,6 +69,10 @@ public class Location {
 
     public void addEdge(TAParser.GuardContext guard, String action, HashSet<String> resetClocks, Location target){
         this.targets.add(new Edge(guard, action, resetClocks, target));
+        System.out.println("empiezaa");
+        System.out.println(this.getName());
+        System.out.println(target.getName());
+        System.out.println("terminaa");
         target.getSources().add(new Edge(guard, action, resetClocks, this));
     }
 
@@ -90,6 +95,10 @@ public class Location {
             int randomRate = rand.nextInt(1000);
             this.clockRates.put(clock.getName(), (double) randomRate);
         }
+    }
+
+    public boolean couldDelayTransition(double d){
+        return d <= this.invariantInterval.getMax();
     }
 
     public Location takeDiscreteTransition(HashMap<String, Clock> clocks, int i){

@@ -26,10 +26,6 @@ public class TANetwork {
         return newAutomaton;
     }
 
-    public void addAutomaton(Automaton newAutomaton){
-        this.network.put(newAutomaton.getName(), newAutomaton);
-    }
-
     public Automaton getAutomaton(String automaton){
         return this.network.get(automaton);
     }
@@ -38,23 +34,34 @@ public class TANetwork {
         return this.network;
     }
 
+    public Location addLocation(String nameAutomaton, Location loc, State currentState){
+        Automaton automaton = this.network.get(nameAutomaton);
+        System.out.println("empieza");
+        System.out.println(nameAutomaton);
+        System.out.println(this.network.get(nameAutomaton).getId());
+
+        System.out.println("termina");
+        HashMap<String, Clock> clocks = currentState.getLocalClocks().get(automaton.getId());
+        return automaton.addLocation(loc, clocks);
+    }
+
     public void addLocations(String automaton, HashMap<String, Location> locations){
         this.network.get(automaton).addLocations(locations);
     }
 
-    public void setInitLocation(String automaton, String initLocation){
-        this.network.get(automaton).setInitLocation(initLocation);
+    public Location getLocation(String nameAutomaton, String nameLocation){
+        return this.network.get(nameAutomaton).getLocation(nameLocation);
     }
 
-    public String getVariablesString(){
-        String output = "";
+    public int getIdAutomaton(String nameAutomaton){
+        return this.network.get(nameAutomaton).getId();
+    }
+
+    public void takeDelayTransition(double d, State state){
         for(Automaton automaton: this.network.values()){
-            output = output.concat("Automaton ").concat(automaton.getName()).concat("\n");
-            output = output.concat(automaton.getVariablesString());
+            automaton.takeDelayTransition(d, state);
         }
-        return output;
     }
-
     /**
      * With i transition, identify the automaton which takes the transition
      * @param i

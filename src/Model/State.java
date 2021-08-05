@@ -8,6 +8,7 @@ import Model.Types.Value;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class State {
 
@@ -21,6 +22,20 @@ public class State {
         this.localMemory = new ArrayList<>();
         this.localClocks = new ArrayList<>();
         this.currentLocations = new ArrayList<>();
+    }
+
+    public State(State stateIn){
+        this.globalMemory = new HashMap<>(stateIn.globalMemory);
+        this.localMemory = new ArrayList<>();
+        for (HashMap<String, Value> values: stateIn.localMemory){
+            this.localMemory.add(new HashMap<>(values));
+        }
+        this.localClocks = new ArrayList<>();
+        for (HashMap<String, Clock> clocks: stateIn.localClocks){
+            this.localClocks.add(new HashMap<>(clocks));
+        }
+        this.currentLocations = new ArrayList<>();
+        this.currentLocations.addAll(stateIn.currentLocations);
     }
 
     public State(HashMap<String, Value> globalMemory,
@@ -79,6 +94,21 @@ public class State {
     public void addAutomatonState(){
         this.localMemory.add(new HashMap<>());
         this.localClocks.add(new HashMap<>());
+    }
+
+    public void addInitLocation(int idAutomaton, Location initLoc){
+        this.currentLocations.add(initLoc);
+        initLoc.configLocation(this.localMemory.get(idAutomaton),
+                                this.globalMemory,
+                                this.getLocalClocks().get(idAutomaton));
+
+    }
+
+    public void putClock(int idAutomaton, String nameClock){
+        Clock newClock = new Clock(nameClock);
+        System.out.println("relojes");
+        System.out.println(this.localClocks.size());
+        this.localClocks.get(idAutomaton).put(nameClock, newClock);
     }
 
     public boolean existsValue(Automaton automaton, String id){
@@ -149,4 +179,41 @@ public class State {
 
         throw new NoFindSymbolException(id);
     }
+
+    @Override
+    public String toString(){
+        String output = "Global memory:\n";
+        for(Map.Entry<String, Value> v: this.globalMemory.entrySet()){
+            output = output.concat(v.getKey());
+            if(v instanceof Number){
+                output = output.concat(": ").concat(Double.toString(((Number) v).getNumberValue()));
+            }
+            output = output.concat("\n");
+        }
+        output = output.concat("\nLocal memory:\n");
+        int i=0;
+        for (HashMap<String, Value> values: this.localMemory){
+            output = output.concat(Integer.toString(i++)).concat("\n");
+            for(Map.Entry<String, Value> v: values.entrySet()){
+                output = output.concat("\t").concat(v.getKey());
+                if(v.getValue() instanceof Number){
+                    output = output.concat(": ").concat(Double.toString(((Number) v).getNumberValue()));
+                }
+                output = output.concat("\n");
+            }
+        }
+
+        output = output.concat("\nClocks:\n");
+        i=0;
+        for (HashMap<String, Clock> clocks: this.localClocks){
+            output = output.concat(Integer.toString(i++)).concat("\n");
+            for(Map.Entry<String, Clock> c: clocks.entrySet()){
+                output = output.concat("\t").concat(c.getKey());
+                output = output.concat(": ").concat(Double.toString(c.getValue().getCurrentValue()));
+                output = output.concat("\n");
+            }
+        }
+        return output;
+    }
+
 }

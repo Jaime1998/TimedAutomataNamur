@@ -28,8 +28,9 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         this.currentAutomaton = null;
     }
 
-    public TANetwork getAutomata(){
-        return this.controller.getAutomata();
+
+    public Controller getController(){
+        return this.controller;
     }
 
     @Override
@@ -151,10 +152,11 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
             visit(edge);
         }
         String initNameL = ctx.initLocation().IDENTIFIER().getText();
-        this.currentAutomaton.setInitLocation(initNameL);
+        this.controller.setInitLocation(this.currentAutomaton.getName(), initNameL);
+        /*this.currentAutomaton.setInitLocation(initNameL);
         Location initLocation = this.currentAutomaton.getLocation(initNameL);
         this.currentAutomaton.setCurrentLocation(initLocation);
-
+         */
         visit(ctx.block());
 
         return new Number(1);
@@ -174,7 +176,8 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
     public Value visitClockType(TAParser.ClockTypeContext ctx) {
         List<TerminalNode> clocks = ctx.IDENTIFIER();
         for(TerminalNode clock: clocks){
-            this.currentAutomaton.putClock(clock.getText());
+            //this.currentAutomaton.putClock(clock.getText());
+            this.controller.putClock(this.currentAutomaton.getId(), clock.getText());
         }
         return new Number(1);
     }
@@ -203,11 +206,9 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         String nameLocation = ctx.IDENTIFIER(0).getText();
         TAParser.GuardContext newGuard = ctx.guard();
         Location newLocation = new Location(nameLocation, newGuard);
-        this.currentAutomaton.addLocation(newLocation);
+        this.controller.addLocation(this.currentAutomaton.getName(), newLocation);
 
         List<TerminalNode> clockRates = ctx.IDENTIFIER();
-
-
 
         for(int i=1; i<clockRates.size(); i++){
             String nameClock = clockRates.get(i).getText();

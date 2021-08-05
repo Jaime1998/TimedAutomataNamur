@@ -28,23 +28,13 @@ public class Automaton {
         return this.id;
     }
 
-    public void setCurrentLocation(Location currentLocation){
-        this.currentLocation = currentLocation;
-        this.currentLocation.configLocation(this.memory, this.clocks);
-    }
-
-    public ArrayList<Edge> getEdges(){
-        return this.currentLocation.getEdges();
-    }
-
-
     public String getName(){
         return this.name;
     }
 
-    public void addLocation(Location newLocation){
-        this.locations.put(newLocation.getName(), newLocation);
-        newLocation.setRandomClocks(this.clocks);
+    public Location addLocation(Location newLocation, HashMap<String, Clock> clocks){
+        newLocation.setRandomClocks(clocks);
+        return this.locations.put(newLocation.getName(), newLocation);
     }
 
     public void addLocations(HashMap<String, Location> newLocations){
@@ -55,29 +45,20 @@ public class Automaton {
         return this.locations.get(nameLocation);
     }
 
-    public void putClock(String nameClock){
-        Clock newClock = new Clock(nameClock);
-        this.clocks.put(nameClock, newClock);
-    }
-
     public void setClockRate(String location, String nameClock, double newRate){
         this.locations.get(location).setRate(nameClock, newRate);
     }
 
+    public void takeDelayTransition(double d, State state){
+        HashMap<String, Clock> clocks = state.getLocalClocks().get(this.id);
 
-    public void setInitLocation(String newInitLocation){
-        if(!this.locations.containsKey(newInitLocation)){
-            throw new NoLocationException(newInitLocation);
-        }
-        this.initLocation = newInitLocation;
-    }
-
-    public void takeDelayTransition(double d){
-        for(Clock clock: this.clocks.values()){
+        for(Clock clock: clocks.values()){
             clock.increaseCurrentValue(d);
         }
-        this.currentLocation.configLocation(memory, clocks);
-        //this.currentLocation.takeDelayTransition(d);
+        HashMap<String, Value> localMemory = state.getLocalMemory().get(this.id);
+        HashMap<String, Value> globalMemory = state.getGlobalMemory();
+
+        state.getCurrentLocations().get(this.id).configLocation(localMemory, globalMemory, clocks);
     }
 
     public void takeDiscreteTransition(int i, State state){
@@ -91,19 +72,9 @@ public class Automaton {
         HashMap<String, Value> localMemory = state.getLocalMemory().get(this.id);
         HashMap<String, Value> globalMemory = state.getGlobalMemory();
 
-        loc.configLocation(localMemory, globalMemory, clocks);
+        target.configLocation(localMemory, globalMemory, clocks);
     }
 
-    public String getVariablesString(){
-        String output = "";
-        for(Clock clock: this.clocks.values()){
-            output = output.concat("\t");
-            output = output.concat(clock.getName()).concat(" = ");
-            output = output.concat(Double.toString(clock.getCurrentValue()));
-            output = output.concat("(rate = ").concat(Double.toString(clock.getRate())).concat(")");
-            output = output.concat("\n");
-        }
-        return output;
-    }
+
 
 }
