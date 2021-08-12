@@ -1,9 +1,10 @@
 package View;
 
+import Controller.Controller;
+import Controller.TAVisitor;
 import Model.*;
 import Model.Errors.CannotTakeTransition;
 import Model.Errors.TaErrorListener;
-import Model.Types.Number;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -34,10 +35,13 @@ public class App extends JFrame{
     private JList<String> listTransitions;
     private JButton discreteTransitionButton;
     private JTextField delayField;
-    private JList listTraces;
+    private JList<String> listTraces;
     private JScrollPane scrollListTransitions;
     private JScrollPane scrollListTraces;
     private JPanel tracesPanel;
+    private JButton a;
+    private JSlider slideSpeedSimulation;
+    private JButton randomSimulationButton;
     private JPanel discretePanel;
     private JScrollPane discreteScroll;
 
@@ -47,13 +51,13 @@ public class App extends JFrame{
     private JMenu file;
     private JMenuItem variables;
     private DefaultListModel<String> stringTransitions;
+    private DefaultListModel<String> stringTraces;
 
-    private TANetwork automata;
-    private Automaton automaton;
+
+    private Controller controller;
+    private boolean randomSimulation;
 
     public App(String title) {
-
-
 
         super(title);
 
@@ -70,8 +74,10 @@ public class App extends JFrame{
 
 
         App.this.stringTransitions = new DefaultListModel<>();
+        App.this.stringTraces = new DefaultListModel<>();
 
         App.this.listTransitions.setModel(App.this.stringTransitions);
+        App.this.listTraces.setModel(App.this.stringTraces);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
@@ -90,6 +96,7 @@ public class App extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 try{
                     App.this.printArea.setText("");
+                    App.this.randomSimulation = false;
                     String code = getTextDeclarationArea();
                     CharStream input = CharStreams.fromString(code);
 
@@ -103,15 +110,19 @@ public class App extends JFrame{
                     TAParser.ModelContext tree = parser.model();
 
                     TAVisitor eval = new TAVisitor();
+                    App.this.controller = null;
                     eval.visit(tree);
 
-                    App.this.automata = eval.getAutomata();
+                    App.this.controller = eval.getController();
 
-
+                    /*
                     LinkedHashMap<String, Automaton> mapAutomata = App.this.automata.getAutomaton();
                     Set<Map.Entry<String, Automaton>> entrySet = mapAutomata.entrySet();
                     Iterator<Map.Entry<String, Automaton>> it = entrySet.iterator();
                     App.this.automaton = it.next().getValue();
+                     */
+
+
 
                     setLabelsIntervals();
 
@@ -135,6 +146,14 @@ public class App extends JFrame{
                 JOptionPane.showMessageDialog(null, getVariablesString());
             }
         });
+        randomSimulationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                takeRandomTransitions();
+
+            }
+        });
     }
 
 
@@ -146,7 +165,7 @@ public class App extends JFrame{
         String delayText = this.delayField.getText();
         try{
             double d = Double.parseDouble(delayText);
-            this.automaton.takeDelayTransition(d);
+            this.controller.takeDelayTransition(d);
         }catch (NumberFormatException ignored){
             JOptionPane.showMessageDialog(null, "Delay is not a number");
         }
@@ -159,7 +178,7 @@ public class App extends JFrame{
                 this.printArea.append("Transition is not selected");
                 return;
             }
-            this.automaton.takeDiscreteTransition(i);
+            this.controller.takeDiscreteTransition(i);
             this.setLabelsIntervals();
         }catch (CannotTakeTransition e){
             this.printArea.append(e.getMessage());
@@ -170,25 +189,57 @@ public class App extends JFrame{
 
     }
 
+    public void takeRandomTransitions() {
+        this.randomSimulation = !this.randomSimulation;
+        new Thread (()->{
+            while(this.randomSimulation){
+
+                int speed = this.slideSpeedSimulation.getValue();
+                int timeSleep = 1000-speed*9;
+                System.out.println(timeSleep);
+
+                try{
+                    Thread.sleep(timeSleep);
+                }catch (InterruptedException error){
+                    error.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     public void setLabelsIntervals(){
         this.stringTransitions.clear();
-        Interval invariantInterval = this.automaton.getCurrentLocation().getInvariantInterval();
-        ArrayList<Edge> listEdge = this.automaton.getEdges();
+        this.stringTraces.clear();
+        Interval invariantInterval = this.controller.intersectionInvariants();
+        ArrayList<Location> currentLocation = this.controller.getCurrentLocation();
 
-        for(Edge edge: listEdge){
-            String element = this.automaton.getCurrentLocation().getName().concat(", ");
-            element = element.concat(edge.toString());
-            this.stringTransitions.addElement(element);
+        for(Location loc: currentLocation){
+            System.out.println("jajajajjaj  " + loc.getName());
+            for(Edge edge: loc.getTargets()){
+                String element = loc.getName().concat(", ");
+                element = element.concat(edge.toString());
+                this.stringTransitions.addElement(element);
+            }
+        }
+        for(ArrayList<String> locations: this.controller.getTraceLocation()){
+            String element = "( ";
+            String separator = "";
+            for(String locName: locations){
+                element = element.concat(separator).concat(locName);
+                separator = ", ";
+            }
+            element = element.concat(" )");
+            this.stringTraces.addElement(element);
         }
 
         this.invariantLabel.setText("[ " + invariantInterval.getMin() + ", " + invariantInterval.getMax() + " ]");
     }
 
     public String getVariablesString(){
-        if(this.automata==null){
+        if(this.controller==null){
             return "";
         }
-        return this.automata.getVariablesString();
+        return this.controller.getVariablesString();
     }
 
     public static void main(String[] args) {

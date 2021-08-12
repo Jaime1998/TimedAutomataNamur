@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Interval {
     private double min;
     private double max;
@@ -42,6 +44,15 @@ public class Interval {
             this.min = 0;
         }
         this.max = this.max - d;
+    }
+
+    public Interval intersection(Interval intervalIn){
+        return new Interval(Math.max(this.min, intervalIn.min),
+                            Math.min(this.max, intervalIn.max));
+    }
+
+    public Interval intersection (ArrayList<Interval> intervals){
+        return new Interval(1,2);
     }
 
     @Override

@@ -17,7 +17,8 @@ public class Location {
     private final String name;
     private TAParser.GuardContext invariant;
     private Interval invariantInterval;
-    private ArrayList<Edge> edges;
+    private ArrayList<Edge> targets;
+    private ArrayList<Edge> sources;
     private HashMap<String, Double> clockRates;
     private static Random rand = new Random();
 
@@ -25,7 +26,8 @@ public class Location {
         this.name = name;
         this.invariant = invariant;
         this.invariantInterval = null;
-        this.edges = new ArrayList<>();
+        this.targets = new ArrayList<>();
+        this.sources = new ArrayList<>();
         this.clockRates = new HashMap<>();
     }
 
@@ -53,25 +55,38 @@ public class Location {
         this.invariantInterval = invariantInterval;
     }
 
-    public ArrayList<Edge> getEdges() {
-        return this.edges;
+    public ArrayList<Edge> getTargets() {
+        return this.targets;
+    }
+
+    public int getNumTargets(){
+        return this.targets.size();
+    }
+
+    public ArrayList<Edge> getSources() {
+        return this.sources;
     }
 
     public void addEdge(TAParser.GuardContext guard, String action, HashSet<String> resetClocks, Location target){
-        this.edges.add(new Edge(guard, action, resetClocks, target));
+        this.targets.add(new Edge(guard, action, resetClocks, target));
+        System.out.println("empiezaa");
+        System.out.println(this.getName());
+        System.out.println(target.getName());
+        System.out.println("terminaa");
+        target.getSources().add(new Edge(guard, action, resetClocks, this));
     }
 
     public TAParser.GuardContext guardI(int i){
-        return this.edges.get(i).getGuard();
+        return this.targets.get(i).getGuard();
     }
     public String actionI(int i){
-        return this.edges.get(i).getAction();
+        return this.targets.get(i).getAction();
     }
     public HashSet<String> clocksToResetI(int i){
-        return this.edges.get(i).getResetClocks();
+        return this.targets.get(i).getResetClocks();
     }
     public Location getTargetI(int i){
-        return this.edges.get(i).getTarget();
+        return this.targets.get(i).getTarget();
     }
 
     public void setRandomClocks(HashMap<String, Clock> clocks){
@@ -82,8 +97,15 @@ public class Location {
         }
     }
 
+    public boolean couldDelayTransition(double d){
+        return d <= this.invariantInterval.getMax();
+    }
+
     public Location takeDiscreteTransition(HashMap<String, Clock> clocks, int i){
-        Edge edge = this.edges.get(i);
+        System.out.println("Este es el i : " + i);
+        Edge edge = this.targets.get(i);
+
+
 
         if(edge.getGuardInterval().getMin()>0){
             throw new CannotTakeTransition();
@@ -96,7 +118,9 @@ public class Location {
         return edge.getTarget();
     }
 
-    public void configLocation(ArrayList<HashMap<String, Value>> memory, HashMap<String, Clock> clocks){
+    public void configLocation(HashMap<String, Value> localMemory,
+                               HashMap<String, Value> globalMemory,
+                               HashMap<String, Clock> clocks){
         for(Clock clock: clocks.values()){
             clock.setRate(1);
         }
@@ -104,71 +128,79 @@ public class Location {
             clocks.get(rate.getKey()).setRate(rate.getValue());
         }
 
-        this.configInvariant(memory, clocks);
-        for(int i=0; i<this.edges.size(); i++){
-            this.configEdge(memory, clocks, i);
+        this.configInvariant(localMemory, globalMemory, clocks);
+        for(int i=0; i<this.targets.size(); i++){
+            this.configEdge(localMemory, globalMemory, clocks, i);
         }
     }
 
 
-    public Interval configInvariant(ArrayList<HashMap<String, Value>> memory, HashMap<String, Clock> clocks){
+    public Interval configInvariant(HashMap<String, Value> localMemory,
+                                    HashMap<String, Value> globalMemory,
+                                    HashMap<String, Clock> clocks){
         if(getInvariant() == null){
             Interval interval = new Interval(0, Double.POSITIVE_INFINITY);
             this.setInvariantInterval(interval);
             return interval;
         }
         TAParser.GuardContext invariant = getInvariant();
-        double numMinInterval = this.minGuard(invariant, memory, clocks, new HashSet<>());
-        double numMaxInterval = this.maxGuard(invariant, memory, clocks, new HashSet<>());
+        double numMinInterval = this.minGuard(invariant, localMemory, globalMemory, clocks, new HashSet<>());
+        double numMaxInterval = this.maxGuard(invariant, localMemory, globalMemory, clocks, new HashSet<>());
         Interval intervalInvariant = new Interval(numMinInterval, numMaxInterval);
 
         setInvariantInterval(intervalInvariant);
         return intervalInvariant;
     }
 
-    public void configEdge(ArrayList<HashMap<String, Value>> memory, HashMap<String, Clock> clocks, int i){
-        if(this.edges.get(i) ==null){
+    public void configEdge(HashMap<String, Value> localMemory,
+                           HashMap<String, Value> globalMemory,
+                           HashMap<String, Clock> clocks,
+                           int i){
+        if(this.targets.get(i) ==null){
             Interval interval = new Interval(0, Double.POSITIVE_INFINITY);
-            this.edges.get(i).setGuardInterval(interval);
+            this.targets.get(i).setGuardInterval(interval);
             return;
         }
 
-        Interval intervalGuard = configGuardEdge(memory, clocks, i);
-        Interval intervalInvariantTarget = configInvariantTarget(memory, clocks, i);
+        Interval intervalGuard = configGuardEdge(localMemory, globalMemory, clocks, i);
+        Interval intervalInvariantTarget = configInvariantTarget(localMemory, globalMemory, clocks, i);
 
-        this.edges.get(i).setGuardInterval(intersection(this.invariantInterval, intervalGuard, intervalInvariantTarget));
+        this.targets.get(i).setGuardInterval(intersection(this.invariantInterval, intervalGuard, intervalInvariantTarget));
     }
 
-    public Interval configGuardEdge(ArrayList<HashMap<String, Value>> memory,
+    public Interval configGuardEdge(HashMap<String, Value> localMemory,
+                                    HashMap<String, Value> globalMemory,
                                     HashMap<String, Clock> clocks,
                                     int i){
-        TAParser.GuardContext guard = this.edges.get(i).getGuard();
+        TAParser.GuardContext guard = this.targets.get(i).getGuard();
         if(guard == null){
             return new Interval(0, Double.POSITIVE_INFINITY);
         }
-        double numMinGuard = this.minGuard(guard, memory, clocks, new HashSet<>());
-        double numMaxGuard = this.maxGuard(guard, memory, clocks, new HashSet<>());
+        double numMinGuard = this.minGuard(guard, localMemory, globalMemory, clocks, new HashSet<>());
+        double numMaxGuard = this.maxGuard(guard, localMemory, globalMemory, clocks, new HashSet<>());
         return new Interval(numMinGuard, numMaxGuard);
     }
 
-    public Interval configInvariantTarget(ArrayList<HashMap<String, Value>> memory,
+    public Interval configInvariantTarget(HashMap<String, Value> localMemory,
+                                          HashMap<String, Value> globalMemory,
                                           HashMap<String, Clock> clocks,
                                           int i){
-        HashSet<String> resetClocks = this.edges.get(i).getResetClocks();
+        HashSet<String> resetClocks = this.targets.get(i).getResetClocks();
 
 
-        TAParser.GuardContext invariantTarget = this.edges.get(i).getTarget().getInvariant();
+        TAParser.GuardContext invariantTarget = this.targets.get(i).getTarget().getInvariant();
         if(invariantTarget == null){
             return new Interval(0, Double.POSITIVE_INFINITY);
         }
 
-        double numMinInvTarget = this.minGuard(invariantTarget, memory, clocks, resetClocks);
-        double numMaxInvTarget = this.maxGuard(invariantTarget, memory, clocks, resetClocks);
+        double numMinInvTarget = this.minGuard(invariantTarget, localMemory, globalMemory, clocks, resetClocks);
+        double numMaxInvTarget = this.maxGuard(invariantTarget, localMemory, globalMemory, clocks, resetClocks);
         return new Interval(numMinInvTarget, numMaxInvTarget);
     }
 
     public double minGuard(TAParser.GuardContext guard,
-                           ArrayList<HashMap<String, Value>> memory,
+                           HashMap<String, Value> localMemory,
+                           HashMap<String, Value> globalMemory,
                            HashMap<String, Clock> clocks,
                            HashSet<String> resetClocks){
         try{
@@ -181,7 +213,7 @@ public class Location {
             IloLinearNumExpr objective = cplex.linearNumExpr();
             objective.addTerm(1,d);
 
-            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, memory, clocks, resetClocks);
+            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, localMemory, globalMemory, clocks, resetClocks);
 
             Object visitedGuard = guardVisitor.visit(guard);
 
@@ -207,7 +239,8 @@ public class Location {
     }
 
     public double maxGuard(TAParser.GuardContext guard,
-                           ArrayList<HashMap<String, Value>> memory,
+                           HashMap<String, Value> localMemory,
+                           HashMap<String, Value> globalMemory,
                            HashMap<String, Clock> clocks,
                            HashSet<String> resetClocks){
         try{
@@ -220,7 +253,7 @@ public class Location {
             IloLinearNumExpr objective = cplex.linearNumExpr();
             objective.addTerm(1,d);
 
-            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, memory, clocks, resetClocks);
+            GuardVisitor guardVisitor = new GuardVisitor(cplex, d, localMemory, globalMemory, clocks, resetClocks);
 
             Object visitedGuard = guardVisitor.visit(guard);
 

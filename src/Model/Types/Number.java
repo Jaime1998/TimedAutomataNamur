@@ -1,11 +1,10 @@
 package Model.Types;
 
-import Model.Errors.NoFindSymbolException;
 import Model.Errors.NoFunctionException;
 import Model.Errors.TypeException;
 
 public class Number extends Value {
-    private double numberValue;
+    private final double numberValue;
 
     public Number(double numberValue){
         this.numberValue = numberValue;
@@ -15,9 +14,6 @@ public class Number extends Value {
         return numberValue;
     }
 
-    public void setNumberValue(double numberValue) {
-        this.numberValue = numberValue;
-    }
 
     @Override
     public boolean toBoolean() {

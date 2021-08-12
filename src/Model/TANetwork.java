@@ -11,96 +11,23 @@ import java.util.*;
 public class TANetwork {
 
     private LinkedHashMap<String, Automaton> network;
-    private ArrayList<HashMap<String, Value>> memory;
+
+    //Used to give id to each automaton. Every id correspond to the index in array of states
+    protected int idAssign;
 
     public TANetwork(){
         this.network = new LinkedHashMap<>();
-        this.memory = new ArrayList<>();
-        this.memory.add(new HashMap<String, Value>());
+        this.idAssign=0;
     }
 
-    public ArrayList<HashMap<String, Value>> getMemory(){
-        return this.memory;
-    }
-
-    public Value getValue(String id){
-        Value v;
-        for(int i=this.memory.size() -1; i>=0; i--){
-            v=this.memory.get(i).get(id);
-            if(v!=null){
-                return v;
-            }
-        }
-        throw new NoFindSymbolException(id);
-    }
-
-    public boolean existsValue(String id){
-        Value v;
-        boolean exist;
-
-        for(int i=this.memory.size() -1; i>=0; i--){
-            exist = this.memory.get(i).containsKey(id);
-            if(exist){
-               return true;
-            }
-        }
-        return false;
-    }
-
-    public void assignNewValue(String id, Value value){
-        if(existsValue(id)){
-            System.out.println(this.memory);
-            System.out.println(id);
-            System.out.println(((Number)value).getNumberValue());
-            System.out.println(this.memory);
-            throw new AlreadyDefinedExpection(id);
-        }
-        this.memory.get(this.memory.size()-1).put(id, value);
-    }
-
-
-    public Value updateValue(String id, Value value){
-        Value v;
-        for(int i=this.memory.size() -1; i>=0; i--){
-            v = this.memory.get(i).get(id);
-            if(v==null){
-                continue;
-            }
-            if(v.isNumber() && value.isNumber()){
-                this.memory.get(i).replace(id, value);
-                return value;
-            }
-            if(v.isFunction() && value.isFunction()){
-                this.memory.get(i).replace(id, value);
-                return value;
-            }
-        }
-        throw new NoFindSymbolException(id);
-    }
-
-    public boolean newEnv(){
-        return this.memory.add(new HashMap<>());
-    }
-
-    public HashMap<String, Value> removeEnv(){
-        return this.memory.remove(this.memory.size() - 1);
-    }
-
-    public void addValue(String id, Value newValue){
-        int lastEnv = this.memory.size()-1;
-        this.memory.get(lastEnv).put(id, newValue);
+    public int size(){
+        return this.network.size();
     }
 
     public Automaton addAutomaton(String nameNewAutomaton){
-        this.memory.add(new HashMap<>());
-        ArrayList<HashMap<String, Value>> currentMemory = new ArrayList<>(this.memory);
-        Automaton newAutomaton = new Automaton(nameNewAutomaton, currentMemory);
+        Automaton newAutomaton = new Automaton(nameNewAutomaton, idAssign++);
         this.network.put(nameNewAutomaton, newAutomaton);
         return newAutomaton;
-    }
-
-    public void addAutomaton(Automaton newAutomaton){
-        this.network.put(newAutomaton.getName(), newAutomaton);
     }
 
     public Automaton getAutomaton(String automaton){
@@ -111,27 +38,62 @@ public class TANetwork {
         return this.network;
     }
 
+    public Location addLocation(String nameAutomaton, Location loc, State currentState){
+        Automaton automaton = this.network.get(nameAutomaton);
+        System.out.println("empieza");
+        System.out.println(nameAutomaton);
+        System.out.println(this.network.get(nameAutomaton).getId());
+        System.out.println("estado en adicionar loca");
+        System.out.println(currentState.toString());
+        System.out.println("estado en finalizar loca");
+        HashMap<String, Clock> clocks = currentState.getLocalClocks().get(automaton.getId());
+        System.out.println("terminaaa");
+        return automaton.addLocation(loc, clocks);
+    }
+
     public void addLocations(String automaton, HashMap<String, Location> locations){
         this.network.get(automaton).addLocations(locations);
     }
 
-
-    public void addActions(String automaton, Set<String> actions){
-        this.network.get(automaton).addActions(actions);
+    public Location getLocation(String nameAutomaton, String nameLocation){
+        return this.network.get(nameAutomaton).getLocation(nameLocation);
     }
 
-    public void setInitLocation(String automaton, String initLocation){
-        this.network.get(automaton).setInitLocation(initLocation);
+    public int getIdAutomaton(String nameAutomaton){
+        return this.network.get(nameAutomaton).getId();
     }
 
-    public String getVariablesString(){
-        String output = "";
+    public void takeDelayTransition(double d, State state){
         for(Automaton automaton: this.network.values()){
-            output = output.concat("Automaton ").concat(automaton.getName()).concat("\n");
-            output = output.concat(automaton.getVariablesString());
+            automaton.takeDelayTransition(d, state);
         }
-        return output;
     }
+    /**
+     * With i transition, identify the automaton which takes the transition
+     * @param i
+     * @return
+     */
+    public void takeDiscreteTransition(int i, State state){
+        int numTargets;
+        int numAutomaton = 0;
+        for(Automaton automaton: this.network.values()){
+            Location loc = state.getCurrentLocations().get(numAutomaton);
+            numTargets = loc.getNumTargets();
+
+            System.out.println("calculo del indice del edge ");
+            System.out.println("aquí i es: "+i);
+            System.out.println("numTargets es"+ numTargets);
+            if(i<numTargets){
+                automaton.takeDiscreteTransition(i, state);
+                return;
+            }
+            i=i-numTargets;
+
+            numAutomaton++;
+        }
+        throw new RuntimeException();
+    }
+
     /*
     public LinkedHashMap<Location, ArrayList<Edge>> getTransitions(){
         LinkedHashMap<Location, ArrayList<Edge>> transitions = new LinkedHashMap<>();
