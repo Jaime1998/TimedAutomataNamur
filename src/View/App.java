@@ -42,6 +42,9 @@ public class App extends JFrame{
     private JButton a;
     private JSlider slideSpeedSimulation;
     private JButton randomSimulationButton;
+    private JLabel minInvLabel;
+    private JLabel maxInvLabel;
+    private JLabel commaInvLabel;
     private JPanel discretePanel;
     private JScrollPane discreteScroll;
 
@@ -88,7 +91,6 @@ public class App extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 takeDelayTransition();
-                setLabelsIntervals();
             }
         });
         updateButton.addActionListener(new ActionListener() {
@@ -166,6 +168,8 @@ public class App extends JFrame{
         try{
             double d = Double.parseDouble(delayText);
             this.controller.takeDelayTransition(d);
+
+            this.setLabelsIntervals();
         }catch (NumberFormatException ignored){
             JOptionPane.showMessageDialog(null, "Delay is not a number");
         }
@@ -188,9 +192,18 @@ public class App extends JFrame{
 
 
     }
+    /*
+    automaton a{
+    locations = {a,b,c}
+    clocks = {x,y,z}
+    init = a
+
+    }
+     */
 
     public void takeRandomTransitions() {
         this.randomSimulation = !this.randomSimulation;
+
         new Thread (()->{
             while(this.randomSimulation){
 
@@ -199,9 +212,43 @@ public class App extends JFrame{
                 System.out.println(timeSleep);
 
                 try{
+
+                    String maxInvString = this.maxInvLabel.getText();
+                    double delay = Double.POSITIVE_INFINITY;
+
+                    if(!maxInvString.equals("Infinity")){
+                        delay = Double.parseDouble(maxInvString);
+                    }
+
+                    Random rand = new Random();
+
+                    if(delay == Double.POSITIVE_INFINITY){
+                        delay = rand.nextInt(Integer.MAX_VALUE);
+                    }
+                    else{
+                        delay = rand.nextDouble()*delay;
+                    }
+
+                    this.controller.takeDelayTransition(delay);
+                    this.setLabelsIntervals();
+
+
+                    int nTransition = this.stringTransitions.size();
+
+                    if(nTransition==0){
+                        Thread.sleep(timeSleep);
+                        continue;
+                    }
+
+                    nTransition = rand.nextInt(nTransition);
+                    this.controller.takeDiscreteTransition(nTransition);
+                    this.setLabelsIntervals();
+
                     Thread.sleep(timeSleep);
                 }catch (InterruptedException error){
                     error.printStackTrace();
+                }catch (NumberFormatException ignored){
+                    JOptionPane.showMessageDialog(null, "Delay is not a number");
                 }
             }
         }).start();
@@ -214,7 +261,6 @@ public class App extends JFrame{
         ArrayList<Location> currentLocation = this.controller.getCurrentLocation();
 
         for(Location loc: currentLocation){
-            System.out.println("jajajajjaj  " + loc.getName());
             for(Edge edge: loc.getTargets()){
                 String element = loc.getName().concat(", ");
                 element = element.concat(edge.toString());
@@ -232,7 +278,9 @@ public class App extends JFrame{
             this.stringTraces.addElement(element);
         }
 
-        this.invariantLabel.setText("[ " + invariantInterval.getMin() + ", " + invariantInterval.getMax() + " ]");
+        this.minInvLabel.setText(Double.toString(invariantInterval.getMin()));
+        this.commaInvLabel.setText(", ");
+        this.maxInvLabel.setText(Double.toString(invariantInterval.getMax()));
     }
 
     public String getVariablesString(){
