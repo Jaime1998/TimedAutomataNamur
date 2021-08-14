@@ -68,8 +68,6 @@ public class Controller {
 
         State currentState = this.statesRecord.get(this.currentTrace);
 
-        System.out.println("estado actual");
-        System.out.println(currentState);
 
         State duplicatedState = new State(currentState);
 
@@ -79,10 +77,6 @@ public class Controller {
         }
         this.statesRecord.add(duplicatedState);
         this.currentTrace++;
-        System.out.println("estado actual");
-        System.out.println(currentState);
-        System.out.println("estado duplicado");
-        System.out.println(duplicatedState);
     }
 
     public boolean couldDelayTransition(double d, State state) {
