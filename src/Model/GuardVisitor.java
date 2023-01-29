@@ -209,8 +209,25 @@ public class GuardVisitor extends TAParserBaseVisitor<Object> {
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return super.visitIdExpr(ctx);
+    }
+
+    @Override
+    public Object visitRateExpr(TAParser.RateExprContext ctx) {
+        try{
+            String nameIdClock = ctx.IDENTIFIER().getText();
+            System.out.println("[GUARD_VISITOR][VISIT_RATE_EXPR] - Info clocks name ".concat(nameIdClock));
+            if(!this.clocks.containsKey(nameIdClock)){
+                throw new NoFindSymbolException(nameIdClock);
+            }
+            Clock clock = this.clocks.get(nameIdClock);
+            System.out.println("[GUARD_VISITOR][VISIT_RATE_EXPR] - Info clocks rate " + clock.getRate());
+            return new Number(clock.getRate());
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return super.visitRateExpr(ctx);
     }
 
     @Override

@@ -1,5 +1,4 @@
-// Generated from C:/Users/Jaime/OneDrive - correounivalle.edu.co/Documentos/Github/TimedAutomataNamur/src/Model/Parser\TALexer.g4 by ANTLR 4.9.1
-package Model.Parser;
+// Generated from C:/Users/Jaime/OneDrive - correounivalle.edu.co/Documentos/Github/TimedAutomataNamur/out/production/TimedAutomataNamur/Model/Parser\TALexer.g4 by ANTLR 4.9.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

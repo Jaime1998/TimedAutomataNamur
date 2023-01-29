@@ -2,7 +2,7 @@ package Model.Types;
 
 import Model.Errors.TypeException;
 
-public class Clock {
+public class Clock extends Value{
 
     private String name;
     private double rate;
@@ -51,11 +51,31 @@ public class Clock {
     }
 
 
+    @Override
+    public boolean toBoolean() {
+        return this.currentValue>=1;
+    }
+
+    @Override
+    public boolean isFunction() {
+        return false;
+    }
+
+    @Override
+    public boolean isNumber() {
+        return false;
+    }
+
     public Value mul(Value valMul) {
         if(valMul instanceof Number){
             return new Number(this.currentValue * ((Number)valMul).getNumberValue());
         }
         throw new TypeException("Type error for binary operator *. A value is not a number");
+    }
+
+    @Override
+    public Clock mul(Clock clock) {
+        return new Clock(this.getName(), this.getRate()*clock.getRate(), this.getCurrentValue());
     }
 
     public Value sum(Value valSum) {
@@ -65,11 +85,21 @@ public class Clock {
         throw new TypeException("Type error for binary operator +. A value is not a number");
     }
 
+    @Override
+    public Value sum(Clock clock) {
+        return new Number(this.getCurrentValue() + clock.getCurrentValue());
+    }
+
     public Value sub(Value valSub) {
         if(valSub instanceof Number){
             return new Number(this.currentValue - ((Number) valSub).getNumberValue());
         }
         throw new TypeException("Type error for binary operator -. A value is not a number");
+    }
+
+    @Override
+    public Value sub(Clock clock) {
+        return new Number(this.getCurrentValue() - clock.getCurrentValue());
     }
 
     public Value greater(Value valGreater) {
@@ -78,6 +108,11 @@ public class Clock {
 
     public Value less(Value valLess) {
         throw new TypeException("Type error for binary operator <=. A value is not a number");
+    }
+
+    @Override
+    public Value apply(Value[] values) {
+        return null;
     }
 
 }

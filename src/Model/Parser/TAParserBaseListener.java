@@ -1,4 +1,4 @@
-// Generated from C:/Users/57310/OneDrive - correounivalle.edu.co/Documentos/Github/TimedAutomataNamur/src/Model/Parser\TAParser.g4 by ANTLR 4.9.1
+// Generated from C:/Users/Jaime/OneDrive - correounivalle.edu.co/Documentos/Github/TimedAutomataNamur/src/Model/Parser\TAParser.g4 by ANTLR 4.9.1
 package Model.Parser;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -383,6 +383,18 @@ public class TAParserBaseListener implements TAParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParensExpr(TAParser.ParensExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRateExpr(TAParser.RateExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRateExpr(TAParser.RateExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

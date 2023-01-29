@@ -1,4 +1,4 @@
-// Generated from C:/Users/57310/OneDrive - correounivalle.edu.co/Documentos/Github/TimedAutomataNamur/src/Model/Parser\TAParser.g4 by ANTLR 4.9.1
+// Generated from C:/Users/Jaime/OneDrive - correounivalle.edu.co/Documentos/Github/TimedAutomataNamur/src/Model/Parser\TAParser.g4 by ANTLR 4.9.1
 package Model.Parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -208,6 +208,13 @@ public interface TAParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitParensExpr(TAParser.ParensExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code RateExpr}
+	 * labeled alternative in {@link TAParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRateExpr(TAParser.RateExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Unary}
 	 * labeled alternative in {@link TAParser#expr}.

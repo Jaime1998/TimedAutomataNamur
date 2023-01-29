@@ -5,6 +5,7 @@ import Model.Location;
 import Model.Parser.TAParser;
 import Model.Parser.TAParserBaseVisitor;
 import Model.TANetwork;
+import Model.Types.Clock;
 import Model.Types.Lambda;
 import Model.Types.Number;
 import Model.Errors.TypeException;
@@ -362,7 +363,11 @@ public class TAVisitor extends TAParserBaseVisitor<Value> {
         return this.controller.updateValue(this.currentAutomaton, ctx.IDENTIFIER().getText(), newValue);
     }
 
-    /*
+    @Override
+    public Value visitRateExpr(TAParser.RateExprContext ctx) {
+        return super.visitRateExpr(ctx);
+    }
+/*
     private Value lookUpMemory(TerminalNode identifier) {
         String id = identifier.getText();
         for(int i=this.automata.get.size()-1; i>=0; i--){

@@ -94,7 +94,7 @@ expr        :   op=('+' | '-') expr         # Unary
             |   expr '*' expr               # Mul
             |   expr op=('+'|'-') expr      # AddSub
             |   expr op=('<='|'>=') expr    # CompareExpr
-            |   IDENTIFIER  '\''            # rateExpr
+            |   IDENTIFIER  '\''            # RateExpr
             |   DOUBLE                      # DoubleExpr
             |   IDENTIFIER                  # IdExpr
             |   '(' expr ')'                # ParensExpr

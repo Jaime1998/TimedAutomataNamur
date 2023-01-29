@@ -1,4 +1,4 @@
-// Generated from C:/Users/57310/OneDrive - correounivalle.edu.co/Documentos/Github/TimedAutomataNamur/src/Model/Parser\TAParser.g4 by ANTLR 4.9.1
+// Generated from C:/Users/Jaime/OneDrive - correounivalle.edu.co/Documentos/Github/TimedAutomataNamur/src/Model/Parser\TAParser.g4 by ANTLR 4.9.1
 package Model.Parser;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -341,6 +341,18 @@ public interface TAParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParensExpr(TAParser.ParensExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code RateExpr}
+	 * labeled alternative in {@link TAParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterRateExpr(TAParser.RateExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code RateExpr}
+	 * labeled alternative in {@link TAParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitRateExpr(TAParser.RateExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code Unary}
 	 * labeled alternative in {@link TAParser#expr}.

@@ -6,7 +6,7 @@
         <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/src/Model/Parser/TAParser.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\Users\57310\OneDrive - correounivalle.edu.co\Documentos\Github\TimedAutomataNamur\src" />
+          <option name="outputDir" value="C:\Users\Jaime\OneDrive - correounivalle.edu.co\Documentos\Github\TimedAutomataNamur\src" />
           <option name="libDir" value="" />
           <option name="encoding" value="" />
           <option name="pkg" value="" />
@@ -16,7 +16,7 @@
         <PerGrammarGenerationSettings>
           <option name="fileName" value="$PROJECT_DIR$/src/Model/Parser/TALexer.g4" />
           <option name="autoGen" value="true" />
-          <option name="outputDir" value="C:\Users\57310\OneDrive - correounivalle.edu.co\Documentos\Github\TimedAutomataNamur\src" />
+          <option name="outputDir" value="C:\Users\Jaime\OneDrive - correounivalle.edu.co\Documentos\Github\TimedAutomataNamur\src" />
           <option name="libDir" value="" />
           <option name="encoding" value="" />
           <option name="pkg" value="" />
