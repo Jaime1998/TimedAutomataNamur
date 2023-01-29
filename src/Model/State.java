@@ -134,29 +134,33 @@ public class State {
     }
 
     public boolean existsValue(Automaton automaton, String id){
-        Value v;
-        v = this.localMemory.get(automaton.getId()).get(id);
-        if(v!=null){
-            return true;
-        }
-        v = this.globalMemory.get(id);
+        return existsValueLocal(automaton, id) || existsValueGlobal(id);
+    }
+
+    public boolean existsValueGlobal(String id){
+        Value v = this.globalMemory.get(id);
+        return v != null;
+    }
+
+    public boolean existsValueLocal(Automaton automaton, String id){
+        if(automaton == null) return false;
+        Value v = this.localMemory.get(automaton.getId()).get(id);
         return v != null;
     }
 
     public Value getValue(Automaton automaton, String id){
         Value v;
-        v = this.localMemory.get(automaton.getId()).get(id);
-        if(v!=null){
-            return v;
+        if(automaton != null){
+            v = this.localMemory.get(automaton.getId()).get(id);
+            if(v!=null) return v;
         }
         v = this.globalMemory.get(id);
-        if(v!=null){
-            return v;
-        }
+        if(v!=null) return v;
         throw new NoFindSymbolException(id);
     }
 
     public void assignNewValue(Automaton automaton, String id, Value value){
+        System.out.println("[STATE][ASSOGN_NEW_VALUE] - Info automaton " + automaton);
         if(existsValue(automaton, id)){
             throw new AlreadyDefinedExpection(id);
         }

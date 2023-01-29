@@ -8,6 +8,18 @@ automaton a{
 	clocks={x,y,z}
 	init=a
 }
+
+
+
+num varNum = 2
+automaton a {
+	locations = {a : invariant = x<=varNum,b,c}
+	clocks = {x,y,z}
+	actions = {a1,a2,a3}
+	edges = {(a,a1,b)}
+	init = a
+
+}
 */
 
 model       :   block automaton+;

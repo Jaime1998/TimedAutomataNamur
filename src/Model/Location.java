@@ -192,7 +192,7 @@ public class Location {
         if(invariantTarget == null){
             return new Interval(0, Double.POSITIVE_INFINITY);
         }
-
+        System.out.println("[LOCATION][CONFIG_INVARIANT_TARGET]");
         double numMinInvTarget = this.minGuard(invariantTarget, localMemory, globalMemory, clocks, resetClocks);
         double numMaxInvTarget = this.maxGuard(invariantTarget, localMemory, globalMemory, clocks, resetClocks);
         return new Interval(numMinInvTarget, numMaxInvTarget);
@@ -204,10 +204,12 @@ public class Location {
                            HashMap<String, Clock> clocks,
                            HashSet<String> resetClocks){
         try{
+
+            System.out.println("[LOCATION][MIN_GUARD] empieza minGuard " + guard);
             IloCplex cplex = new IloCplex();
 
             //Variables
-
+            System.out.println("[LOCATION][MIN_GUARD] empieza minGuard");
             IloNumVar d = cplex.numVar(0, Double.POSITIVE_INFINITY, "d");
 
             IloLinearNumExpr objective = cplex.linearNumExpr();
@@ -216,7 +218,7 @@ public class Location {
             GuardVisitor guardVisitor = new GuardVisitor(cplex, d, localMemory, globalMemory, clocks, resetClocks);
 
             Object visitedGuard = guardVisitor.visit(guard);
-
+            System.out.println("visited Guard " + visitedGuard.toString());
             if(visitedGuard instanceof Number){
                 if(!((Number) visitedGuard).toBoolean()){
                     return Double.POSITIVE_INFINITY;
